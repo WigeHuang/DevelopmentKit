@@ -1,0 +1,56 @@
+DOM的两级联动
+
+Ajax三级联动
+
+过滤器
+
+监听器
+
+阿里大于的短信服务器
+
+邮件服务器
+
+支付方式
+
+mybatis高级映射,多表联查
+
+spring AOP
+spring IOC
+
+springMVC
+spring mybatis 整合
+
+旅游网整合
+分页插件
+通用mapper
+事务管理
+
+
+私服的搭建
+Nginx反向代理
+
+1.spring controller 中request获取session中的数据代替!!!!!!!!!!!!!!
+
+
+luence
+
+-DarchetypeCatalog=internal
+
+svn://192.168.50.22/heima32/32
+
+<option name="configurationTypes">
+  <set>
+    <option value="SpringBootApplicationConfigurationType" />
+  </set>
+</option>
+
+
+
+
+
+
+
+
+
+
+com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
