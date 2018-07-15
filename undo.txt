@@ -33,10 +33,10 @@ Nginx反向代理
 
 
 luence
+solr
+solrcloud
 
 -DarchetypeCatalog=internal
-
-svn://192.168.50.22/heima32/32
 
 <option name="configurationTypes">
   <set>
@@ -44,13 +44,3 @@ svn://192.168.50.22/heima32/32
   </set>
 </option>
 
-
-
-
-
-
-
-
-
-
-com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
