@@ -1,4 +1,4 @@
-intellij IDEA 
+﻿intellij IDEA 
 
 一、lombok插件
 1.插件Lombok的简介 
@@ -14,4 +14,17 @@ intellij IDEA
   </dependency>
 
 二、intellij IEDA 
+
+
+
+
+有关springboot的通用mapper注解扫描的问题
+java.lang.NoSuchMethodException: tk.mybatis.mapper.provider.base.BaseSelectProvider.<init()
+
+
+问题原因：启动类的包扫描注解@MapperScan()
+不是org.mybatis.spring.annotation.MapperScan
+应该是通用mapper的注解tk.mybatis.spring.annotation.MapperScan
+
+
   
