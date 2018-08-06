@@ -17,7 +17,7 @@
 
 
 
-
+开发过程中问题
 有关springboot的通用mapper注解扫描的问题
 java.lang.NoSuchMethodException: tk.mybatis.mapper.provider.base.BaseSelectProvider.<init()
 
