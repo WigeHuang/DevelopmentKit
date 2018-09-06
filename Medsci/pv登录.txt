@@ -4,4 +4,7 @@ origin	http://192.168.0.28:3033/medsci-develop/himalaya-pass.git
 
  微服务的各个组件
 http://10.0.1.251:8090/pages/viewpage.action?pageId=1277979
+
+
 https://pro.modao.cc/app/Lnnk8ehZ2Q2g9KYjr2HeU18Pb7HSawd#screen=sD19EC4783E1533290974616
+https://pro.modao.cc/app/Lnnk8ehZ2Q2g9KYjr2HeU18Pb7HSawd#screen=sECF70CFF191529909686530
