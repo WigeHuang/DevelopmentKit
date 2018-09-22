@@ -1,0 +1,2 @@
+在edit Configuration中，对启动项进行编辑，修改 VM Options：
+-Xmx128m -Xms128m
