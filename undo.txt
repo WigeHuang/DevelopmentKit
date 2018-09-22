@@ -38,6 +38,7 @@ solrcloud
 
 -DarchetypeCatalog=internal
 
+##################IDEA配置DashBoard###############################
 <option name="configurationTypes">
   <set>
     <option value="SpringBootApplicationConfigurationType" />

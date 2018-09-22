@@ -1,0 +1,25 @@
+近日在虚拟机上部署项目时发现在虚拟机每次重启之后都得重新关闭防火墙，很是麻烦，所有想着怎么永久性关闭防火墙，毕竟这只是自己用来玩的虚拟机，虽然是一个很简单的事，但是在解决的过程中让我深刻意识到，不管做啥，一定要关注软件的版本号，要不然一切都是白搭。其中细节，带我细细说来。
+
+我要说的就是CentOS 6和CentOS 7在关闭防火墙时的区别
+
+作为刚学习Linux的新手，不知道具体关闭防火墙的命名，自然而然求助百度，但是其实百度之后发现大多数给的命令都是基于CentOS 6的，但是我本地虚拟机上装的是CentOS 7，在试了很多遍之后，发现跟网上的效果很不一样，黄天不负有心人，在找了很久之后，终于在博客园上发现了一篇总结文章，才发现CentOS 6和CentOS 7关闭防火墙时命令不一样。写下此文，一来几下这几个命令，而来让自己对软件版本号铭记于心。
+
+具体命令如下：
+
+CentOS 6:
+1） 永久性生效，重启后不会复原
+开启： chkconfig iptables on
+关闭： chkconfig iptables off
+2） 即时生效，重启后复原
+开启： service iptables start
+关闭： service iptables stop
+CentOS 7:
+systemctl start firewalld.service#启动firewall
+systemctl stop firewalld.service#停止firewall
+systemctl disable firewalld.service#禁止firewall开机启动
+查询TCP连接情况：
+ netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+查询端口占用情况：
+ netstat   -anp   |   grep  portno（例如：netstat –apn | grep 80）
+
+总结：细细研究之后会发现，centOS 7 永久关闭防火墙其实是跟centOS 6用chkconfig 方式关闭命令差不多，我暂且理解为，centos 7 把防火墙那一块从iptables里独立出来了。
