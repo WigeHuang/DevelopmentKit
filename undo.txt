@@ -26,9 +26,6 @@ spring mybatis 整合
 事务管理
 
 
-
-
-
 私服的搭建
 Nginx反向代理
 
@@ -47,4 +44,18 @@ solrcloud
     <option value="SpringBootApplicationConfigurationType" />
   </set>
 </option>
+
+
+docker演示
+
+http://10.0.1.251:8090/pages/viewpage.action?pageId=6750217
+
+http://www.cnblogs.com/weiqinl/p/docker_node.html
+
+https://github.com/msnetc/docker-node 我演示的项目的github地址
+
+rabbitmq集群
+3节点的rabbitmq集群，haproxy做负载均衡 
+http://10.0.1.253:15672/#/   MQ账户 admin/Admin@123.
+http://10.0.1.253:1936/haproxy?stats   HAProxy账户  haproxy/haproxy
 

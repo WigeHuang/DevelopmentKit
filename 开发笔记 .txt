@@ -27,4 +27,15 @@ java.lang.NoSuchMethodException: tk.mybatis.mapper.provider.base.BaseSelectProvi
 应该是通用mapper的注解tk.mybatis.spring.annotation.MapperScan
 
 
-  
+
+
+
+error： javax.validation.UnexpectedTypeException: HV000030: No validator could be found for constraint 'javax.validation.constraints
+
+使用hibernate validator出现上面的错误， 需要 注意
+
+@NotNull 和 @NotEmpty  和@NotBlank 区别
+
+@NotEmpty 用在集合类上面
+@NotBlank 用在String上面
+@NotNull    用在基本类型上
