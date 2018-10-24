@@ -39,3 +39,8 @@ error： javax.validation.UnexpectedTypeException: HV000030: No validator could 
 @NotEmpty 用在集合类上面
 @NotBlank 用在String上面
 @NotNull    用在基本类型上
+
+
+MybatisPlus
+
+http://mp.baomidou.com/guide/
