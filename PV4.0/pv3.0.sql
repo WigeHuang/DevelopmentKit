@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-10-22 19:40:35
+Date: 2018-10-25 18:36:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,43 +20,52 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_account_log`;
 CREATE TABLE `auth_account_log` (
-  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `UUID` char(32) NOT NULL DEFAULT '' COMMENT '唯一键',
   `LOG_NAME` varchar(32) DEFAULT NULL COMMENT '操作名称',
   `USER_ID` varchar(32) DEFAULT NULL COMMENT '用户ID',
+  `TENANT_ID` char(32) DEFAULT NULL COMMENT '租户ID',
+  `project_id` char(32) DEFAULT NULL COMMENT '项目ID',
   `SUCCEED` int(11) DEFAULT NULL COMMENT '是否成功(0失败1成功)',
   `MESSAGE` varchar(32) DEFAULT NULL COMMENT '具体消息',
   `IP` varchar(32) DEFAULT NULL COMMENT '登录ip',
+  `VERSION` varchar(32) DEFAULT NULL COMMENT '系统版本',
+  `REQUEST_ID` varchar(32) DEFAULT NULL COMMENT '请求ID',
+  `delete_status` int(11) DEFAULT NULL COMMENT '0:删除，1:未删除',
   `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
   `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
   `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
   `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
   `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`UUID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户访问记录日志';
 
 -- ----------------------------
 -- Records of auth_account_log
 -- ----------------------------
-INSERT INTO `auth_account_log` VALUES ('111', '登录', '111', '1', '上海市徐汇区', '192.168.0.28', '0', 'wenhao.wang', null, 'wenhao.wang', null);
 
 -- ----------------------------
 -- Table structure for auth_operation_log
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_operation_log`;
 CREATE TABLE `auth_operation_log` (
-  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `UUID` char(32) NOT NULL DEFAULT '' COMMENT '唯一键',
   `LOG_NAME` varchar(32) DEFAULT NULL COMMENT '日志名称',
   `USER_ID` varchar(32) DEFAULT NULL COMMENT '用户id',
-  `API` varchar(32) DEFAULT NULL COMMENT 'api名称',
-  `METHOD` varchar(32) DEFAULT NULL COMMENT '方法名称',
+  `TENANT_ID` char(32) DEFAULT NULL COMMENT '租户ID',
+  `project_id` char(32) DEFAULT NULL COMMENT '项目ID',
+  `API` varchar(100) DEFAULT NULL COMMENT 'api名称',
+  `METHOD` varchar(100) DEFAULT NULL COMMENT '方法名称',
   `SUCCEED` int(11) DEFAULT NULL COMMENT '是否成功(0失败1成功)',
-  `MESSAGE` varchar(32) DEFAULT NULL COMMENT '具体消息备注',
+  `MESSAGE` varchar(32) DEFAULT NULL COMMENT '具体消息',
+  `VERSION` varchar(11) DEFAULT NULL COMMENT '系统版本',
+  `REQUEST_ID` varchar(32) DEFAULT NULL COMMENT '请求ID',
+  `delete_status` int(11) DEFAULT NULL COMMENT '0:删除',
   `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
   `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
   `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
   `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
   `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`UUID`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户操作日志';
 
 -- ----------------------------
@@ -83,6 +92,868 @@ CREATE TABLE `common_field` (
 -- ----------------------------
 -- Records of common_field
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for company_unique_code
+-- ----------------------------
+DROP TABLE IF EXISTS `company_unique_code`;
+CREATE TABLE `company_unique_code` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unique_code_key` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '唯一编码key',
+  `unique_code_value` int(32) DEFAULT '0' COMMENT '唯一编码value',
+  `REVISION` int(11) DEFAULT '0' COMMENT '乐观锁',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of company_unique_code
+-- ----------------------------
+INSERT INTO `company_unique_code` VALUES ('36', '2018XXXX', '39', '0', '2018-10-25 16:48:24', null);
+
+-- ----------------------------
+-- Table structure for dictionary_test
+-- ----------------------------
+DROP TABLE IF EXISTS `dictionary_test`;
+CREATE TABLE `dictionary_test` (
+  `id` char(32) NOT NULL,
+  `field_id` char(32) DEFAULT NULL,
+  `dict_data` varchar(255) DEFAULT NULL COMMENT '字典资源',
+  `dict_display_chinese` varchar(255) DEFAULT NULL COMMENT '字典中文显示值',
+  `dict_display_english` varchar(255) DEFAULT NULL COMMENT '字典英文显示值',
+  `dict_real_values` int(11) DEFAULT NULL COMMENT '字典真实的值',
+  `dict_sort` int(11) DEFAULT NULL COMMENT '字典排序',
+  `remark` varchar(255) DEFAULT NULL,
+  `delete_status` int(11) DEFAULT NULL COMMENT '删除状态1删除，2正常',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of dictionary_test
+-- ----------------------------
+INSERT INTO `dictionary_test` VALUES ('001b04f2a7f042f0bacb731c4eb9a63c', null, 'other_event_terms', '由于此事件从研究中脱落', 'Out Of Study', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('007cb0bee26f4ad0a7910571e8c15160', null, 'received_from', '自发报告', 'Spontaneous Report ', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('00947ca54b244d81820c2d22d442c115', null, 'drug-way', '封闭', 'Occlusive dressing technique', '46', '46', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('00eb6bf59d044679ac78f58691746b99', null, 'research-type', '临床验证', 'Clinical Trials', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('010434d3cb3f4cca9ddb084a861173e3', null, 'drug-formulation', '控释口颊片', 'modified-release bucral tablets', '65', '65', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('01cd0efd9f6148c699f769bc31703306', null, 'drug-way', '肾内给药', 'Intracisternal', '20', '20', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('024627b9e4654349bf9c5f6b41efe294', null, 'dosage_unit', '千国际单位', 'k[iU]', '35', '35', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('027c3acb168f47e891586bb6f782f62a', null, 'sender_type', '药物警戒区域中心', 'Regional Pharmacovigilance Centre', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('039273ac72034e89bf843d521e67ade6', null, 'qjf', '未停药或未减量', 'Unchanged', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('039a8ef222f74b889624d1155354137f', null, 'inspect_unit', 'g/L', null, '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('03df5aec76bc45b696bddeb7a6d19826', null, 'drug-way', '冠动脉给药', 'Intracoronary', '22', '22', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('047c832f1f0344279e00d695ed614ca7', null, 'follow-up_information', '随访无更新信息', 'No update information during follow-up', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0487edc8b89b41f4885e971d4f01e196', null, 'zjf', '否', 'yes – no    (rechallenge was done, reaction did not recur) ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('04a66ad211a345eca422b7dce8f1b899', null, 'is_research_drug', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('04b3983f39de435dae953770f08f9639', null, 'attach-class', '出院小结', 'Discharge summary', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('04b47d4b028e41379c45a8eb3aaf7dfd', null, 'is_reference', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0536f36d28c84e8aaa6017288872c4b7', null, 'trimester_of_exposure', '孕晚期', 'Late trimester of pregnancy', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0635e69d75e64e229ae6434521f7410b', null, 'drug-way', '内嗅的', 'Endosinusial', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('06749f51037846ec9b418b319fde1f95', null, 'inspect_unit', '[Amb\'a\'1\'U]', null, '52', '52', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('069ace70dd68451b90a6bda30587aca3', null, 'drug-formulation', '汤剂', 'decoction', '40', '40', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('06a112e47bdb4b80a74c69608c7d8128', null, 'drug-formulation', '熨剂', 'compression formula', '94', '94', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('06c582d791cd454385f281b84b51fedd', null, 'received_from', '其他', 'Other', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('07119effbfd4408490c75f9147d9e3fc', null, 'inspect_unit', 'L/L', null, '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('07399551c4304ff49993ca032d820241', null, 'drug-formulation', '灸剂', 'moxa-preparation', '57', '57', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('07cad94ea5bb4697be78b627c4edfb09', null, 'age_group', '胎儿', 'Foetus', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('07e6a1d0d71d414f940587ee87526d7d', null, 'drug-formulation', '注射用乳', 'Injection milk', '56', '56', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0810fcc1957548a5ab4370471e686151', null, 'clinical-research', '单个病人使用', 'Individual Patient Use', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('08c5a004a73341ed8baf827c0ccd726d', null, 'drug-way', '经淋巴管内灌注', 'Intralymphatic', '27', '27', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('08f3429b423946bea64f17419be05412', null, 'reporter_privacy_confidential', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('098f6fda53e94fb3865457257fdacb32', null, 'drug-formulation', '消毒剂', 'sanitizer', '28', '28', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('09e73287f12844e8898d5a19f08cfa65', null, 'qjf', '不适用', 'no – n/a     (no rechallenge was done, recurrence is not applicable) ', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0a1d0d5a5d1f4ad79990ca3374b6145f', null, 'drug-formulation', '肠溶胶丸', 'enteric-coated soft capsules', '83', '83', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0a5492a33a7e46089fc9a6271d182500', null, 'drug-formulation', '划痕剂', 'nick agent', '26', '26', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0a7e3ac86d0947c080561f4979071013', null, 'research-design', '开放', 'Open Label', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0ac8e93efb9848968dff35e4e845188b', null, 'mailbox_setting', 'POP3', 'POP3', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0b27ffdb5bd54fe89e45738e0480340d', null, 'drug-formulation', '外用凝胶', 'gels ', '126', '126', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0b4c21e034d54ffd98f5b95edb85587b', null, 'inspect_unit', 'mm', null, '38', '38', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0b50b3aa8598469794801eaca0c021c7', null, 'inspect_unit', 'min', null, '36', '36', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0b945ff2d92c489ca17e2051da51346e', null, 'drug-formulation', '试剂', 'reagent', '140', '140', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0bccb84830e548f6a6fc4bbd903f14fc', null, 'bind_test_drug', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0c38d595f5d14d15940f808e3c9c5241', null, 'research-subdivision', 'IIb期', 'phase IIb clinical trials', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0c3d8bb45c744b2ebe6d2e059b03f9fd', null, 'province', '福建省', 'Fujian', '13', '13', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0c5638b855644c03a2bcd8ef404bfac5', null, 'dict_type', 'ICD-10编码', null, '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0ca892c28f52493997f344df7e451a51', null, 'province', '湖北省', 'Hubei', '17', '17', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0cca32d68acc447ba861177b340781d1', null, 'event_out_come', '好转', 'Recovering / Resolving', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0d6e885a7221459cad74e0aff03baa56', null, 'drug-formulation', '湿敷剂', 'wet packing', '45', '45', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0e4b8c8092d844afa92e08fb0cd34fdf', null, 'drug-formulation', '双层片', 'double-layer tablet', '77', '77', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0e4bee0f34f4424a9188cdcf0affa3b4', null, 'dosage_unit', '千克', 'kg', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0e55c339944143de8d0924436a7e7fca', null, 'drug-formulation', '消毒液', 'disinfectant', '121', '121', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0e9e9895801644a6b35cda21dc1ba387', null, 'drug-formulation', '植入剂', 'implant', '62', '62', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0eaca06e258a4f97b3cc89f1437ed2b5', null, 'drug-formulation', '栓剂', 'suppository', '117', '117', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0f4c3c0dbf3a4f659b48ead469a02008', null, 'Drug Information', '药品信息', 'Drug Information', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0f81fea56e004223a4e216dbf77a2bf4', null, 'other_drug_information', '超说明书用药', null, '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('0f97aace7be344a4a391b8f63b8711f6', null, 'event_out_come', '不详', 'unknown ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1046492dc79a43589d6b10cece174c5f', null, 'drug-way', '蛛网膜下腔给药', 'Intracerebral', '18', '18', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1049e48f8471404f9e6004f48aecfbcd', null, 'dosage_unit', '袋', null, '16', '16', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('10de04265acd47af94be82c498332d1b', null, 'clinical-research', 'Ⅰ期', 'Ⅰexpect', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1204c210d63e4fef917defd791741ec4', null, 'blindedor_not', '非盲态', 'Non blind', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1241cbf18e9b431e946d4942cb288836', null, 'province', '广东省', 'Guangdong', '19', '19', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('12e101cdff3c4999ad03ac13c382f174', null, 'Patient Information', '妊娠信息', 'Pregnancy Information', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('131d4684e9b74cb090eb02b7a056ed3e', null, 'province', '贵州省', 'Guizhou', '22', '22', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1367afdb6b854840a0107560ada0b815', null, 'attach-class', '病例', 'case', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('137994c336a24d4d842bb443c2907148', null, 'inspect_unit', '{DF}', null, '75', '75', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1387c761b67b4b28832484524e87da04', null, 'maintain_control', '多项选择', 'Checkbox', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1450e676250d4a6c961176249202f192', null, 'received_from', '重点监测项目', 'Key monitoring items', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('14ddd9b577ea467d8174de9242787a1e', null, 'body_weight_unit', '克', 'g', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('150e0bff86444432804b65f212e46d7a', null, 'drug-formulation', '混悬液', 'suspension', '159', '159', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('15cb39d1f1d04854a32335243697126c', null, 'pregnancy_outcome', '宫内妊娠', 'Intrauterine pregnancy', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('15d9add00d0647639cfd745df288e0ce', null, 'source_caseidentifier', '国家ADR系统', 'ADR', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('162611fecf654813a13a78bd717c3bed', null, 'report_identity_type', '原始报告', 'Original Report', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('16f0c0c490904be286fc78dc4b87b9b2', null, 'source_caseidentifier', '医学信息', 'medical information', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('173972befb3b45ea98d2a39b85e68c1a', null, 'inspect_unit', 'Bq', null, '14', '14', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1742deefb1064b239ca9446f3f3cd914', null, 'relevant_medical_history', '饮酒史', 'History of drinking', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('174af9c0b6854d1e946403f6cbf97b12', null, 'drug-formulation', '口胶', 'chewing gum', '162', '162', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('17927511e5c0417ea6df778136c1f581', null, 'inspect_unit', 'mo', null, '40', '40', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('183548b17ba64f199c90602858adcdc7', null, 'time_interval_unit', '日', 'd', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('18752b085cce449d941f2f5911309a5b', null, 'drug-formulation', '包衣片', 'coating tablet', '164', '164', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1908e73296fb45c2afce1cd7349ba548', null, 'dict_type', 'MEDDRA编码', null, '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('192b03f87bd343269d98c99fb5e651fc', null, 'sae_reports', '有', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('199660aca0964276a1fbede6646acca4', null, 'drug-way', '经鼻给药', 'Nasal', '45', '45', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('19ed0a30c98b426680e3dc501450468b', null, 'province', '澳门特别行政区', 'Macau', '34', '34', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1a2262614f754a2a80e7e967b39f7476', null, 'province', '内蒙古自治区', 'Neimenggu', '28', '28', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1b20ff98912a4689a9e97d85cf356c72', null, 'inspect_unit', 's', null, '79', '79', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1b23737f91ac47f989d72fbb9a6debe1', null, 'drug-way', '含服', 'Buccal', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1b6685267b07414d81f18f6ba6cd9813', null, 'province', '广西壮族自治区', 'Guangxi', '29', '29', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1bc04d53695743b8972f574f3a2423be', null, 'dosage_unit', '%', null, '24', '24', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1bf67a5471b54180986e6ed72c87fd5f', null, 'drug-formulation', '油剂', 'oiling agent', '99', '99', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1c1a1e0e82974128a118687c8777a025', null, 'qjf', '是', 'yes – yes   (rechallenge was done, reaction recurred) ', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1c50c8d395aa48049414043640d00a12', null, 'attach-class', '原始资料', 'Source', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1cacc6c886584e28a464ff2fcc35dcd9', null, 'inspect_unit', 'mL', null, '37', '37', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1ce3bd29264b40b791c97cf71104e6bd', null, 'drug-formulation', '缓释片', 'sustained-release tablet', '78', '78', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1d58bb163f4c49a0871af50e2681762a', null, 'zjf', '不适用', 'no – n/a     (no rechallenge was done, recurrence is not applicable) ', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1d59dc2e47794fce980778f5747d535c', null, 'dosage_unit', '厘米', null, '39', '39', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1d859afea48a407a83eac31fbfe787b7', null, 'inspect_unit', '[kp_C]', null, '68', '68', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1de2552fa30c4cd392dcfba5781d6209', null, 'impacton_primary_disease', '病情加重', 'Aggravation of the disease', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1e0f39b75d1a4606a73cd7ccfbe6bf0a', null, 'drug-way', '子宫颈给药', 'Endocervical', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1e4e612565eb40828b598fe1d67aac16', null, 'is_pregnancy', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1e4f74fd7019418185413574087f94b6', null, 'relevant_medical_history', '肾病史', 'History of nephrosis', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1f2fa9f32f914824a86e5681893393df', null, 'drug-formulation', '双释放胶囊', 'Double release capsule', '23', '23', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1f6e12b41da94978ad996628ad908386', null, 'dosage_unit', '千贝勒克尔', 'kBq', '45', '45', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1f9024f55a6648f1ab2162f392523cb5', null, 'received_from', '反馈数据', 'Feedback data', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1fa94004cfc64fe28fa14e2b90cfef5c', null, 'drug-formulation', '肠溶微丸胶囊', 'enteric coated micropill capsule', '103', '103', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('1ff5baa9fa7b494abb6b9321d73aca74', null, 'Drug/Event', '药物反应/事件矩阵', 'Drug/Event', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('201b67264033423b9b8e6288dbac8d22', null, 'sender_type', '其他（例如分销商或其他机构）', 'Other (e.g. Distributor, Study Sponsor, Contract Research Organisation, or non-Commercial Organisation)', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('20897f3de18847a3a115146841613447', null, 'drug-way', '静脉注射', 'Intravenous bolus', '40', '40', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('209d1f58519c4afa9ac337f78d29ccae', null, 'other_drug_information', '经检测合格的批次和批号', null, '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('20e7f26305c04a689ec3c3160077b0f0', null, 'Patient Information', '父母信息', 'Parent Information', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('21112fd78c44469991c28f81b38be595', null, 'drug-way', '血液透析', 'Hemodialysis', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('21f9731726e04e8fafc43cad20cbc531', null, 'Basic Information', '既往病例标识码', 'Study Medical History', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('226956563cae47fa83b1e521555ce47b', null, 'inspect_unit', 'IU', null, '23', '23', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('227c1379176641f69bf594080110c646', null, 'drug-formulation', '水剂', 'water aqua', '123', '123', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('22cacaa62f86421caef0a55ba5ab6c7e', null, 'Patient Information', '父母病史及相关用药史', 'Parent Medical History', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('22cebd5973324e77a53ff227b3b29f3a', null, 'is_reference', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('22ea16fa3ebd420d9f11dbc8de7ef79d', null, 'inspect_unit', '℃', null, '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('233d2825ad224dfab4b9f4568c854595', null, 'other_drug_information', '父亲服用的药物', null, '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('237da7243cbd47bea098b1c8dd4e4ca0', null, 'Basic Information', '报告属性', 'Reporting Attributes', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2403589cd8f54789b33cb15dca9e0454', null, 'time_interval_unit', '全部的', '{total}', '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('24281523c5024d06836751e4eac74ded', null, 'drug-formulation', '肠溶微粒胶囊', 'enteric-coated microsomes capsule', '153', '153', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('242a83a7cb504e4fa102da0ef172b362', null, 'time_interval_unit', '10年', '10.a', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('24b3bdcfad0b4b03a4b8f62917a00e3b', null, 'reporter_type', '其他', 'Other', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('250e0e9757664fd7ae0337e21b9bc198', null, 'drug-way', '尿道给药', 'Urethral', '66', '66', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('253374b09e9848159afc08cde5866c0f', null, 'dosage_unit', '纳摩尔', null, '58', '58', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('255a74d5a485463a8632edb3270b5906', null, 'drug-formulation', '雾化溶液', 'nebulising solution', '63', '63', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('255cfe8776094d73b65aa5ef5477aef3', null, 'Report Summary', '报告总结', 'Report Summary', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('257ae5b2a7e348059da60ed143822be2', null, 'drug-way', '关节内给药', 'Periarticular', '52', '52', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('25b39b0b0d1e483ea1003357541d4d08', null, 'interaction', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('26249bbef1544ecf9de4331e8e52ef83', null, 'province', '海南省', 'Hainan', '20', '20', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2650c4d46b05443b862ce6306be802c5', null, 'autopsy', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2684d331a4d34a2ab8bd695c60e9a27e', null, 'drug-formulation', '乳剂', 'emulsion', '22', '22', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('268bbe3d48894c42aae9d4b5e9726911', null, 'history_type', '现病史（原患疾病）', 'medical history', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('26a430888f414f1f87e31602dd4f5e62', null, 'drug-formulation', '缓释丸剂', 'sustain-released bolus', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('26a75b82707544099cae098a4f5d3882', null, 'dosage_unit', '毫摩尔', 'mmol', '53', '53', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('272cc8bea63b4a3bacc66fba1f58dad8', null, 'drug-formulation', '阴道泡腾片', 'vaginal effervescent tablets', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2754a6c951d748d0a6997cd884961f6b', null, 'dosage_unit', '毫米', null, '54', '54', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('27ea3153befe47f5963824e195486ac2', null, 'time_interval_unit', '分', 'min ', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('281076eeb8d743f3b21fccf5aa5be2aa', null, 'inspect_unit', 'mm/h', null, '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('28741964682342cfb7a783af42e21102', null, 'drug-formulation', '流浸膏', 'liquid extract', '116', '116', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2876cff4cc314e349141f8401deec4d2', null, 'drug-way', '硬膜外给药', 'Epidural', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2896d1151ff44529a70323d86e5992da', null, 'maintain_page', '报告者信息', 'Reporter Information', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('28a1078b015b4fc19c4d0a8f473db716', null, 'Patient Information', '患者信息', 'Patient Information', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('28c6b0b6f5a341d8af7e4d7e2d83c363', null, 'maintain_control', '单行文本', 'Text field', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('28d86efb83f14eceb5913b3f4bc029fa', null, 'SUSAR', '未填写', 'NI', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('28e97081049a4d9c98f79c10f91814d0', null, 'dosage_unit', '单位', null, '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('290ab8eb5f9142e4960b78d11ec9c05f', null, 'diagnosis', '症状', 'Symptom', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('29173d2e4e7a4b4b988424212e90a0bd', null, 'dosage_unit', '微克/平方米', 'ug/m2', '49', '49', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2948ec4ee2c44414ac258f1c2e300208', null, 'severity', '中度', 'moderate', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('294906d02aca4247a7d5c1b3c68d37db', null, 'drug-way', '气管/支气管内给药', 'Intratracheal', '39', '39', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('29541edd082a487690d202ab03104b8b', null, 'drug-formulation', '巴布膏', 'cataplasm', '134', '134', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('297b4e845e0c439db8a379a8aee2a392', null, 'research_role', '主要研究者', 'Principal', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('29fe4c93c7d646c2b956459eee53b589', null, 'research-type', '单个病人使用', 'Individual Patient Use', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2a25686a7d7c4630b102249336b3f618', null, 'drug_character', '治疗用药', 'Interacting', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2a72196fa0f2427194233fee1ae18e05', null, 'drug-way', '心包内给药', 'Intrapericardial', '32', '32', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2afa2004813a464ba76e17f871315542', null, 'is_attach', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2bebaf9d1369475290d6a27fbe30738c', null, 'dosage_unit', '瓶', null, '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2c44d6f1194b4048aa8579b5ccbb36b0', null, 'standard_of_seriousness', '死亡', 'death', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2c8e810836e648b08ae510bb19f6a779', null, 'dosage_unit', '平方厘米', null, '40', '40', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2cc12cf6a0374264860588bf81310593', null, 'is_research_drug', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2d18b70e8bc64632948661276705f8a6', null, 'attach-format', 'bmp', 'bmp', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2eef7343c0914b95a4c9f343053596b0', null, 'dosage_unit', '贝克勒尔', 'Bq', '38', '38', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('2f14634f2ddb47599d46ca1ea8dff5ca', null, 'action_taken', '不详', 'Unknown', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('30251aa35f5d4e699e5e69d41f558bfa', null, 'drug-way', '臂丛麻醉', 'Brachial plexus anaesthesia', '74', '74', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('303c3a7b28cd495d97c93258b5c78f91', null, 'drug-formulation', '双释放肠溶胶囊', 'dual release enteric-coated capsules', '145', '145', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3042923ffaaf4f76ac9973f6147b6174', null, 'drug-formulation', '大蜜丸', 'big honeyed pills', '130', '130', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3062bd7091834117836b880f29471bf6', null, 'age_group', '老人', 'Elderly ', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('317a2f56ce04458f9757a07f53395dc2', null, 'drug-formulation', '肠溶颗粒', 'enteric coated granules ', '60', '60', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('318a408b04b34e85a82ae25fa171cb06', null, 'dosage_unit', '兆贝克勒尔', 'MBq', '34', '34', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('31a3dbc67e804d5aad84c57ff7adde9c', null, 'province', '北京市', 'Beijing', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('31d4ffa35a2349d397f5d8b3c44e0820', null, 'drug-way', '阴道给药', 'Vaginal', '67', '67', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('31f14f62cc9046ada1a33ab4114922ea', null, 'drug-way', '宫颈管内给药', 'Intracervical', '19', '19', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3211a6b0161d45448800329b3273c083', null, 'other_event_terms', '与研究过程相关', 'Study Related', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('32894e86b8a549f7a9433934d9e4e57a', null, 'drug-formulation', '贴剂', 'patch', '44', '44', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3421ca7607c144dea1a2c67ff95bab8f', null, 'Adverse Event', '不良事件', 'Adverse Event', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3491c6475ca644f5b8793378435a0d03', null, 'event_out_come', '有后遗症', 'Recovered / Resolved with Sequelae', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('35549ad362ff4597802a59b2ba0f2e0c', null, 'drug-formulation', '洗发剂', 'shampoo', '38', '38', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('358136c33dae4557b6b3f213370133b3', null, 'maintain_page', '概览', 'Overview', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('35de42f2df01480ca1defae059653669', null, 'province', '云南省', 'Yunnan', '23', '23', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('35e5474b22ed4ab6a45564de5b6ed4e3', null, 'drug-way', '眼球内给药', 'Retrobulbar', '56', '56', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('35fe124731bf4b4ebde2cafb5cdf65d7', null, 'patient_nationality', null, null, null, null, null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3628ba1048b243819a5fc61ed4af40a9', null, 'received_from', '临床研究', 'Report from Study （研究报告）', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3682b796306e4369a4ae65333b773285', null, 'other_drug_information', '职业暴露', null, '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('368b58423f3548359fdd411e0c752488', null, 'dosage_unit', '微克/千克', 'ug/kg', '50', '50', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('369e7ecdaec54a02b5ec76d4b5f0dc64', null, 'drug-way', '球后注射', 'Retrobulbar injection', '80', '80', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('36bab218c25c420ca21b247ea6db76b4', null, 'age_unit', '三个月', '{trimester}', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('36d0db105c514540b1594a1234fbbb92', null, 'inspect_unit', '[Lf]', null, '69', '69', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('36f61e68968e4ec0bc0d991ea63f0441', null, 'time_interval_unit', '年', 'a', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('372f6e95e7af40a9afdac4ac19506219', null, 'standard_of_seriousness', '危及生命', 'Life Threatening', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('376207dbc8e04380950d9e7a33a3e409', null, 'attach-format', 'jpg', 'jpg', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('383d8785d3e94ed4901c26a93df7c32a', null, 'company_type', '个人', 'personal', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3872de898e2c42f0ab07c88fff223a5b', null, 'drug-way', '脊髓内给药', 'Intradiscal (intraspinal)', '24', '24', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('389a0ebef85f44749cf971e747cd8b89', null, 'frequency', '持续', 'Continued', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('389b6b014ff444bfa3f30669b43ebd54', null, 'reporter_type', '护士', 'Nurse', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('38abe0728a6947d588b900458688b2a4', null, 'zjf', '是', 'yes – yes   (rechallenge was done, reaction recurred) ', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('39a0f8e1c37740628a7fe3f67f73ac75', null, 'drug_character', '并用药品', 'Concomitant', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('39bbf2d68eae46b49617c77b09d82511', null, 'province', '重庆市', 'Chongqing', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('39e7863468eb4e2bb6817951ebcb8af6', null, 'drug-formulation', '阴道软胶囊', 'vaginal soft capsule', '54', '54', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3a560ddde4b949e896aa011c6661239e', null, 'Basic Information', '临床前药理毒理试验', 'Pharmacology Toxicology', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3a5b8a4287234dd99067a42698f02e9a', null, 'drug-way', '外用', 'External', '78', '78', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3a734a9b58e94e30b2386bd89c25607a', null, 'time_interval_unit', '三个月', '{trimester}', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3a7e72291d514780affe7d30a349a930', null, 'inspect_unit', '[USP\'U]', null, '73', '73', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3b608acbebd647f48323de6a37c24820', null, 'province', '青海省', 'Qinghai', '26', '26', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3b7fb78a3b104e9294137bbe48b49b6e', null, 'research-subdivision', 'Ia期', 'phase Ia clinical trials', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3c0388ce0f9b4ddd9d3b65b9a876693d', null, 'province', '辽宁省', 'Liaoning', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3c53aca0f985466d9133da095c13dbab', null, 'blindedor_not', '研究后揭盲', 'Blindness after study', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3cde4ce0cb314f2491ba0068480f33b8', null, 'drug-way', '冲洗', 'Rinse', '84', '84', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3cf9517cb9194180b6fdcbc8405949ed', null, 'inspect_unit', 'GBq', null, '21', '21', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3cfb9f4903194c03a1b78ede9a93e91c', null, 'drug-formulation', '混悬注射液', 'suspension injection', '29', '29', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3d34f06fd76642ed98b83974497cc68f', null, 'drug-formulation', '酊剂', 'tinctrue', '48', '48', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3e533c7c57e64c808747794ef0567b49', null, 'drug-way', '静脉滴注', 'Intravenous drip', '41', '41', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3eb3a1a38c3f432da9fadc22e6fa2967', null, 'clinical-research', '生物等效性试验', 'bioequivalence test', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3f7c929553a241079c3c156b0f6f7977', null, 'drug-formulation', '缓释颗粒', 'sustained-release granules', '107', '107', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('3ff18277aa5a448aa8a807b93799ec40', null, 'attach-format', 'xls', 'xls', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('40388646259a42769b45633f2aba6810', null, 'drug-formulation', '肠溶微丸', 'enteric coated micropil', '131', '131', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('405eb9d3fa2d42929a52c4a4e26f2bc6', null, 'drug-formulation', '口服缓释混悬液', 'oral sustained-release suspension liquid', '35', '35', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('40b2b6d198fc4a9595587a60730ca4ee', null, 'drug-way', '周围神经给药', 'Perineural', '53', '53', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4155db1dea864949add89e9f7bf53d13', null, 'age_group', '青少年', 'Adolescent', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('417ac8f4238c4d64b2c5ad423c4548fa', null, 'dosage_unit', 'MB', null, '21', '21', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('41a2bb91baa34fdfb2c01bdf018d4900', null, 'drug-formulation', '乳膏', 'emulsifiable paste', '72', '72', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('41b5b0bd92164dd5ae39510ddf6d8289', null, 'drug-formulation', '软膏', 'ointment', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('41dd05b3263e4fce88941bf3f8f8622e', null, 'SUSAR', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4202d089fc3f44e8a91d3e5e362abbfc', null, 'dosage_unit', '升', 'L', '17', '17', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('422c878e9d4c4dae98ca37d5df64a6d7', null, 'listedness_determination', '新的', 'new', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('432181ba3a83464f8c2bbb3c50d379fb', null, 'relevant_medical_history', '其他', 'Other', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4394ef903fcb4d1ebbf6917f2549acfa', null, 'drug-way', '植入给药', 'Implants', '70', '70', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('43b5c24184d44229a04e2babfe52cba4', null, 'dosage_unit', '百分比', '%', '37', '37', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('43d5f8163a3c4aacb246e2f2e8703679', null, 'inspect_unit', '[hp_M]', null, '62', '62', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('43e937fc44034a9ebe5c9bd4e0819dad', null, 'other_event_terms', '该药缺乏治疗效果', 'effect lack', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4478ed67a1f94d068d8fd4af4b6367cb', null, 'age_unit', '10年', '10.a', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('454677d7b5964ceeb1f25f3e484e35e7', null, 'Drug Information', '用药情况', 'Drug use', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('454eb4f6640b40d2b27b9914971ee54e', null, 'source_info_name', '个人', 'personal', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('45502807697b4e61bf24ddadd47a12bc', null, 'dosage_unit', '国际单位/千克', '[iU]/kg', '44', '44', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('45626792cc014460912abbbf2b20efdc', null, 'drug-formulation', '咀嚼胶', 'chewing-gum', '21', '21', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('456f28fa9f1f4c83b4a7f34938ca2727', null, 'inspect_outcome', '边界线上', 'Borderline', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('45e0b29958844dd98de00220b4265bbf', null, 'province', '新疆维吾尔自治区', 'Sinkiang', '32', '32', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('46900ffc3a394244ae5524fbdb2a0d29', null, 'dosage_unit', '支', null, '15', '15', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('46d51cd81f4a44f298cf7ee640f32d48', null, 'attach-format', 'doc', 'doc', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('46ff3d0fa83942e280062661ca82d6fa', null, 'province', '河北省', 'Hebei', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('473fcfce0e5f4f78b6f2fb3f6d7a8f57', null, 'Basic Information', '文献信息', 'Literature Information', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('47fe2ac999c54ac395900b9496470383', null, 'maintain_control', '多行文本', 'Text area', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('482266c8522a49a3981f764c0e3a7339', null, 'can_reporter_be_followed_up', '未知', 'unknown ', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('48227d5683884d738cb6a74b479edcc0', null, 'dosage_unit', '丸', null, '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4828cbf1377e4ba9911985d4f0b29e74', null, 'pregnancy_outcome', '足月妊娠', 'Full term pregnancy', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4879490829c74cb8ac93913cb3f5edd0', null, 'inspect_unit', 'ug/m2', null, '48', '48', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('488d53ea61e042e69591b393ca41d4cf', null, 'other_drug_information', '用药无用', null, '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('494abcb065524f569a87635be4c2bc3a', null, 'reporter_organisation', '医疗机构', 'medical institution', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('49529bd467de4f4591316222a743ce74', null, 'trimester_of_exposure', '孕中期', 'Mid trimester', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('49902e85ea384fb693e9a750ad5b7df9', null, 'inspect_unit', '%', null, '13', '13', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4a208321927b4b42a1b4aa3f814022eb', null, 'inspect_unit', 'U/L', null, '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4a4238f913974b049a38eeabedd3bbe3', null, 'drug-formulation', '溶液', 'solution', '87', '87', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4b3f512e93ef49a4ae35fc3317c68b56', null, 'sex', '女', 'Female', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4bb132baf9ca440c951126877fe038da', null, 'dosage_unit', 'UT', null, '26', '26', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4be4336720c34409a0b082b6e5711231', null, 'research-subdivision', '0期', 'phase 0 clinical trials', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4bf38d81f6db44829c3d802e1bb9a25b', null, 'research-design', '单盲', 'Single Blinded', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4c26fe5c53b3464c8ce2e0f976fa921f', null, 'drug-formulation', '缓释微粒', 'delay release', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4c5cbe8a3fa84a8cad582219338ba2d1', null, 'province', '台湾省', 'Taiwan', '27', '27', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4ca98f6b73824a0dbeb3f9db990126fe', null, 'drug-formulation', '缓释混悬液', 'sustained release suspension', '31', '31', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4e29812c5e7e474eaa4f084f38480265', null, 'dosage_unit', '毫升', 'mL', '20', '20', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4ed96054dd224e3c9f4d97d5203fcd09', null, 'reporter_evaluation', '可能无关', 'It may be irrelevant', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4f775f3d501b466998fbe611abfae26c', null, 'Patient Information', '相关既往用药史', 'Drug History', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4f8ec6827c6244e0ab98c630418ec167', null, 'drug-formulation', '肠溶胶囊', 'capsulae enterosolubilis', '111', '111', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('4f8f540af55b439da230b6900fbe3867', null, 'dosage_unit', '毫克/千克', 'mg/kg', '30', '30', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5053a0fccab6432e979315b6e0b3c67b', null, 'medically_confirmed', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5104a1409d8642efa2fa7d5673be680a', null, 'drug-formulation', '醑', 'spirit', '88', '88', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('511042a6f2d5422885ed3d5091510a86', null, 'action_taken', '增加剂量', 'Dose Increased', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('513b10641c0e41e6ab5ee6c61b65b795', null, 'report_from_other_companies', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('520b064f9d3e45f8abdb934bbbf45039', null, 'inspect_unit', '[CCID_50]', null, '56', '56', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('52693d74c01f402b8dbb745c8ead87a4', null, 'autopsy', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('527ae705e09240bfb53cf40a0b1d5383', null, 'inspect_unit', 'mg/kg', null, '34', '34', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('528b219ef756496f80583ace2b74d30b', null, 'research_role', '次要研究者', 'Secondary researcher', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5292606a8e1f4f849650574d481d2b72', null, 'inspect_unit', '10^9/L', null, '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('52ac2224af1f4ee2a3c304fa685c727e', null, 'reporter_organisation', '其他', 'Other', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('52ba64c9a61f44469059be81def2ce82', null, 'inspect_unit', '[IR]', null, '65', '65', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('52bcccfccda04f65ae5ffd59afe0c4c7', null, 'drug-formulation', '洗剂', 'lotion', '41', '41', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('532fc441bc674663a4e8e5100e6a560b', null, 'drug-formulation', '霜剂', 'cream', '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('533962d91c2d4dc882fee6d113da3af8', null, 'inspect_unit', 'y', null, '77', '77', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('53640462d2124bc49b9ee3aa5d94f763', null, 'drug-way', '口腔/咽喉给药', 'Oropharingeal', '49', '49', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('538b74097f644116a283f1597520e1ff', null, 'province', '天津市', 'Tianjin', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('53b659310f0b474880fa979e87a58403', null, 'diagnosis', '诊断', 'Diagnosis', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('53fe92d24393471da6ae0e30df52c392', null, 'drug-formulation', '搽剂', 'liniment', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5464293e50ff42cdaa5e2020bbd6af39', null, 'drug-formulation', '混悬颗粒', 'suspended granules', '46', '46', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('54750bd0453841debdadfd7603083d7c', null, 'report_from_other_companies', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('54d2d517e3f64688856cecb305638eaf', null, 'drug-formulation', '茶剂', 'medicinal tea', '154', '154', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5500325017784f77aa7b893632fac2c2', null, 'clinical-research', 'Ⅱ期', 'Ⅱexpect', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('555230086ec3470eaf21ffd70e5d7c83', null, 'inspect_unit', 'cm', null, '16', '16', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('55eac5c7204946a99cc59d1a9525f6c5', null, 'sae_reports', '不详', 'unknown ', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('56e786302ca54f3d97a3ae4a2bd7bdc1', null, 'drug-formulation', '冻干制剂', 'lyophilized formulation', '36', '36', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('57ddec56991744cb8c0af8b3915cc58f', null, 'drug-way', '心内注射', 'Intracardiac', '16', '16', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('57f6b6284b364201a365ebc1b5a213fe', null, 'product-categories', '临床前药物', 'Preclinical drug', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58282c89367443dbace9b919657ae5cf', null, 'drug-way', '肌内注射', 'Intramuscular', '30', '30', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58414985c0b64a7eb0f1ab2b0937eeaf', null, 'drug-formulation', '透皮贴剂', 'transdermal patch', '149', '149', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58565b342c704551a1acb62352712450', null, 'pregnancy_outcome', '自然流产', 'spontaneous abortion', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('588381bcf2cc4e7093698f1da6a2f0a0', null, 'inspect_unit', '[TCID_50]', null, '72', '72', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58a629f20cf54d78a331b4de6d25c9f0', null, 'research-type', '其他研究', 'Other Studies', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58c1a969615b49e18e44cd3e45e3ea35', null, 'pregnancy_report', '孕中期', 'Mid trimester', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('58cd3ba489ad4535942bd5ef0e5322c3', null, 'inspect_unit', '[PNU]', null, '71', '71', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('591f822f810b415e9b694e8c3167c520', null, 'autopsy', '不详', 'NI', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('592761cb55d8462fa78280d5a4483697', null, 'relevant_medical_history', '过敏史', 'Anaphylaxis', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5930dff54b0a458e9ce48b4847e3eae3', null, 'age_unit', '时', 'h', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('59896fd4fdae4cdb99793a8787c73f84', null, 'drug-way', '骨髓内给药', 'Intramedullar (bone marrow)', '28', '28', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('59a5700498ed482c9c87a73496e488cd', null, 'initial_report', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('59b21344ab8a44a3bc476b1ea928d75a', null, 'province', '山东省', 'Shandong', '15', '15', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5ace7e96b6f84c53b9ed85bb023d596c', null, 'age_group', '儿童', 'Child', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5b728aff240c41379300f4913c95e686', null, 'mailbox_setting', 'IMAP', 'IMAP', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5b95beb7b6574e3184ec0b4aeca7ba00', null, 'drug-formulation', '含漱液', 'gargle', '138', '138', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5b985456444e43728529cba23a895856', null, 'sex', '男', 'Male', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5be7108a25e44e1ca4c48934c600c161', null, 'inspect_unit', 'fl', null, '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5c03d851fa5b4078babd9943bcd8612f', null, 'maintain_page', '附件信息', 'Additional Documents', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5ca03ab67f054b3b9ec88efacd4ce134', null, 'attach-format', 'gif', 'gif', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5cadbe5deb4546d2a0c0a3454defef1d', null, 'drug-formulation', '胶浆剂', 'mucilage', '19', '19', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5cbe295f87084b9393e16ba439af6a02', null, 'action_taken', '减小剂量', 'Dose Reduced', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5ce850404be44c40b61cb570e9ab3366', null, 'frequency', '单次', 'Single time', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5d659eee20ea404299eaa174e5c50d56', null, 'reporter_type', '其他医疗保健专业人士', 'Other Health Professional', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5e37c5f3383d46fdaac23adf9181420d', null, 'breast_feeding', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5eb9c0f5934e4b10893ebb18ba10fb86', null, 'inspect_unit', 'kg', null, '26', '26', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('5fdfa7447b26403f90c49e9e446b8641', null, 'maintain_control', '密码', 'Password', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('601c209daa2d4d4f8b35a7320f904bcc', null, 'medically_important', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('60c2dea897934536a547d541fbb9cf1a', null, 'mailbox_setting', 'Exchange', 'Exchange', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6133c30f254a47f99d3cbdd6faff277e', null, 'relevant_medical_history', '妊娠史', 'History of pregnancy', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('618056c35bc34d66aecbecf72fce8e95', null, 'impacton_primary_disease', '不明显', 'Not obvious', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6190616a52764c3e97b8425dae288751', null, 'inspect_unit', 'dL', null, '19', '19', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('61a05aaf9b6040e8920a2e5c350349ce', null, 'standard_of_seriousness', '住院/住院时间延长', 'Hospitalisation/Prolonged Hospitalisation ', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('61dd1149899a427bb1999e1a7a1e6e73', null, 'is_serverity', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('624ca58732784fc79588c2e86ac8bafb', null, 'drug-formulation', '泡沫剂', 'foaming agent', '80', '80', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('627b5293905c400a811e7c59322af772', null, 'dosage_unit', '微克', 'ug', '27', '27', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6313e1db90ff4bb699d5a60b25c52e27', null, 'frequency', '间断', 'Interrupted', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('63155a9a8316430b995f02419ea054c8', null, 'source_info_name', '医疗机构', 'medical institution', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('63832f279d354f2cbc234c1d8d6ab26d', null, 'reporter_type', '律师', 'Lawyer', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('638a787dbd774d24ac61441d95a1aae4', null, 'inspect_unit', 'kBq', null, '25', '25', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('647d71528be84f09a8e4462c1c15a36f', null, 'standard_of_seriousness', '致残/功能丧失', 'Disabling/Incapacitating', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('64a62b53957348d6819b7cdbe74f6a32', null, 'time_interval_unit', '周', 'wk', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('64f86d34e4bc45f498a15e8c0fd03393', null, 'research-subdivision', '针对特殊人群的探索性研究', 'exploratory research on special populations', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('65a76d87229c459f98845c519bb49822', null, 'dosage_unit', '微特斯拉', null, '31', '31', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6608ab4110b145da8ffd7b517ee05732', null, 'standard_of_seriousness', '医学上有重要意义', 'Other Medically Important Condition ', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('662df3f787254eddae275108260f2f5a', null, 'Patient Information', '新生儿信息', 'Neonatal Information', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('66a68d5ef4c540a187e84f766379dacb', null, 'other_event_terms', '药物停用症状', 'Withdrawal Symptoms', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('66ae8dcfb82c4803ab417cdd8c16bd72', null, 'drug-way', '动脉给药', 'Intra-arterial', '13', '13', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('66b7e38382634c1297d7ed7a810cdad2', null, 'reporter_organisation', '生产企业', 'manufacturing enterprise', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('66e3f450369c432ba33e006d07c1ea4d', null, 'reporter_type', '医生', 'Physician', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('66f3c262c7c54f509497e205fc73983c', null, 'dosage_unit', '单位', null, '32', '32', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6785f64bb6974fe6a14c7978cd38e6a1', null, 'attach-class', '电话记录', 'Telephone record', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('68146708f373430396ce07a00f2a645d', null, 'drug-way', '椎管给药', 'Spinal canal administration', '87', '87', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('694661c41660418c9831364f1d372557', null, 'age_group', '新生儿（早产及足月产）', 'Neonate (Preterm and Term Newborns)', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('694a90ece1bd4c14a452f95363bc452f', null, 'drug-class', '治疗用生物制品', 'Biopharmaceutical', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('698e837556c847eab29384471d7c1f4e', null, 'is_first_report', '首次报告', 'First Report', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('69b3f90bccdb4344a8be4a1a216ad897', null, 'drug-formulation', '控释胶囊', 'controlled-release pellet', '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('69d865a7eb7f4b709b6ccab270a5e8e8', null, 'drug-way', '经眼给药', 'Ophthalmic', '47', '47', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6a0352d8c3114148bd48057885618d1d', null, 'inspect_unit', '[arb\'U]', null, '53', '53', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6ab3d0348dfe452ca3adb3aa373a2d4c', null, 'blindedor_not', '申办方揭盲', 'Bid blindness', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6bb0b055abc049d09ce6cc9758335f35', null, 'inspect_unit', '{decade}', null, '74', '74', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6bd71488bb4a41fabe669fd68fdd45d4', null, 'dosage_unit', '百万国际单位', 'M[iU]', '33', '33', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6d0dc9b3037e480a83457fc11d529722', null, 'can_reporter_be_followed_up', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6d87e4754d004d9f8324b49d400357a4', null, 'clinical-research', 'Ⅳ期', 'Ⅳexpect', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6db7fd808ec349b1b52a36ba87190d7c', null, 'drug-formulation', '硬膏', 'plaster', '47', '47', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6de54704d46e40ab907a7dfd3ddc08a4', null, 'sex', '不详', 'NI', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6e37afe1cc1a4c82ac5e3fc1d962e0de', null, 'qualifier', '≤', '≤', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6e3fe52502ae4f7e8fa4b11933ba16eb', null, 'birth_defects', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6e5dc112faa14eb6a0995a476c03a41f', null, 'drug-way', '鞘内给药', 'intrathecal administration', '88', '88', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6ece667103574e988b5e23b087af123e', null, 'Reporter Information', '报告者信息', 'Reporter Information', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6ed579969a1d4e15ad46e3a593044a66', null, 'dosage_unit', '毫克/毫升', 'mg/mL ', '46', '46', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6ede949c68e2425695f161521a051417', null, 'product-categories', '新药3类', 'New drug class 3', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6f0a7b5d6eb44c1ea46680b309943381', null, 'inspect_unit', '[iU]/kg', null, '67', '67', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('6f1886976d824e73963c0a72be3b3fca', null, 'drug-formulation', '粉剂', 'pulveres', '71', '71', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('702ee69ebf664790b8fca85ed09c77f1', null, 'dosage_unit', '国际单位', '[iU]', '43', '43', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('70c2d64aea874333ae0b775eb9996d7a', null, 'dosage_unit', '毫克/平方米', 'mg/m2', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('710becf8b75a4a1a93d036bdd012fb7a', null, 'dict_type', 'WHODRUG编码', null, '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('71a5d9a80d2a4002b5a4eb2a111fdf5e', null, 'event_out_come', '痊愈', 'Recovered / Resolved', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('72688951cd254ba39986c5177c42eaf1', null, 'drug-formulation', '涂膜剂', 'liniment', '61', '61', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('72c85602856a4a7ea350bfde7440404f', null, 'inspect_unit', '[CFU]', null, '57', '57', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('733161d591384bf8a120876f5f834203', null, 'dosage_unit', '摩尔', 'mol', '55', '55', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('737cc58b53124371a338369fb17a02f1', null, 'inspect_unit', '[hp_C]', null, '61', '61', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('739734c97720466682f6ecb903a00c3b', null, 'drug-way', '注射', 'injection', '81', '81', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('74153611a61a491b8340e175ddb864cb', null, 'age_unit', '周', 'wk', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('749040510bc542b283dad3660d804daf', null, 'drug-formulation', '浓缩丸', 'condensed pill', '81', '81', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7532907b2392465f9d86ae1a50e94d51', null, 'drug-formulation', '口腔贴片', 'buccal tablets', '137', '137', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('756de0259d5a4aa2a3450623120b32c5', null, 'combined_treatment', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('765ad952a9384c4c9c99caa4ece62606', null, 'maintain_page', '不良事件', 'Adverse Event', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('76c93251fa194f988e067b976cb868b6', null, 'follow-up_information', '无效报告', 'Invalid report', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7739366db3f3450ebab057cd8d0fbcca', null, 'drug-formulation', '橡胶膏', 'rubber', '66', '66', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('778c849dcc3d485cb6ba1f9d0fcd3acc', null, 'Overview', '报告属性', 'Reporting Attributes', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('77df4d88547c450b94c14ae36f1fbd96', null, 'drug-formulation', '水煎剂', 'water decoction', '110', '110', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('77e166d81bd44e1e9f535bd4e1214f90', null, 'attach-class', '说明书', 'Instructions', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7846e64c9947493fa4a05f671bc8c0a6', null, 'inspect_unit', '次', null, '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('788a66bf1b584b33a8c37ca78c900efc', null, 'drug-way', '鼻饲', 'Nasal feeding', '69', '69', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('78a9904c8dae4d75868a18714fcecfff', null, 'inspect_unit', 'umol/L', null, '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('78c198e66f5541eca9f6c97ec09263bb', null, 'inspect_unit', '[hp_X]', null, '64', '64', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('78fbd025ad864377939430bdf24cef79', null, 'Overview', '文献信息', 'Literature Information', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('792f2c6fa210468d93b718eb6305a528', null, 'reporter_cancel', '修改', 'Amendment ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7985ef184cb84a22ad9bc742c6a2f6dd', null, 'pregnancy_outcome', '过期产', 'Overdue production', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('799673e2ec9d40fd9d10203f9dbfd5e3', null, 'drug-way', '肝动脉灌注', 'Hepatic artery infusion', '73', '73', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7a2a09f2a8834574826f54f7ee4aaff5', null, 'event_out_come', '未好转', 'Not Recovered / Not Resolved / Ongoing', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7a41b6445cb54c52969d5f88cfbf840d', null, 'research-subdivision', 'IIa期', 'phase IIa clinical trials', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7ae4a2caad1641d6be79da4c91362bb8', null, 'reporter_evaluation', '肯定有关', 'There must be something about it', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7b2e89cd214a4b5b9c2bbabb0a619e52', null, 'drug-formulation', '含片', 'lozenge', '135', '135', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7cf23d91faa340429e829cff306bdfde', null, 'province', '湖南省', 'Hunan', '18', '18', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7d64d395904449908cc3430108a946e5', null, 'province', '上海市', 'Shanghai', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7dbd06c21dcc4d0598627ce5e46e4dbb', null, 'drug_info_type', '国产', 'Home-made', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7e059b285bce499495e7fbaec2aac97e', null, 'inspect_unit', 'ug', null, '47', '47', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7e2b54baccb040a5ba89213a00bd9aa3', null, 'drug-formulation', '咀嚼片', 'chewable tablet', '25', '25', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7ef95ce33a274573a5e34a9e37a70117', null, 'inspect_unit', 'MBq', null, '29', '29', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('7f1f98b10f8f4719a09352a9ed75967f', null, 'inspect_unit', '[iU]', null, '66', '66', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('800109051cfe4f4ea59e7ad3585e146f', null, 'is_pregnancy', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('802d4d698e9e4639add5069d967a4b21', null, 'history_type', '家族不良反应史', 'Family History', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8040dfdb6fca4f99842a671fbe502c05', null, 'research-subdivision', '针对常见疾病的探索性研究', 'exploratory research on common diseases', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('80bcecb96642474a8681f7da8570ccd9', null, 'extended_hospitalization', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('81141b2a04134ffbb46f6e89ecc69a2e', null, 'drug-formulation', '颗粒', 'granule', '133', '133', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8211652755d849518482a4aac6028c8d', null, 'drug-formulation', '微粒', 'particle', '30', '30', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('82501dbf73724ff585c280020637bb43', null, 'drug-formulation', '丸剂', 'pilula', '42', '42', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('82f2b2b3d5954f28b9de24c3b16d5fb0', null, 'drug-way', '脑膜内给药', 'Intrameningeal', '29', '29', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('831b5fe7c7cd41a89bcb595319711d7e', null, 'is_attach', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('838c6afd53ca42efa12dd948bae3a01d', null, 'drug-formulation', '分散片', 'dispersible tablet', '132', '132', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('839f3830144d4474a97302ea692b7e58', null, 'inspect_unit', 'M[iU]', null, '28', '28', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('840899476ae3451684ea9257f51fa6ea', null, 'drug-way', '角膜给药', 'Intracorneal', '21', '21', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('842afd0f8f034528a208ac028f8f1e00', null, 'inspect_unit', 'I', null, '27', '27', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('847d4d7d486c4d26af7a434646966736', null, 'research-design', '双盲', 'Double Blinded', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('84d7100659c546179544625259993efc', null, 'company_type', '其他', 'Other', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('84e4a69e9e1e426b916237823b819f87', null, 'reporter_type', '消费者或其他非健康专业人员', 'Consumer or other Non-Health Professional', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('85141db394524fb4b253fc4a05636e6f', null, 'drug-formulation', '颗粒剂', 'granules', '69', '69', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('852d720b65184aec8a687e74bd935629', null, 'Drug Information', '报告适应症编号', 'Drug Indication', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8535f15a07274b329995a5d0b4a649a0', null, 'other_drug_information', '假药', null, '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('85545b6a67b04bb7beaa7030796292bb', null, 'is_primary_reporter', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('857d69c28833485bb120f28cb71c7985', null, 'province', '甘肃省', 'Gansu', '25', '25', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('85d54c86685c4419a16c33f974947be6', null, 'drug-way', '海绵体器官给药', 'Intra corpus cavernosum', '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('864b9c58f07e4a38983c95ac5741952f', null, 'ctcae_classification', '2级', '2 level', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('864cb086fea14116a4c831d87613e321', null, 'drug-formulation', '锭剂', 'lozenge', '95', '95', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8677e2b91b7846f29ec9de03d6ad89e9', null, 'attach-class', '质疑问卷-解答', 'Question questionnaire answer', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('869b2cbab344487b9d859a7010845e71', null, 'inspect_unit', '[AU]', null, '54', '54', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('86f22a0ea828475d91db9b7923d39ed5', null, 'province', '浙江省', 'Zhejiang', '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8809200fb66e4288bb1e70f4d3c7c581', null, 'inspect_unit', 'uCi', null, '46', '46', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8829f7d6af204ad7ab387c2e88d8c851', null, 'drug-formulation', '混悬剂', 'suspension', '148', '148', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('884cf8ae75714b0796aadddac0c09d71', null, 'drug-way', '泵内注射', 'Intramuscular injection', '83', '83', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('88666227de724498ac03c08c8f72995a', null, 'maintain_page', '实验室检查', 'Laboratory', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('887f38a87d554b6bbf8ea129033055d5', null, 'drug-formulation', '干混悬剂', 'dry suspension', '18', '18', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('88b7933410614fada0045b317bc700c9', null, 'inspect_unit', 'U', null, '45', '45', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('88cc4a6d32a04a1ba5dbc4e6e001287c', null, 'age_unit', '月', 'mo', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('89a323fc8ce841ab9b611c4ad121ff22', null, 'drug-formulation', '阴道灌注液', 'vagina perfusate', '146', '146', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('89b605f8e8c8445faddc45886c10a6cb', null, 'inspect_unit', 'h', null, '22', '22', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('89f3adceab9a454e88dbb05f68d27009', null, 'product-categories', '新药5类', 'New drug class 5', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8a083c778f70414ca4c10e537233080c', null, 'received_from', '患者支持项目', 'Patient support project', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8a17775be7b44462beaab535e781b6c1', null, 'drug-formulation', '灌肠剂', 'enema', '128', '128', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8a5e724609d7477797d951e4be671fb0', null, 'pregnancy_outcome', '早产', 'premature delivery', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8ac86a85669d496e970011193355a072', null, 'province', '吉林省', 'Jilin', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8b4e814f6f664af894fcd3c06db12cd3', null, 'dict_type', 'WHOART编码', null, '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8b82de1691de4192b832611159e98b88', null, 'standard_of_seriousness', '先天性异常或出生缺陷', 'Congenital Anomaly / Birth Defect ', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8b8cadb5044342169df9b00b541366fb', null, 'time_interval_unit', '月', 'mo', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8b913054bf944842b1c8f4b2eb17b775', null, 'autopsy_results', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8ba50b3cf3494120a222a00bfc205e5f', null, 'reporter_evaluation', '可能有关', 'It may be related', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8bf111130a9f448b9c37a00443b92dd1', null, 'inspect_unit', 'mmol', null, '39', '39', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8c082f0fb0504d8fa949a12c51f264f1', null, 'company_info_type', '药企', 'Pharmaceutical Company', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8c408ac96f6846f0a84a5018a1302620', null, 'maintain_page', '患者信息', 'Patient Information', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8c5efa83b9a84a0290804c3a5717bf17', null, 'drug-formulation', '缓释小丸', 'sustained-release pellets', '112', '112', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8c5ffc5acbc34a42a214dce4db722d90', null, 'dosage_unit', '纳克', 'ng', '57', '57', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8c978e846a3e4bda989aea0ade68027a', null, 'frequency', '多次', 'many times', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8cc2f28cec7c4c60a03bfe0ecca81175', null, 'drug-formulation', '敷料', 'surgical dressing', '100', '100', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8d72b096bc0942b8aef2403e4ab10522', null, 'company_type', '生产企业', 'manufacturing enterprise', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8d94712344b74f1abfce26f6315dde49', null, 'drug-formulation', '阴道片', 'vaginal tablet', '68', '68', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8d9d79a52cb24f9892c471cfee2c85f1', null, 'inspect_unit', 'g', null, '20', '20', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8dece978f3c74b1fa9e3020e5a8fff80', null, 'blindedor_not', '盲态', 'Blind', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8ec1f3a702b04cbba9801186db1e2daf', null, 'drug-way', '漱口', 'gargle', '71', '71', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8ecae712c07b40a5952addfc58c517e6', null, 'age_group', '婴儿', 'Infant', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8eef00a8880b4adc9ebee055ff487387', null, 'drug-formulation', '滴鼻液', 'nasal drops', '102', '102', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8f73fa960ca64287a4c403a188f84eb4', null, 'drug-way', '造瘘管注入', 'Fistulas injection', '75', '75', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8f7bbdd51a0d47c4b63bc079e43b3bd1', null, 'drug-way', '前房内注射', 'Injection into anterior chamber', '85', '85', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('8fd97fd9f65245859b9bf634b17dd854', null, 'ctcae_classification', '5级', '5 level', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9014e7f6de224552a3e02bdde49dee25', null, 'interaction', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9040be4f0f584f4b81bd7ce1bd3fbf55', null, 'drug-formulation', '滴丸', 'dropping pill', '91', '91', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('90601075547142ebacd70541dcd00154', null, 'drug-formulation', '缓释颗粒', 'sustained-release granules', '127', '127', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('912581f417484e95b668d2bd52c1cc5f', null, 'age_unit', '秒', 's', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('91f1c45bbeed4a98a536488561880a3b', null, 'life_threatening', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9230dfd7811f4438973f90892f8d489b', null, 'medically_confirmed', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('929d73eae5704fa3b20bc6f3709c98ce', null, 'clinical-research', '上市后研究', 'post marketing study', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('92c4c4add7034bf29b59289551fd65bb', null, 'pregnancy_report', '孕晚期', 'Late trimester of pregnancy', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('92d3498237ec49209fe1907312d513a0', null, 'source_info_name', '文献报道', 'Literature report', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9349b2df11034a128598c1acd8eb3983', null, 'drug-formulation', '浸膏', 'extract', '82', '82', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('936903b35b7c45f0bbc301cf1e00c576', null, 'inspect_unit', 'mg', null, '32', '32', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('945237026cc3441fa27eb5fe4b15fb71', null, 'drug-way', '羊膜腔外给药', 'Extra-amniotic', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('94c42266eaa04f50962ac3cb9497c911', null, 'inspect_unit', 'meq', null, '31', '31', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('95295510e235487eaa2ac515c9923e9d', null, 'severity', '中度', 'severe', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9553af7ae2174349aea07b03999d5062', null, 'is_reported_drug_supervision', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('959a2e152c934639b81106cf6ec68700', null, 'reporter_type', '药师', 'Pharmacist', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('95c59855c1ac4507be76c7b950a61bfb', null, 'report_identity_type', '父母报告', 'Parent Report', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('95dca37d723148e28fa2257bcd8f3b00', null, 'action_taken', '停用药物', 'Drug Withdrawn', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('96114c7821354ff6a32a99f4f1367882', null, 'IME', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('964ce5ad0bac49f086b89daab5b7c618', null, 'drug-formulation', '中药材', 'traditional chinese medicine', '106', '106', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9660b285dbbf4e1597a25fca6e248b04', null, 'reporter_evaluation', '肯定无关', 'There must be nothing to do with it', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9671da9881f64f38b241ea17c09b26b7', null, 'dosage_unit', '皮克', 'pg', '59', '59', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('969819ec1be843c59d94890a7f488c2f', null, 'drug-way', '牙科给药', 'Dental', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('96c632cc15c34f2fb377205ef9f9c9e4', null, 'Patient Information', '相关病史', 'Medical History', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('96e0ae255f7e40f28ae041b9a0767975', null, 'drug-formulation', '糖浆', 'syrup', '136', '136', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('972f0e84ff3f42f7a97e25cf4a6cd0cf', null, 'time_interval_unit', '时', 'h', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('973d8dd004644fa883a6fa047cca0e18', null, 'autopsy_results', '不详', 'NI', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('974be5f1601a4c97a33d346c91ad8882', null, 'drug-way', '未知', 'Unknown', '65', '65', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('976279e99d7548e3a4d0238e2c2bd230', null, 'drug-formulation', '喷剂', 'spray', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9776d662737249eb8ccfc20df2c69876', null, 'Basic Information', '与本报告相关的报告识别码', 'Link Report', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('97c047a3124d416693554ee1979bf916', null, 'inspect_unit', 'cm2', null, '17', '17', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('97ef88aaca3a4b1f8f58459a7ea1861c', null, 'drug-way', '胸膜腔内注射', 'Intrapleural', '34', '34', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9827b20e101a410d906bd816363d8eae', null, 'attach-format', 'mp3', 'mp3', '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('987f8a88d193406cafff032cbcf71a59', null, 'drug-formulation', '控释贴', 'controlled-release patches', '86', '86', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('98a5ea54aeb34a6098588be071547556', null, 'seriousness', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('98ab2a71b8eb4a7bb833d873c8f53cd8', null, 'drug-formulation', '胶剂', 'colloids', '143', '143', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('990a545c9f164c589d70c219aa17825b', null, 'reporter_organisation', '经营企业', 'Business enterprise', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('993b0e944edc4b7e823f3c93193e635e', null, 'relevant_medical_history', '肝病史', 'History of liver disease', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9a17edc4ea064ae7b714f4081fb53fba', null, 'combined_treatment', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9a2b75359267422a96fb035bc41e1398', null, 'research-subdivision', '观察性研究', 'observation study', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9a720e1a9d284018be974a64d51f52e8', null, 'drug-class', '化学药', 'Chemicals', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9a9a834efccb4e72badf4059b38dd3df', null, 'drug-way', '气管/支气管内给药', 'Endotracheal', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ab48fc4f71c4b57ae822934a6037cce', null, 'sender_type', '监督管理机构', 'Regulatory Authority', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9af5776eec3f4a369ea0fc1e6f36ddea', null, 'dosage_unit', '微摩尔', 'umol', '51', '51', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9aff81f1b2e44c2d814075898ae0ab37', null, 'action_taken', '继续用药', 'Dose not Changed', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9b50928825964bfba6605d41505f66e5', null, 'attach-format', 'png', 'png', '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9b9377797b91440fabfebef3b857fa6d', null, 'birth_defects', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9bce50da1b1b4ad9a5a2742e55da2b9c', null, 'zjf', '未再使用', 'Unused', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9bfd73c3066441959eabf12af9bc936c', null, 'province', '安徽省', 'Anhui', '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9c274aaffb834a1b82e0483da8b3613a', null, 'other_drug_information', '药物过量', null, '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9c4886a7d84640579ac4a038e5dafa4f', null, 'drug-way', '真皮下给药', 'Subdermal', '59', '59', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9c8a8d7474bd4c519fd60f39a563e3cc', null, 'attach-format', 'jpeg', 'jpeg', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9cbc70f05211408e928eeb8cddc435ac', null, 'drug-formulation', '气雾剂', 'aerosol', '92', '92', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ceda541a7be45b8a44f03ee41101a7c', null, 'age_unit', '日', 'd', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9d9ce2b6a27946afaa80564e6be8f34a', null, 'drug-formulation', '冲洗液', 'Irrigation solution', '119', '119', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9dca4d45ec454883a20dad80d52e438b', null, 'inspect_unit', 'mg/m2', null, '35', '35', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9e8a5ecc9e974f20935e17b9992c7c37', null, 'drug-class', '中药', 'Traditional Chinese Medicine', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ea9321cbcd04b5d8ea28f1636623801', null, 'follow-up_information', '数据清理', 'Data cleaning', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ee1eca2788c494d8899561c479f12e5', null, 'drug-formulation', '片剂', 'tablet', '70', '70', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ef21c6e8cfd4780a833e9430929cae7', null, 'drug-formulation', '口腔崩解片', 'orally disintegrating tablet', '147', '147', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9f4ec60272bf412d97eae4a61cd17a58', null, 'drug-formulation', '舌下片', 'sublingual tablet', '93', '93', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9f83354278ec4cd395b7642b7835d3ff', null, 'drug-way', '表面麻醉', 'Topical anesthesia', '77', '77', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('9ffcebb29eef4e74904102fb84d49b54', null, 'qualifier', '＞', '＞', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a0da97ee562c438392b928a47658caed', null, 'pregnancy_outcome', '人工流产', 'artificial abortion', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a0e2f99598504978ac3808b486da67df', null, 'reporter_evaluation', '待评价', 'To be evaluated', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a10ffaa804214b98a28a60454a7208bd', null, 'zjf', '不明', 'yes – unk  (rechallenge was done, outcome unknown) ', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a14742b04e9040e6af4c0bd6aeed20f5', null, 'drug-formulation', '注射液', 'Injection', '20', '20', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a1b400e60485430ea6c86c036692646e', null, 'drug-formulation', '口服液', 'oral liquid', '34', '34', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a22f4a5c6a0347a4a1f3e71ea4c63d13', null, 'attach-format', 'xlsx', 'xlsx', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a248bfef2a8a4bf1ae20e6ace12706db', null, 'reporter_privacy_confidential', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a25a40d8aa2d4e7088bddb243d182d05', null, 'drug-formulation', '外用冻干制剂', 'freeze-dried preparation for external use ', '109', '109', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a2aea0cb44b34a25a86635b1937624d0', null, 'dosage_unit', '分升', null, '42', '42', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a31f28cb47d74fe9a6330ba14cd526a5', null, 'drug-formulation', '灌洗液', 'graft caval effluent ', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a323ce54830943c59f5e5b2c16d13418', null, 'severity', '轻度', 'Light', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a44c1c2cdb6643beb94ba748d55f5d50', null, 'drug-formulation', '混悬滴剂', 'suspend drops', '96', '96', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a53e8ce09eb2478c986808850f3d26a2', null, 'maintain_page', '药物信息', 'Drug Information', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a55f47045ba241b798221f5893628753', null, 'research_role', '首要研究者', 'First researcher', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a6791ca144cb48848c260ee50d1ea933', null, 'inspect_unit', '[drp]', null, '59', '59', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a6d9f905c4a14094836c08d76bb6725c', null, 'inspect_unit', 'umol', null, '51', '51', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a6e18f2a34b746fcaa83cf2576815d0c', null, 'drug-formulation', '滴眼液', 'eye drops', '155', '155', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a6f23bdade0a4e95992a6e1de823449b', null, 'source_info_name', '经营企业', 'Business enterprise', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a74a0357a2d14736a25c999ba8d7cf28', null, 'seriousness', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a78de3ea9b8f4f2c919e5adb1ba22298', null, 'province', '河南省', 'Henan', '16', '16', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a8509e19b5394925b4fd5be1fdd26af1', null, 'inspect_unit', 'uL', null, '49', '49', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a894dff2a2284e68af7375a080a307e2', null, 'drug-way', '局部给药', 'Topical', '61', '61', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a89c3987c04c4d6aa649a49124ad0e1b', null, 'drug-formulation', '散剂', 'powder', '52', '52', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a98a61c9a88b40f5a6e54f36de638153', null, 'source_info_name', '其他', 'Other', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a9936d4736224d9a9b804e3a92b1232c', null, 'drug-formulation', '缓释干混悬剂', 'sustained release suspension', '27', '27', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a9a8823f511d4b9898f764f8e064fa81', null, 'pregnancy_outcome', '结局未知', 'Unknowns', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('a9c1ed54a6da46f791916cd5427033e1', null, 'bind_test_drug', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aa144aacbb2247e8905fe72150be9fae', null, 'drug-formulation', '酏', 'elixir', '144', '144', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aa79e25f2a5e4e489487bdd51e135730', null, 'drug-formulation', '吸入溶液', 'Inhalation solution', '13', '13', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aa8294a0ad3c40a5ae6560bbf4d1a65e', null, 'action_taken', '药物暂停后又恢复', 'Recovery after drug suspension', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aa8da00b803842608bcc294c77cfdcf9', null, 'time_interval_unit', '按需要', '{asnecessary} ', '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aaa77118d5994f6da8871c3e6ce7f484', null, 'drug-way', '其他', 'Other', '50', '50', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aacff1ac60f74068a563baec28e6f5bf', null, 'other_drug_information', '药物滥用', null, '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('aae418a549664d21a73aea22b46d4a29', null, 'drug-formulation', '鼻用吸入剂', 'nasal inhalation', '64', '64', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ab363cbdd8bc41a8a863334e04f008c7', null, 'drug-formulation', '粉针剂', 'powder-injection', '120', '120', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ab5241a23f1240ec8d0e1c1de3a00a77', null, 'drug-formulation', '口服乳', 'oral emulsion', '51', '51', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('abb8e90f29a248b8a67cddf4fe62d958', null, 'Patient Information', '相关既往用药史', 'Parent Drug History', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('abfa9d1e93344ad6984985a7066f7228', null, 'drug-way', '直肠给药', 'Rectal', '54', '54', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ac6794b5a31b44ff9c1165d9e686f3a5', null, 'drug-formulation', '膏剂', 'paste', '55', '55', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ac91cff200814d518c484282fef1dd87', null, 'qualifier', '≥', '≥', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('accef5343b2d45a6a29044acd9f9e742', null, 'sender_type', '世卫组织国际药物监测合作中心', 'WHO Collaborating Centres for International Drug Monitoring', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('acd31f5cbe0d48ea8f2a1cda9fac0ad1', null, 'inspect_unit', 'nCi', null, '42', '42', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ad5b3382c3664d38975fbf7659d4dbb7', null, 'autopsy_results', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('add42cb051e84e3a9b20cddfe259cefd', null, 'drug-formulation', '体内诊断试剂', 'In vivo diagnostic reagents', '141', '141', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('adf48f706f5e47929022906841028283', null, 'drug-formulation', '明胶纤维', 'gelatin fibre', '84', '84', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ae3cd8832bfc46839be7c7dbead986b8', null, 'drug-formulation', '缓释胶囊', 'sustained release capsules', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af21a061e4814cceaa91096437140dae', null, 'company_info_type', 'CRO公司', 'CRO', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af50769ee5c14e6588f75ca2e4f2f7be', null, 'inspect_unit', 'mg/dl', null, '33', '33', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af576cc982aa42759bf13a9e4f919d96', null, 'pregnancy_outcome', '死产', 'Stillbirth', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af6ef5171bbb41bba288a858325832f6', null, 'drug-class', '其他', 'Other', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af8cd09330624c03a9511d5e62a8bee9', null, 'drug-formulation', '肠溶缓释片', 'enteric-coated and sustained-release tablets', '58', '58', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('af9a51cf5b974314b66f95ce0008e8b6', null, 'received_from', '上市后研究', 'Post marketing research', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b07f0c7caf2d4590a7b95aee53a3fcfb', null, 'drug-way', '子宫内给药', 'Intra-uterine', '15', '15', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b0928800cea54513acf558caf6220e56', null, 'province', '黑龙江省', 'Heilongjiang', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b18f9d9458964037be282c3295a8fd73', null, 'drug-formulation', '阴道药膜', 'medical film for vaginal use', '151', '151', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b2025b3dc6f94b198fd8f7b66882ac6d', null, 'is_first_report', '随访报告', 'Fllow-up Report', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b22819b4f15c4b6180ff7592c784d3ce', null, 'drug-formulation', '试剂', 'reagent', '74', '74', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b267318d01ac40e599726227c6ab43bb', null, 'inspect_unit', 'mmHg', null, '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b2c9f6b53d7a49d99f8b7eb3c1f09321', null, 'drug-formulation', '微丸', 'pellet', '24', '24', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b2dd7109e89c4a08a0bb0bd6c6c5464b', null, 'maintain_page', '药物/事件矩阵', 'Drug/Event', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b2feeb2005b94ba7a53a07dc72255113', null, 'drug-formulation', '控释片', 'controlled-release tablet', '37', '37', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b3d340c25a4045f2aebabecfb9670110', null, 'is_ongoing', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b3d8ee5c3443483aaac09eb885d485a5', null, 'report_identity_type', '父母-子女报告', 'Child Report', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b4678b06cfc2491faa06e73afcdaf6be', null, 'maintain_control', '下拉单选择', 'Drop list Single', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b47e479db4164eb6a9cde777c15c52b9', null, 'other_drug_information', '服用超过有效期的药物', null, '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b483a19f671c47618b8baa52065e1b90', null, 'time_interval_unit', '秒', 's', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b4fb23dd7a4a45d6a5ca0759bbcf92e5', null, 'drug-way', '管道喂养', 'Parenteral', '51', '51', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b50377551a1c46659638f910827dad77', null, 'trimester_of_exposure', '孕早期', 'Early pregnancy', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b54297086257454fa89bc3d698a5e7eb', null, 'drug-formulation', '凝胶', 'hydrogel ', '97', '97', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b6a55fd0be084a409c8cd2f03fda00fb', null, 'dosage_unit', '毫克/分升', null, '48', '48', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b6ade853aa8a4b16a1b4851a9073f1c0', null, 'drug-formulation', '眼膏', 'eye ointment ', '124', '124', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b70a9220b2664298b7ee3e23451fbe8c', null, 'Patient Information', '尸检-确定的死因', 'Autopsy', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b745754aff7a4c7eb2baacfeaad2ab21', null, 'drug-formulation', '染发剂', 'hair dyes', '142', '142', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b76289c920704a1999c2aff1bd2e8c87', null, 'clinical-research', '临床验证', 'Clinical Trials', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b7a044a6cc82466783f5d5fd48e49aca', null, 'drug-way', '皮下给药', 'Subcutaneous', '58', '58', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b7a90ce5c97e472cb0de5da00d5b3128', null, 'blindedor_not', '研究者揭盲', 'Researchers uncover blindness', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b7f59eb6fba74fbc928647f391240797', null, 'product-categories', '新药6类', 'New drug class 6', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b7feff2b01584788a0cf77749dd88c83', null, 'province', '陕西省', 'Shanxi', '24', '24', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b80bad05d8e74458af1e9146dc32b22e', null, 'other_event_terms', '与疾病进展相关', 'Disease Related', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b82bffb1c63345eb958c4439255ad7a8', null, 'drug-formulation', '吸入混悬液', 'Inhalation suspension liquid', '160', '160', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b82e9d7aa0f14047a9dd82e08aac7232', null, 'drug-way', '吸入给药', 'Respiratory (inhalation)', '55', '55', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b900a0c564ab44258ebb6d9acc0df15a', null, 'drug-formulation', '眼用凝胶', 'eye gel', '113', '113', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b9bed4dc1989468191b93735bd6ade28', null, 'drug-way', '结膜下给药', 'Sunconjunctival', '57', '57', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('b9d8b0b8619c4af4ab01164ea53fe45d', null, 'reporter_cancel', '取消', 'Nullification', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ba6dfc2add9d475fa0dbc54850d2cf38', null, 'pregnancy_report', '孕早期', 'Early pregnancy', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bad696bd424246138cf634c55c753710', null, 'is_primary_reporter', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bb94d90684f3481eaa0a49d042d690ee', null, 'history_type', '既往不良反应史', 'Past medical history', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bbfdc2c6d88f4fbdab9610085533ffbd', null, 'drug-way', '肿瘤内注射', 'Intratumor', '36', '36', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bcbcbfcd86024f72aa48e567b42a9a37', null, 'other_drug_information', '用药错误', null, '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bcc25cfeec50480296df157b0f1a167c', null, 'drug-formulation', '涂剂', 'lotion', '101', '101', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bcc963d08d554530aec408669c341476', null, 'maintain_control', '下拉录入', 'Drop entry', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bceb0a5ee4984afaac0c0d3e4db51482', null, 'drug-way', '羊膜腔内给药', 'Intra-amniotic', '12', '12', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bd8bc9af51384ceea73f880c868ece8f', null, 'source_info_name', '上市后研究', 'Post marketing research', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bdf966b5b4064d52896c0cd7a096bb7c', null, 'drug-formulation', '喷雾剂', 'spray', '150', '150', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('be10f7a90481489f8a0cc8ef439c5d95', null, 'inspect_unit', 'um', null, '50', '50', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bf12be218fc14c1fa9aefc9a517aab50', null, 'pregnancy_outcome', '失访', 'loss to follow-up', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bf33a96535784c299b672737e08b8f94', null, 'drug-formulation', '粉雾剂', 'powder ', '108', '108', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bf938b18bad64ae3884374e4f872538c', null, 'attach-class', '尸检报告', 'autopsy report', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bf9c342668034cf9a137268f4ada2908', null, 'age_group', '成年', 'Adult', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bfd14c5d19c045c09918574c2efbc6c6', null, 'pregnancy_outcome', '宫内死亡', 'Intrauterine death', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('bfd18abd26ff4687a7363e09ba06e5f4', null, 'source_caseidentifier', '产品质量投诉', 'Complaint of product quality', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c03319e5450944f6b7c2505b3501a78f', null, 'dosage_unit', '居里', 'Ci', '41', '41', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c0a72dce597245c39710d8c91e823428', null, 'inspect_unit', 'k[iU]', null, '24', '24', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c0ab20fa98ac44bdb2d28f408c07d8cd', null, 'is_death', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c0b1c3fac9214ed48b394e512c116e28', null, 'attach-format', 'txt', 'txt', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c0b754a9054e44ccb3454d4e8f53f78c', null, 'drug-way', '膀胱内给药', 'Intravesical', '43', '43', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c0d302ad00354b359511318c9d629e0d', null, 'province', '江苏省', 'Jiangsu', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c11bf64ef1f2429db4352888d166d008', null, 'drug-formulation', '泡腾颗粒', 'effervescent granules', '49', '49', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c13b8f18ed8d490d9ced2ab510a0556d', null, 'drug_character', '怀疑药品', 'Suspect', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c21af912b7dc415395be28e813c03ead', null, 'drug-way', '口服', 'Oral', '48', '48', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c22282e051214e9a9aba652b89e58dfa', null, 'province', '山西省', 'Shanxi', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c4463554d48e46f08b2866654d91c864', null, 'inspect_unit', '10^12/L', null, '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c47af321ffdf43a7917935a5c22afa25', null, 'province', '西藏自治区', 'Tibet', '30', '30', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c4ad4b733ccb40969f7d00525175b641', null, 'drug-way', '经乳房给药', 'Transmammary', '63', '63', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c4b7a52f08cb40cba3770b65d483b471', null, 'inspect_unit', 'mmol/L', null, '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c4cf7343d5f14c2296b9751fd5949b00', null, 'inspect_unit', 'wk', null, '78', '78', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c51449f2f2f14fcfba1e2d6d9e1a58fb', null, 'breast_feeding', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5563c96eec8485c91c1f2ac92ff3529', null, 'drug-formulation', '阴道栓', 'vaginal plug', '98', '98', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5c1c0eea152482fb9e82a670b3105ec', null, 'drug-way', '皮内注射', 'Intradermal', '23', '23', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5d852bc25c74937ac55df1b56eeb647', null, 'drug-formulation', '丹剂', 'sublimed preparation', '75', '75', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5eda17a1d9e412da511624fd1a6889f', null, 'inspect_unit', '[D\'ag\'U]', null, '58', '58', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5f065b096054de1acca0f079b2ce157', null, 'province', '江西省', 'Jiangxi', '14', '14', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c5f6558009da40c08bb6a30941f1dc69', null, 'drug-formulation', '吸入剂', 'inhalant', '105', '105', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c65bc1f3c2394c78a4ea3c2f623f0186', null, 'drug-formulation', '缓释植入剂', 'sustained-release implant', '17', '17', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c6d41257c66249cfaa631915620f149c', null, 'drug-formulation', '注射剂', 'injection', '39', '39', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c75771c430164e94afc4067ab53060e6', null, 'reporter_evaluation', '无法判断', 'Unable to judge', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c7a7e8a88b6e49cd960c4903b740c87f', null, 'attach-class', '药品检验报告', 'Drug inspection report', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c7ead525fdd343c98ec4e0b055520ec6', null, 'dosage_unit', '微居里', 'uCi', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c8a9e24ba36a495fa4bf3dfb83e2c6ac', null, 'sae_reports', '无', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c8b576acde7640d1af470dd172492d8e', null, 'dosage_unit', '粒', null, '28', '28', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c8db9de721e34c8a9d71f0cce6364e11', null, 'drug-way', '海绵体给药', 'Intracavernous', '17', '17', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c94328151d7044dea0a9c61bb7be8b18', null, 'received_from', '文献报道', 'Literature report', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('c998636bcaf9445ea7577e658d2ae1c4', null, 'clinical-research', 'Ⅲ 期', 'Ⅲexpect', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ca14948c8f86491fa174b6b14afec93a', null, 'sender_type', '患者/消费者', 'Patient / Consumer ', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cbb3b6d5e79b49e5a8b5f8b382eca921', null, 'Laboratory', '实验室检查', 'Laboratory', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cc084e5af26741c9899de8082db01431', null, 'drug-formulation', '涂膜', 'coating', '89', '89', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cc3c4b80ee124c65a502ec9d943eedd6', null, 'action_taken', '不适用', 'Not Applicable', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cc4c0549024d4438847aa8a456267f43', null, 'disabling', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cc8a200359204d999257194d54e54ba4', null, 'drug-formulation', '合剂', 'mixtrue', '79', '79', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cd0a6dd15ab74294a567ffa1c9e64c2d', null, 'drug-formulation', '糊剂', 'paste', '163', '163', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ce0504e36f8a4b3e91f1e0c3902f3b3e', null, 'qjf', '否', 'yes – no    (rechallenge was done, reaction did not recur) ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ce160f7046ce412b87de6e62d3867ee7', null, 'inspect_unit', '[FFU]', null, '60', '60', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cee8e9b822b1496b8434afa058024de4', null, 'is_death', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cf331ea1b9ef45acb9a0006548c689c8', null, 'drug-way', '经胎盘给药', 'Transplacental', '64', '64', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cf593c8dfcb740939846c8b5dd8ca2a4', null, 'event_out_come', '死亡', 'Fatal', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cf72f18314684705aec4338bb4f6eba6', null, 'drug-formulation', '控释透皮贴', 'controlled release transdermal stick', '59', '59', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('cfae8e838a1b4c04b36e3fdf2d9fbaab', null, 'drug-formulation', '洗液', 'washing liquor', '32', '32', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d008278d887c479cbb857f1f982e9ee6', null, 'drug-way', '局部浸润麻醉', 'Iontophoresis', '44', '44', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d01a0556243d4c40b98cd1ca5749add9', null, 'drug-way', '皮肤给药', 'Cutaneous', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d04b4272942c49d6ac746b3bc1c20d9f', null, 'dosage_unit', 'U', null, '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d0b19aee4aae4ae2a1390cbfcfa50c26', null, 'Patient Information', '死亡信息', 'Death Information', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d0d1395858064634b26b383a8baa18ff', null, 'qualifier', '＜', '＜', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d134cd6ed67f4f3a848e2c596919762e', null, 'attach-format', 'docx', 'docx', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d1387018a07a4c0eaa8b53be7aabd2b0', null, 'drug-way', '经皮给药', 'Transdermal', '62', '62', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d13c3546f21e44e68a57a5438e4fca3a', null, 'dosage_unit', '滴', '[drp]', '18', '18', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d1646906ab63433b902e27b3cce4f123', null, 'dosage_unit', '纳居里', 'nCi', '56', '56', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d21d13c80ae849f69dcb4b665fb880cd', null, 'drug-way', '颈丛阻滞', 'Cervical plexus block', '76', '76', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d3663c4668ad4667bce0e16186d8a197', null, 'other_drug_information', '经检测不合格的批次和批号', null, '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d39ef5ae847f4d4aab97a3ee3693d1a7', null, 'maintain_control', '文件输入框', 'File input', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d3d853b40b8b4dbb9492d5640c691575', null, 'time_interval_unit', '周期性的', '{cyclical} ', '10', '10', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d42aaa12367e40d8a4e45c15048900df', null, 'sender_type', '卫生专业人员', 'Health Professional', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d44c8f6878cc407f9ed854f02e6803e1', null, 'dosage_unit', '片', null, '19', '19', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d51b685567834a3ca82483225be00e06', null, 'drug-formulation', '气体', 'gaseous fluid', '14', '14', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d579e8c464514d2e96f56a6d30b3508a', null, 'drug-way', '关节内给药', 'Intra-articular', '14', '14', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d64ae8ad1b5d402ab6979def1f7d938a', null, 'relevant_medical_history', '吸烟史', 'History of smoking', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d6bbf28fca87461098b9db88a23f8885', null, 'drug-formulation', '泡腾片', 'effervescent tablets', '139', '139', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d6bdc06bf76e47ecb31f56b4879df199', null, 'reporter_evaluation', '很可能有关', 'Probably related', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d714bf66d27241b19fe33522aaa5f8a6', null, 'dosage_unit', '毫居里', 'mCi', '7', '7', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d72755ce0b594bbdaa7837197ca8e371', null, 'maintain_control', '下拉多选择', 'Drop list Multiple', '10', '10', null, '3', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d773a006de4d4033af58f1aa1f16ccb1', null, 'company_type', '经营企业', 'Business enterprise', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d77c16f8f25a4d6385ab18474f0971bb', null, 'listedness_determination', '已知', 'old', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d7c8f186a737407ba53bb5d505021470', null, 'dosage_unit', '微米', null, '60', '60', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d8a190dc07044074a549a930ac17ffd4', null, 'drug-formulation', '速释片', 'rapid-release tablets', '53', '53', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d8bdbe4245c44478b7b4fa38400ee22f', null, 'action_taken', '暂停用药', 'drug suspension', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d91b328eaf924956820570c09e13dfe5', null, 'drug-way', '肝内给药', 'Intrahepatic', '25', '25', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d928d685b0714850abc576c50e9a9414', null, 'drug-way', '术中栓塞', 'Intraoperative embolization', '86', '86', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d9290f63d1854a2f934ea132c9b56a7d', null, 'attach-class', '文献', 'literature', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d949da10e75143f0ba178ec60085f2cc', null, 'inspect_unit', 'pg', null, '44', '44', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('d95a93b008f348dda69cbf85ffb5e2bd', null, 'drug-way', '舌下给药', 'Sublingual', '60', '60', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('da73a8261778492c9619b39b1e9e421f', null, 'clinical-research', '其他研究', 'Other Studies', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('daaedcb8e88348348fdf531d59d40483', null, 'drug-formulation', '滴剂', 'drops', '15', '15', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dab69a5e94914b708096d35b839ace2d', null, 'SUSAR', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dacbc2fdcfff4d06879f1c498ac372b1', null, 'maintain_control', '单项选择', 'Radio Button', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('daed01d1e7c041fb902a0da5347c15f6', null, 'drug-formulation', '胶囊', 'capsule', '129', '129', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dbdec2a275cd433597acc2077ca90cff', null, 'Overview', '药品与不良事件信息', 'Drug & AE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dcc54d49905b4b0eaf7b4e9048fa0439', null, 'drug-way', '骶管注射', 'Sacral canal injection', '79', '79', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dd3b0c9e1b074267af87bf8bb461e84c', null, 'age_unit', '分', 'min ', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dd827c1795e94088ac9458ed1d1567b9', null, 'dosage_unit', '微升', 'uL', '22', '22', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('de829480bfea4f37a435b78b58edc648', null, 'inspect_unit', '[hp_Q]', null, '63', '63', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('deaf63eaaa8f45fcb69f662745b65fe0', null, 'drug-way', '包膜内给药', 'Intrathecal', '37', '37', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('df68cca63d5f4515aebb91bfa2ae8383', null, 'reporter_type', '法规部门', 'Regulatory department', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('df6d0eeeaa034b6d9d8aca554b7d7bec', null, 'qjf', '不明', 'yes – unk  (rechallenge was done, outcome unknown) ', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dfc0fde323ca4aaba5ee079f0877d4eb', null, 'dosage_unit', 'MU', null, '25', '25', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('dfc7867f298d4cceb1a6296457f5019b', null, 'dosage_unit', 'GB', null, '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e02d5f481fab403da910db94d88ace2b', null, 'attach-class', '现场调查报告', 'Field investigation report', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e04d49ae98ab4f1084855a06e953f095', null, 'dosage_unit', '毫克', 'mg', '8', '8', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e09a9094b5e04e79b9526a74f1958978', null, 'body_weight_unit', '千克', 'Kg', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e0a4c39d57ee4f8b9a2a0d1600908bc6', null, 'drug-way', '静脉给药', 'Intravenous (not otherwise specified) ', '42', '42', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e1067f97063c4570b1ef84d8e879c210', null, 'frequency', '不详', 'Unknown', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e1408865dfde445992772cb1f2e21bbc', null, 'dosage_unit', '毫当量', 'meq', '52', '52', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e1a0d95adf544ba78a8f69d9f1689a57', null, 'drug-formulation', '混悬注射剂', 'acetate suspension for injection', '104', '104', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e24f708580144de2a5eddb6f8dba5dbc', null, 'dosage_unit', 'IU', null, '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e292f3e8fad74912abb401e1e26afe1b', null, 'province', '宁夏回族自治区', 'Ningxia', '31', '31', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e2d6a5275fe745a89cd2b88f676e46e8', null, 'drug-formulation', '口服冻干粉', 'oral lyophilized powder', '156', '156', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e305e2d52b86404e90015e23f5143181', null, 'dosage_unit', '剂型', '{DF}', '47', '47', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e379dd1207cc45db96c31658f56893bf', null, 'drug-formulation', '露剂', 'Distillate medicinal water', '16', '16', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e474fc128c524d1e97f878e7f6a72a70', null, 'inspect_unit', 'nmol', null, '43', '43', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e4844cb7480a41ccb05ab36e5681d3ea', null, 'drug_info_type', '进口', 'Imported', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e489e3a2c16d4e77bc8f0c0b4310c3e5', null, 'drug-formulation', '口服溶液', 'oral solution', '158', '158', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e4ad22e6018144e7b502ea58687855ef', null, 'reporter_organisation', '个人', 'personal', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e4ebd2f559974e80aee279bcacb0bf1a', null, 'product-categories', '新药1类', 'New drug class 1', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e62e0a17233f474c948abe1e8671054b', null, 'delivery_type', '顺产', 'Yield', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e62e12b5d05d4a70ba1ae7b068daf82d', null, 'province', '香港特别行政区', 'HongKong', '33', '33', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e674ae2cdc234a648a0730531fbe55f1', null, 'life_threatening', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e6a013ae3bea43d5a70dd6229b93e285', null, 'report_attach_status', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e6ebba2b6bb34d028ccf88d3eff4cfef', null, 'initial_report', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e75d080d58af4a8e94a5b5485dd0aca8', null, 'Additional Documents', '附加信息', 'Additional Documents', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e7876e3dbfc24b2384a79067f4b33ff2', null, 'ctcae_classification', '1级', '1 level', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e8975491da254a36a82888f7a8d0030b', null, 'impacton_primary_disease', '导致后遗症', 'Cause sequela', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e8cb068039204251988b06de8920845c', null, 'Basic Information', '研究者信息', 'Reporter Information', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('e9ca432bbbdb4ef7b4febaf51084da62', null, 'delivery_type', '剖腹产', 'Caesarean birth', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ea821dc658054ef380df997d6add3b2f', null, 'age_unit', '岁', 'a', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ead00fa24c4f4d12bd8a350b57aecf1f', null, 'inspect_unit', 'd', null, '18', '18', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('eb2191ad3c0b4b5c944f6b3fe82e8862', null, 'ctcae_classification', '3级', '3 level', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('eb21c19ff4ee49849051a2a3f1212cbd', null, 'dosage_unit', '不详', 'NI', '13', '13', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('eb5095c1a97742a18574c87a250d2a67', null, 'province', '四川省', 'Sichuan', '21', '21', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('eb8d304ff726456a8e4c0779084e33af', null, 'drug-formulation', '缓释凝胶', 'sustained-release gel', '73', '73', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ec391024ade845f8aa44be5bf59845d3', null, 'maintain_page', '基本信息', 'Basic Information', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ec754c61a4d04a809822825fd22946ec', null, 'drug-formulation', '肠溶缓释胶囊', 'enteric sustained-release capsules', '157', '157', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ecbe04a6314e4722bb698ae98ff95a5a', null, 'dosage_unit', 'KU', null, '11', '11', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ed1861539d25477a9f319a054cc305cb', null, 'medically_important', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('edf752bcf2f54303aa9c7855ff839885', null, 'drug-formulation', '乳胶', 'latex', '50', '50', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ee538a96f65446149fb395f725751882', null, 'drug-way', '胸腔内给药', 'Intrathoracic', '38', '38', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ee5eb38824d149cab816879da5fa3f96', null, 'other_event_terms', '感染', 'Infected', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('eef3bb07a9f64ef698730e2c26c7ad93', null, 'is_ongoing', '否', 'false ', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ef29159a93414f459e5cf9768e77f27f', null, 'maintain_control', '日期', 'Date', '6', '6', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f01170cbadff437f919fb953fdda571f', null, 'attach-format', 'pdf', 'pdf', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f0215c01726f4fb9abbbef8b83f23e63', null, 'drug-way', '灌注', 'perfusion', '68', '68', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f0bb554cdafd44ffb749b611dd72f487', null, 'inspect_unit', '[PFU]', null, '70', '70', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f1121abcc33541c3bedd240bc5c1e350', null, 'drug-formulation', '糖丸', 'sugar pills', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f11bce93c3d54c779dc3651f59948536', null, 'drug-formulation', '软胶囊', 'soft capsule', '114', '114', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f20882d41342447eae994f2b3e3cae69', null, 'drug-formulation', '滴耳剂', 'ear drops', '161', '161', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f239eea860cb48ce9f2dc49e4ee893eb', null, 'inspect_outcome', '不可判断', 'Inconclusive', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f2a4fec7d77d49a1b0830f0096eea35b', null, 'Overview', '患者与报告者信息', 'Patient & Reporter', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f2d87083112848d58faa9269ebbb4214', null, 'is_reported_drug_supervision', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f3b846ee86d246c8895deed8d225bfc6', null, 'drug-way', '病灶内给药', 'Intralesional', '26', '26', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f3b9b8eecfd14aa1b367539d51fd3460', null, 'drug-formulation', '煎膏剂', 'soft extract', '67', '67', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f3cf40ddfda6425bb2ce774ac5e445f4', null, 'inspect_outcome', '阳性', 'Positive', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f3f5f5d029244c17a48f4e182d738e84', null, 'drug-formulation', '缓释透皮贴', 'slow-release transdermal stick', '115', '115', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f41ce586b1b141bb8e29fb3a75b6030e', null, 'dosage_unit', '千兆贝克勒尔', 'GBq', '36', '36', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f46c9f5b258c47bfb10c6100370a8816', null, 'report_attach_status', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f47887eb0a4c49e4a024a0de7111b896', null, 'drug-class', '预防用生物制品', 'Vacine', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f50c1334f0ec48e99132719b9cabff6e', null, 'dosage_unit', '贴', null, '23', '23', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f5495b0151894533a24bbd9342331f11', null, 'drug-formulation', '肠溶片', 'enteric-coated tablet', '90', '90', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f645d5e5a76f4f5c81cfad44ffef18fc', null, 'drug-formulation', '浸膏片', 'extract tablets', '43', '43', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f69168595d524bc592f1b50b4342d642', null, 'research_role', '次要研究者', 'Secondary', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f6f3ff56d1334ab28461ad1edca76b9f', null, 'inspect_unit', 'mol', null, '41', '41', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f7027c449a9e455780acab1d277a1808', null, 'inspect_outcome', '阴性', 'Negative', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f76881d220ac47cfa73a8705fc5ada07', null, 'drug-formulation', '外用片', 'tablet', '85', '85', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f77096e7101b4cbaa0a875aed12cd600', null, 'maintain_page', '报告总结', 'Report Summary', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f7a9d6a1088c4fe19e9a83a5597a3f17', null, 'drug-way', '腹膜腔内注射', 'Intraperitoneal', '33', '33', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f7f67043667f47d2a6a5b6b8229a4853', null, 'drug-way', '经眼给药', 'Intraocular', '31', '31', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f90cd2146215467281d6af7a69f9e3df', null, 'received_from', '未知', 'Unknown', '9', '9', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f90d50d63c244c7c8a22a4f6a770ac31', null, 'disabling', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f951d7ad9168446b9e590f2c99ddd040', null, 'drug-formulation', '酒剂', 'medicinal liquor', '76', '76', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f95961b1bfdc473994cb54b87b9dab69', null, 'ctcae_classification', '4级', '4 level', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f9ba6afd62a544afa2568830b0e1671f', null, 'follow-up_information', '重复报告', 'Repeat Report', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('f9c57ebaa733499e90bb5e6dad56aa1c', null, 'inspect_unit', 'mCi', null, '30', '30', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fa88086a2dec4dc894bd149e5573edc4', null, 'drug-way', '经耳给药', 'Auricular (otic)', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fac3a2d8ad1c4056bbe33e862ea14d34', null, 'drug-formulation', '阴道泡腾胶囊', 'vaginal effervescent capsule', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fb389809b1a34eb6b22a6864c287bf7d', null, 'drug-formulation', '膜剂', 'membranes', '152', '152', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fb4e487685734ac3a716c1184cd3e9d0', null, 'drug-way', '滑膜内给药', 'Intrasynovial', '35', '35', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fb52f34d3c1740df888b985a837fc3d2', null, 'drug-formulation', '干糖浆', 'dry syrup', '125', '125', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fb871623267a43a3a0c8c548700d49e4', null, 'can_reporter_be_followed_up', '是', 'TRUE', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fc14b413d6bd4b6aad2d52a830423308', null, 'is_serverity', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fcaad4729b0a423aa0efc8fcc2c54bce', null, 'is_ongoing', '未知', 'NI', '3', '3', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fd055377ada746f8ab88168fdceb3b48', null, 'drug-way', '局部注射', 'Local injection', '82', '82', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fd06dcebbd6f46f38707b54fd315da05', null, 'research-subdivision', 'Ib期', 'phase Ib clinical trials', '5', '5', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fda350dd33684839b85e09e50e61521f', null, 'drug-formulation', '液体', 'liquid', '33', '33', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fda60ae3377e4c5fb04901c6ebd31a9f', null, 'inspect_unit', '{trimester}', null, '76', '76', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fdd20e09c5c7490991e9d3b10782cd60', null, 'extended_hospitalization', '不详', 'NI', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe042b2c3f574c579e1adcd567f1efe8', null, 'drug-formulation', '鼻用喷雾剂', 'nasal spray', '118', '118', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe47d530cb844b26b97aed382d323dcb', null, 'drug-way', '鼻甲注射', 'Injection of nasal turbinate', '72', '72', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe61afbb947f4275a364e4c7002daac0', null, 'qualifier', '＝', '＝', '1', '1', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe64730af91f42959ebcc0f9b5774b39', null, 'dosage_unit', '克', 'g', '14', '14', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe81c4916e1947649d1a34279072a25a', null, 'dosage_unit', '万U', null, '29', '29', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fe9dd66bacbf4d8c9916362a47afceac', null, 'inspect_unit', '[BAU]', null, '55', '55', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('feaacaecf4e54939a3a31e506784edc8', null, 'inspect_unit', 'Ci', null, '15', '15', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fee4507486f8428587676d30104d2a40', null, 'IME', '否', 'FALSE', '2', '2', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('fef3ecf7429f449eaf28b50fb3f6dc3f', null, 'drug_character', '未用药', 'Drug Not Administered', '4', '4', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ff5bd86ce24549b3bab16eaa62fbef5e', null, 'drug-formulation', '细粒', 'fine stuff', '122', '122', null, '2', null, null, null, null, null);
+INSERT INTO `dictionary_test` VALUES ('ff69f937d158485d8b26f7f0cf3fe3b8', null, 'sender_type', '制药公司', 'Pharmaceutical Company', '1', '1', null, '2', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for drug
@@ -476,6 +1347,336 @@ INSERT INTO `drug_attachment` VALUES ('fd019c443d07447282c52e264eb72609', 'd8537
 INSERT INTO `drug_attachment` VALUES ('feb1fc204ff34f84803a535c587c2f12', '31fd99c1e1354b088abe629195d36c89', '62', '反馈数据导入模板15367423365951537151207801.xlsx', '1', '反馈数据导入模板1536742336595', '11591', 'xlsx', '2', 'sfs ', null, 'jerry', '2018-09-17 10:26:53', null, null);
 
 -- ----------------------------
+-- Table structure for field_test
+-- ----------------------------
+DROP TABLE IF EXISTS `field_test`;
+CREATE TABLE `field_test` (
+  `id` char(32) NOT NULL,
+  `field_type` int(11) DEFAULT NULL COMMENT '字段类型1系统通用，2内置字段，3私有字段',
+  `field_code` varchar(64) DEFAULT NULL COMMENT '字段编码',
+  `dict_data_name` varchar(32) DEFAULT NULL COMMENT '字段对应字典',
+  `field_chinese_name` varchar(32) DEFAULT NULL COMMENT '字段中文名',
+  `field_english_name` varchar(255) DEFAULT NULL COMMENT '字段英文名',
+  `table_name` varchar(32) DEFAULT NULL COMMENT '数据表名称',
+  `attribute_name` varchar(255) DEFAULT NULL COMMENT '表字段名',
+  `html_type` int(11) DEFAULT NULL COMMENT '控件类型',
+  `edit_status` int(11) DEFAULT NULL COMMENT '是否可编辑1可编辑，2不可编辑',
+  `required_field` int(11) DEFAULT NULL COMMENT '是否必填1必填，2不必填',
+  `field_length` varchar(11) DEFAULT NULL COMMENT '最大长度',
+  `field_owner_boundary` int(11) DEFAULT NULL COMMENT '所属界面',
+  `field_owner_paragraph` int(11) DEFAULT NULL COMMENT '所属段落',
+  `export_node` varchar(255) DEFAULT NULL COMMENT 'etb导出节点',
+  `dic_type` varchar(11) DEFAULT NULL COMMENT '字典类型',
+  `dic_language` int(11) DEFAULT NULL COMMENT '字典语言',
+  `dic_version` int(11) DEFAULT NULL COMMENT '字典版本',
+  `field_statistical` int(11) DEFAULT NULL COMMENT '参与统计(1:是,2:否)',
+  `field_qc` int(11) DEFAULT NULL COMMENT '参与QC(1:是,2:否)',
+  `field_search` int(11) DEFAULT NULL COMMENT '参与搜索(1:是,2:否)',
+  `delete_status` int(11) DEFAULT NULL COMMENT '删除状态1正常，2删除',
+  `remark` varchar(32) DEFAULT NULL COMMENT '备注',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of field_test
+-- ----------------------------
+INSERT INTO `field_test` VALUES ('01c79d375aa546d1af6bdf927cec3723', '1', '10_001_0001', 'attach-class', '文件分类', 'Document Type', null, null, '4', '1', '2', '50', '10', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('03524a80c7914003ab746e286d084d62', '1', '09_001_0007', 'listedness_determination', '报告已知判断', 'Is it known', null, null, '4', '1', '2', '50', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('045900febc014e0ab5dd3bbefbb9351d', '1', '06_001_0011', null, '事件开始日期', 'Start Date of AE', null, null, '6', '1', '1', '25', '6', '1', 'E.i.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('046bc53a47024aeca14f620dd1f1a74d', '1', '07_001_0008', null, '正常范围最高值', 'Normal High Value', null, null, '1', '1', '2', '50', '7', '1', 'F.r.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('047ddda6df884da4a4281ae0bf2c9336', '1', '05_001_0002', null, '商品名称', 'Drug Name', null, null, '1', '1', '2', '50', '5', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0571b57f51fd454aacdfb1ccf7bedf7e', '1', '04_004_0009', 'pregnancy_outcome', '妊娠结局', 'Gestation Results', null, null, '3', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('06687a69d4e24cf09f7d264ede2d1c87', '1', '04_004_0003', null, '药物暴露时孕周', 'Exposure Weeks', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('071054b744874ae6bfe348840100a415', '1', '05_001_0018', 'dosage_unit', '剂量（单位）', 'Dose Unit', null, null, '5', '1', '2', '50', '5', '2', 'G.k.4.r.1b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0a2f42f1988b4929a0849ff79c8ade42', '1', '01_002_0007', null, '不良事件发生时间', 'Start Date of AE', null, null, '6', '2', '1', '25', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0baf200536364d5882c6ca744e5f381d', '1', '05_001_0012', null, '批准文号', 'Application Number', null, null, '1', '1', '2', '50', '5', '1', 'G.k.3.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0bfdf0fe24294317b560b2b51b408168', '1', '04_004_0011', 'sex', '性别', 'Neonatal\'s Sex', null, null, '4', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0c115d3ea3194ae5ab24b42c5175df25', '1', '06_001_0002', 'initial_report', '首要不良事件', 'Initial Report', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0c4bd3481e4e4d4c9276d1aa9f08c3f8', '1', '09_001_0009', 'event_out_come', '报告结局', 'Outcome of AE', null, null, '4', '1', '2', '50', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0d23eca6b99841d598b168fcf6f73cb0', '1', '08_001_0005', 'listedness_determination', '已知', 'Is it known', null, null, '4', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0d99097140224e56afd5a0eacc860422', '1', '03_001_0007', null, '报告者地址', 'Reporter\'s Street', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.2.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('0dcad61df52b4d6ebfe8e472c85ebca5', '1', '09_001_0002', null, '备注', 'Case Narrative Note', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('10717c97fad24418a937d4c43b65f645', '1', '04_003_0004', null, '适应症（coode）', 'Drug Indication', null, null, '4', '1', '2', '50', '4', '3', 'D.8.r.6b', '1,3', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('12bb73743ebe4be692175244830fa4f9', '1', '08_001_0006', 'is_serverity', '严重性', 'Seriousness', null, null, '4', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1310e90c081541babc482c1e71c3ab31', '1', '01_003_0007', null, '中心编号', 'Center Id', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1556301eb5f74ff6a3761f2184a24c30', '1', '02_004_0002', null, '病例识别码的来源', 'Case Source', null, null, '1', '1', '2', '50', '2', '4', 'C.1.9.1.r.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('177e471568af4439af54676fb779342d', '1', '08_001_0010', null, '开始给药至事件发生的时间间隔', 'Drug Start Interval', null, null, '1', '1', '2', '50', '8', '1', 'G.k.9.i.3.1a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('18ec6c3559a54b67ad61bdb69e6f29ec', '1', '04_001_0006', 'age_group', '年龄层', 'Patient\'s Age Group', null, null, '4', '1', '2', '50', '4', '1', 'D.2.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1904ac08afd1432889da542acc8dcf0f', '1', '09_001_0005', 'reporter_evaluation', '报告相关性', 'Causality', null, null, '4', '1', '2', '50', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1ab082ad6b524fc28a07bc71da6c0086', '1', '03_001_0002', null, '报告者名', 'Reporter\'s Given Name', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.1.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1b0f0e944f11474db55364bb9132ca4e', '1', '05_001_0015', 'drug-class', '药品注册分类', 'Drug Categorization', null, null, '4', '1', '2', '50', '5', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1be4cdd45a104c99ab7fb6ef117b14e2', '1', '02_001_0007', null, '最晚上报药监时间', 'Last Report Time', null, null, '6', '1', '2', '25', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1c5eb8c7237d4c149937fbcc6593e954', '1', '04_008_0012', null, '病史结束日期', 'Parent\'s Medical End Date', null, null, '6', '1', '2', '25', '4', '10', 'D.10.7.1.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1e12955f9d85468bb053a48b2d548b37', '1', '01_003_0008', null, '患者编号', 'Patient\'s Id', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1e2ee1dd12604614a63c5209bb74e464', '1', '04_004_0008', 'delivery_type', '分娩方式', 'Delivery Type', null, null, '10', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1e31d52448ba4f36af303f30e6cb9950', '1', '08_001_0011', 'time_interval_unit', '时间间隔（单位）', 'Interval Unit', null, null, '4', '1', '2', '50', '8', '1', 'G.k.9.i.3.1b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1ed656b680e34454b231c49ff8766b05', '1', '04_004_0016', null, '5分钟APGAR评分', 'APGAR 5 Minutes', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1f4eecffb9004eeaa8c279625cee52f6', '1', '06_001_0001', 'diagnosis', '事件诊断标识', 'Regimen Dosage', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1f671d3b27d04747a4a42f7b021c37e1', '1', '01_002_0001', 'drug_character', '药物特征', 'Drug Characterisation', null, null, '4', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('1f8e76aeca4c4f97aa57fc1df0614459', '1', '04_001_0011', 'patient_nationality', '民族', 'Patient\'s Nationality', null, null, '4', '1', '2', '50', '4', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2045068e9c61432b9cdec725ce8e4cbf', '1', '06_001_0025', 'other_event_terms', '其他情况', 'Other circumstances', null, null, '3', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('23f2d14293dc46f8816b468b61998fd3', '1', '06_001_0013', null, '事件持续时间', 'Duration', null, null, '1', '1', '2', '50', '6', '1', 'E.i.6a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2406e7b135f14d69ba6cd3a492fc6d23', '1', '02_002_0007', null, '第#周', 'Weeks', null, null, '1', '1', '2', '50', '2', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2445d6d5cf5e45c5ab66181070df3319', '1', '05_001_0025', null, '批次/批号', 'Production Batch', null, null, '1', '1', '2', '50', '5', '2', 'G.k.4.r.7', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('256857aabfe4429dba71ed0fe97131a8', '1', '04_005_0001', null, '死亡日期', 'Date of death', null, null, '6', '1', '2', '25', '4', '6', 'D.9.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('26180f3f32de46aca9307a1368d3f3a4', '1', '05_001_0026', 'drug-formulation', '剂型', 'Formulation', null, null, '5', '1', '2', '50', '5', '2', 'G.k.4.r.9.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2763c302fc12448ba65710c0da8b17ce', '1', '05_001_0020', 'time_interval_unit', '时间间隔单位', 'Interval Unit', null, null, '4', '1', '2', '50', '5', '2', 'G.k.4.r.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('279cd35d33f84b49b846311a43059b48', '1', '02_006_0001', null, '临床前药理毒理试验', 'Relevant Tests', null, null, '1', '1', '2', '50', '2', '6', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('28b3e71485794dbdbbf818a8d4c296aa', '1', '05_001_0022', null, '末次给药日期', 'Drug End Time', null, null, '6', '1', '2', '25', '5', '2', 'G.k.4.r.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('28bff023bce243ee94b95553a7707e6c', '1', '02_004_0001', 'source_caseidentifier', '类型', 'Case Type', null, null, '4', '1', '2', '50', '2', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('29db4e4832c440d8a4f192d3bb72aa27', '1', '04_004_0004', 'trimester_of_exposure', '药物暴露时孕期', 'Exposure Trimester', null, null, '4', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2a4d4466539e402f9af98993d2d281c5', '1', '02_005_0003', null, '备注', 'Link Report Note', null, null, '1', '1', '2', '50', '2', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2ac9dd048b6243cfbc3ac72ee35b79a0', '1', '04_001_0007', null, '体重（kg）', 'Patient\'s Weight', null, null, '1', '1', '2', '50', '4', '1', 'D.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2b954fd1bcec40568b422539fb4f0172', '1', '03_001_0006', null, '报告者部门', 'Reporter\'s Department', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.2.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2e5f9a13d78f4a8e95a7078ece982a61', '1', '05_001_0028', 'drug-way', '父母的给药途径', 'Parent Route of Administration', null, null, '5', '1', '2', '50', '5', '2', 'G.k.4.r.11.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2f02da6e435d4a5097e91867ac1eedd9', '1', '02_001_0002', null, 'PV获知时间', 'PV Received Date', null, null, '6', '1', '1', '25', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('2ffb896c181c43d2b9f661261f696a5e', '1', '01_002_0003', null, '商品名', 'Drug Name', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3001610377b3491880fe9a1cd3c2302c', '1', '06_001_0006', 'listedness_determination', '已知/新的', 'Is it known', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3042525128f647bdb2cabbc0402758f2', '1', '04_002_0006', 'combined_treatment', '合并治疗', 'Medical Treatment', null, null, '4', '1', '2', '50', '4', '2', 'D.7.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('311263eab3884231aab65ef5e0a84daf', '1', '03_001_0017', 'can_reporter_be_followed_up', '是否被随访', 'Can Reporter Be Followed Up', null, null, '4', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('313fe5a3aa744b129d662cafc204a0e7', '1', '09_001_0001', null, '报告描述', 'Case Narrative', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('314aa41af3a94bba9f088b4140b1de78', '1', '02_003_0001', null, '篇名', 'Literature title', null, null, '1', '1', '2', '50', '2', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('32f32492258e49ec8b25ee0948bdde82', '1', '08_001_0012', null, '末次给药至事件发生的时间间隔', 'Drug End Interval', null, null, '1', '1', '2', '50', '8', '1', 'G.k.9.i.3.2a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('395bcc75e1f34842bd8603e95bef2d4f', '1', '07_001_0006', null, '非结构化的检查结果', 'Unstructured Result', null, null, '1', '1', '2', '2000', '7', '1', 'F.r.3.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3af87f91d1d94bb6a41f483296f74763', '1', '04_002_0001', 'history_type', '病史（code)', 'Medical code', null, null, '4', '1', '2', '50', '4', '2', 'D.7.1.r.1b', '1,3', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3b8e644a25294115b0ad695fbb5afb14', '1', '01_004_0001', null, '篇名', 'Literature title', null, null, '1', '2', '2', '50', '1', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3ba8acba16d64d6c8ec229bcb40955b5', '1', '06_001_0004', null, '不良事件术语', 'AE MedDRA Code', null, null, '5', '1', '1', '50', '6', '1', 'E.i.2.1b', '1,2', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3bd66ad334404280ab51826783eb6efc', '1', '04_008_0008', 'sex', '父母性别', 'Parent\'s Sex', null, null, '4', '1', '2', '50', '4', '8', 'D.10.6', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3f40b14143894382aa780b0ce0e81e0d', '1', '05_001_0013', 'ISO-3166country_code', '药物授权国', 'Authorisation Country', null, null, '5', '1', '2', '50', '5', '1', 'G.k.3.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3f51f41ea71e4e419ba7fe30f774afd8', '1', '04_001_0004', null, '年龄', 'Patient\'s Age', null, null, '1', '1', '2', '50', '4', '1', 'D.2.2.a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3f87367c47b84122889e6b000fdd3f7b', '1', '04_006_0001', null, '报告的死因（字典编码）', 'Reported of Death Code', null, null, '4', '1', '2', '50', '4', '6', 'D.9.2.r.1b', '1,2', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('3fc080e2073542268b682970a8b152c3', '1', '05_001_0007', 'dosage_unit', '规格（单位）', 'Strength Unit', null, null, '5', '1', '2', '50', '5', '1', 'G.k.2.3.r.3b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('40d30ef032f74d4a88cb76dd5a932b0c', '1', '02_001_0010', null, '企业首位获悉人', 'First Company Learned', null, null, '1', '1', '2', '50', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('42a9cd90db644ba397c2997e01a7be2c', '1', '05_001_0017', null, '剂量', 'Dose', null, null, '1', '1', '2', '50', '5', '2', 'G.k.4.r.1a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('43268948629c4d75bfb633dc463edd02', '1', '04_009_0005', null, '反应（字典编码）', 'Parent\'s Drug Reaction', null, null, '4', '1', '2', '50', '4', '10', 'D.10.8.r.7b', '1,2', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('44106a2f89eb4a4cbfadcf294f1c9779', '1', '04_004_0010', null, '生产日期', 'Delivery Date', null, null, '6', '1', '2', '25', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('447796fa7c204ca19a68c580ee728625', '1', '08_001_0013', 'time_interval_unit', '时间间隔（单位）', 'Interval Unit', null, null, '4', '1', '2', '50', '8', '1', 'G.k.9.i.3.2b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('45f80ab71cd44d9da64290703b924626', '1', '07_001_0002', null, '检查项', 'Test Name', null, null, '1', '1', '2', '50', '7', '1', 'F.r.2.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('47cf8b0cd74c4a84bea8a5be870d8a6e', '1', '04_004_0013', null, '出生体重（kg）', 'Neonatal\'s Weight', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('4834d4de900b44759f5dfc64e0e1097f', '1', '04_009_0004', null, '适应症（字典编码）', 'Parent\'s Drug Indication', null, null, '4', '1', '2', '50', '4', '10', 'D.10.8.r.6b', '1,3', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('48fc58c65a7d4ed182c21fb2aa36eebf', '1', '04_004_0006', null, '胎儿总数', 'para', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('492d9da3515649e88313ddba0256f9a9', '1', '06_001_0021', 'ISO-3166country_code', '事件发生国家', 'Event Occurred Country', null, null, '5', '1', '2', '50', '6', '1', 'E.i.9', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('4a1e0d50f59c4b788d82552fb3a3d4a0', '1', '01_003_0002', null, '患者电话', 'Patient\'s Telephone', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('4a81ad3b679c412387246f496a49cbdd', '1', '03_001_0010', null, '报告者邮编', 'Reporter\'s Postcode', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.2.6', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('4af225e2a8e844d4aceacb54c6cf5a04', '1', '01_003_0010', null, '报告者电话', 'Reporter\'s Telephone', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('4b5bf4d9aee345459a460d4c80824108', '1', '07_001_0009', null, '备注', 'Test Note', null, null, '1', '1', '2', '2000', '7', '1', 'F.r.6', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('507330e8f7d34f3c804db4be2bc34c7f', '1', '08_001_0015', 'other_drug_information', '药物的额外信息', 'Additional Type', null, null, '4', '1', '2', '50', '8', '1', 'G.k.10.r', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('51a28c03c4cc428faad43040980c046a', '1', '02_003_0002', null, '作者', 'Literature author', null, null, '1', '1', '2', '50', '2', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('551fa2df0a7e4bad8efbf2e4e6e00af3', '1', '02_001_0008', null, '报告最近更新时间', 'Last update Date', null, null, '6', '1', '2', '25', '2', '1', 'C.1.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('56449d0711614e65af3b0a93bdba601f', '1', '04_004_0017', null, '10分钟APGAR评分', 'APGAR 10 Minutes', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('573aa8e29f9a4e78b58a91187c4b28aa', '1', '08_001_0016', null, '药物的其他信息', 'Additional Note', null, null, '1', '1', '2', '2000', '8', '1', 'G.k.11', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('590f156ecde544fe9859d87cfe4f1ce6', '1', '04_004_0001', null, '预产期', 'Due Date', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5966dda2c8e14012a1a4e9e2563dabb2', '1', '07_001_0007', null, '正常范围最低值', 'Normal Low Value', null, null, '1', '1', '2', '50', '7', '1', 'F.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('59e7d1c7beb748d6ba8a6df585218a8a', '1', '06_001_0022', 'province', '事件发生省份', 'Event Occurred Province', null, null, '5', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5b0473bd84604ff7a4275455587bcb4d', '1', '02_003_0004', null, '发表时间', 'Literature Date', null, null, '1', '1', '2', '50', '2', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5bbec1c24ddc4ee1ba7886eb8a10e30a', '1', '01_001_0005', 'is_first_report', '首次/随访', 'First/Fllow-up', null, null, '4', '2', '2', '50', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5c99971469244ac1a1e18da350744496', '1', '03_001_0013', 'reporter_type', '报告者资质', 'Qualification', null, null, '4', '1', '2', '50', '3', '1', 'C.2.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5d2a72bf18ce47bc96489dd5c2bf9d75', '1', '01_002_0006', null, '用药原因', 'Durg Reason', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5dac2f3b494f433fa44ebc005b9e50e5', '1', '05_001_0016', 'interaction', '药物相互作用', 'Interaction', null, null, '1', '1', '2', '50', '5', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5e7e76cf36af47b8a8a1369569c1d736', '1', '01_002_0005', null, '生产批次', 'Production Batch', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5ebf5a31b444408d9775a1cc3fa2ed24', '1', '05_001_0003', null, '通用名称', 'Common Name', null, null, '1', '1', '1', '50', '5', '1', 'G.k.2.2', '4', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('5efcc1e6f8e047bba720d6aa97f579e3', '1', '04_001_0010', null, '末次月经日期', 'Patient\'s LMP', null, null, '6', '1', '2', '25', '4', '1', 'D.6', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('609f39c7997b488cae22ebc59c73f3eb', '1', '02_002_0008', null, '第#次随访', 'Follow-up', null, null, '1', '1', '2', '50', '2', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('61ab6a573d3c4b66b7e41a8c24ed03bf', '1', '09_001_0008', null, '备注', 'Is it known Note', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('621f03d03d794d6f95f67aa08c68785a', '1', '06_001_0007', 'is_serverity', '是否严重', 'Seriousness', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6402618d11f24f5c918f3f748f426dea', '1', '04_004_0014', 'delivery_type', '分娩方式', 'Delivery Type', null, null, '4', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('65f656a6bb794052aea32105e23f5a90', '1', '06_001_0014', 'time_interval_unit', '事件持续时间单位', 'Duration Unit', null, null, '4', '1', '2', '50', '6', '1', 'E.i.6b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('664b2d57045a4d6b94ca381f99d34ddb', '1', '06_001_0005', 'IME', 'IME', 'IME', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('666a7361b1404c7bbe039df6cc46cdbb', '1', '05_001_0021', null, '开始用药日期', 'Drug Start Time', null, null, '6', '1', '2', '25', '5', '2', 'G.k.4.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('68304b61457c4aaf9066e76b71dddc43', '1', '04_004_0018', null, '备注', 'Neonatal\'s Note', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('686e5def5eb64185a33cca06c329bb5d', '1', '04_008_0005', null, '父母末次月经', 'Parent\'s LMP', null, null, '6', '1', '2', '25', '4', '8', 'D.10.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('694b3aa9a791407eadc0cd45b715e7fa', '1', '01_004_0002', null, '作者', 'Literature author', null, null, '1', '2', '2', '50', '1', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6b172f2f6e5649a7952b69be64b0e8b1', '1', '01_002_0004', null, '生产厂家', 'Manufacturer', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6b25ef15bbb8491f9e9dfae30f65521a', '1', '03_001_0016', null, '报告者传真', 'Reporter\'s Fax', null, null, '1', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6d291143bcf346918ba467673c70797c', '1', '05_001_0024', 'time_interval_unit', '给药的持续时间（单位）', 'Drug Duration Unit', null, null, '4', '1', '2', '50', '5', '2', 'G.k.4.r.6b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6e89b4d4963848d6a11b39fbfbeaeb81', '1', '04_001_0001', null, '患者姓名', 'Patient\'s name', null, null, '1', '1', '1', '50', '4', '1', 'D.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6ebf15a78b7f487c948d602ea8bbf58e', '1', '06_001_0017', null, '不良事件过程描述(包括症状、体征临床检验等)及处理情况', 'Case Narrative', null, null, '1', '1', '2', '2000', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6ed945cc74664094991836a1dcf9574a', '1', '05_001_0019', null, '间隔', 'Interval', null, null, '1', '1', '2', '50', '5', '2', 'G.k.4.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('6f2aa3e386f04014901f72a723ad8144', '1', '10_001_0002', null, '附件内容', 'Document file', null, null, '9', '1', '2', '10', '10', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7044a94c0a2243fdbf15edc5165ce306', '1', '08_001_0002', null, '商品名称', 'Drug Name', null, null, '1', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7074c040ef4341fda1778ce988984a2c', '1', '01_001_0004', 'received_from', '企业报告类型', 'Type Of Report', null, null, '4', '2', '2', '50', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('70bd89e479fb45a5970fa50d5b94d925', '1', '08_001_0008', 'reporter_evaluation', '因果关系', 'Causality', null, null, '4', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('70d5eac07dfc41f28c5e9b5687ab0960', '1', '05_001_0005', null, '活性成分', 'Specified Substance', null, null, '1', '1', '2', '2000', '5', '1', 'G.k.2.3.r.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('71c420755b50432797d379024c0ba394', '1', '04_009_0001', null, '药物名称', 'Parent\'s Drug name', null, null, '1', '1', '2', '50', '4', '10', 'D.10.8.r.1', '3,4', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7381f16a49c54f27ac70a3284e8912b8', '1', '02_005_0001', 'report_identity_type', '类型', 'Link Report Type', null, null, '4', '1', '2', '50', '2', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('74c43d8796bd414e8bc3ee52492074c0', '1', '04_008_0001', null, '父母姓名', 'Parent\'s Name', null, null, '1', '1', '2', '50', '4', '8', 'D.10.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('770a51aff0da4cf8a9346ec54fab327f', '1', '10_001_0003', 'report_attach_status', '是否属于上报附件', 'Original Document', null, null, '4', '1', '2', '50', '10', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('787054143a854836a32a8a7617133734', '1', '05_001_0029', null, '报告适应症编号（字典编码）', 'Drug Indication', null, null, '4', '1', '2', '50', '5', '3', 'G.k.7.r.2b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('78fd2f332e3a4fb9a6decce0acdc122c', '1', '01_002_0008', null, '不良事件名称', 'Name of AE', null, null, '1', '2', '1', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('792a16cf294243cda4f056ea6a45fb84', '1', '06_001_0008', 'severity', '严重程度', 'Severity', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7cc2898ba25442db9982ecd3cbcd0cec', '1', '03_001_0019', 'evaluation', '报告者单位评价', 'Reporter\'s Organisation Evaluation', null, null, '4', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7ea9b4280d3d4f6c9d550df2ea4deefb', '1', '02_002_0002', null, '中心编号', 'Center Id', null, null, '1', '1', '2', '50', '2', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('7fa598968f07459aadd0245810860e7a', '1', '03_001_0014', 'is_primary_reporter', '是否首要报告者', 'Primary Reporter', null, null, '4', '1', '2', '50', '3', '1', 'C.2.r.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8171d46a7c3d4bb4a122977f875da251', '1', '04_002_0005', null, '说明', 'Medical Narrative', null, null, '1', '1', '2', '2000', '4', '2', 'D.7.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('81754920893b4a788586d1cc81f14362', '1', '04_005_0002', 'autopsy', '是否进行尸检', 'Autopsy', null, null, '4', '1', '2', '50', '4', '6', 'D.9.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('838a03e6a5424b2e92158b0765dca627', '1', '06_001_0018', 'event_out_come', '事件转归情况', 'Outcome of AE', null, null, '4', '1', '1', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8406ac36f0e446138989a03f38026c79', '1', '01_003_0005', null, '年龄', 'Patient\'s Age', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8491f5dea500419283e6b13c64ca2e4c', '1', '06_001_0003', null, '不良事件名称', 'Name of AE', null, null, '1', '1', '1', '50', '6', '1', 'E.i.1.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8c37289350434851a35f2403b724ecad', '1', '06_001_0019', null, '后遗症表现', 'sequela', null, null, '1', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8cfff0117ce449d6af8afdb013a97248', '1', '04_001_0015', null, '住院号', 'Hospital Record Number', null, null, '1', '1', '2', '50', '4', '1', 'D.1.1.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8d2cd96d40ca4a77b50f99681f1ab219', '1', '04_004_0015', null, '1分钟APGAR评分', 'APGAR 1 Minute', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8d3fe78626cc40d49b65144c100be691', '1', '10_001_0004', null, '描述', 'Document Note', null, null, '1', '1', '2', '2000', '10', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('8f47cb5e903b4c3482bb7816671c139d', '1', '01_003_0006', 'age_unit', '年龄单位', 'Patient\'s Age Unit', null, null, '4', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('912bf692a8974338a4fd428334768de4', '1', '04_006_0002', null, '死因描述', 'Death Narrative', null, null, '1', '1', '2', '2000', '4', '6', 'D.9.2.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9304ba921bba459282689709b569ea21', '1', '02_002_0001', null, '项目编号', 'Study Registration Number', null, null, '1', '1', '2', '50', '2', '1', 'C.5.1.r.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('94caa1785f0d429b97608653774cc11e', '1', '02_001_0012', 'report_from_other_companies', '报告来自其他公司', 'Report from other companies', null, null, '4', '1', '2', '50', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('959cb1ecc9a547d9b47a8830035f898a', '1', '05_001_0009', 'is_research_drug', '研究药物', 'Study Drug', null, null, '4', '1', '2', '50', '5', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('972c829c82b94619a64be2c268a1a343', '1', '05_001_0010', 'bind_test_drug', '设盲的试验用药', 'Investigational Product Blinded', null, null, '4', '1', '2', '50', '5', '1', 'G.k.2.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9a6169a499dc481b83d37fdcf83dc596', '1', '04_001_0003', null, '出生日期', 'Patient\'s Birthdate', null, null, '6', '1', '2', '25', '4', '1', 'D.2.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9aeb653a66d440c38eeb88a2733e60ec', '1', '06_001_0016', 'action_taken', '采取措施', 'Action(s) Taken', null, null, '10', '1', '2', '50', '6', '1', 'E.i.7', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9c3a92e7cfc4473b8bfb52cf635b46a4', '1', '01_001_0001', null, '首次获知时间', 'First Received Date', null, null, '6', '2', '2', '25', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9c5028f425754f68b86335bdc28c1e1d', '1', '04_009_0002', null, '用药开始日期', 'Parent\'s Drug Start Date', null, null, '6', '1', '2', '25', '4', '10', 'D.10.8.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9d72621ceeb546be97d7129fb6633cac', '1', '02_001_0001', null, '首次获知时间', 'First Received Date', null, null, '6', '1', '1', '25', '2', '1', 'C.1.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9e9114144c3c411ab4ebe09ba39bd93c', '1', '02_001_0003', 'source_info_name', '企业信息来源', 'Enterprise Information Sources', null, null, '4', '1', '2', '50', '2', '1', 'ADR', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9ec4414e35fa43008e33b1e08f01cfc8', '1', '02_004_0003', null, '病例识别码', 'Case ID', null, null, '1', '1', '2', '50', '2', '4', 'C.1.9.1.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('9ff6991da36b4d56ae845f2e4f89db0d', '1', '07_001_0003', 'qualifier', '检查结果（限定符）', 'Test Result Value', null, null, '4', '1', '2', '50', '7', '1', 'F.r.3.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a008029c8a3d4850ab2e86974f5721ba', '1', '01_002_0009', null, '不良事件PT', 'AE PT', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a0417e1592e148238e338289c3d47e83', '1', '02_002_0006', null, '研究描述', 'Description Of Study', null, null, '1', '1', '2', '2000', '2', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a1407cb03b6e45188fa90ee300bc2c71', '1', '01_004_0004', null, '发表时间', 'Literature Date', null, null, '6', '2', '2', '25', '1', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a165991d12b8455b8a78909f10bbf8c7', '1', '02_005_0002', null, '编号', 'Link Report Id', null, null, '1', '1', '2', '50', '2', '5', 'C.1.10.r', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a1677addc27949f0a87eed5c429c332c', '1', '03_001_0005', null, '报告者单位', 'Reporter\'s Organisation', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.2.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a1ed0a1753784efb8c1a94e5774dbc42', '1', '04_008_0006', null, '父母体重（kg）', 'Parent\'s Weight', null, null, '1', '1', '2', '50', '4', '8', 'D.10.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a20269e5b25b4a478e56a20aa4ada5da', '1', '04_008_0011', 'is_ongoing', '是否持续', 'Parent\'s Ongoing or not', null, null, '4', '1', '2', '50', '4', '10', 'D.10.7.1.r.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a204e9ddba294aea9472743344fa095c', '1', '09_001_0006', null, '备注', 'Causality Note', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a30749013a9443938cd85a80cdde528f', '1', '01_001_0003', 'ISO-3166country_code', '事件发生国家', 'Event Occurred Country', null, null, '5', '2', '2', '50', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a4a6dbb50f354ea6b4afd625678a84b5', '1', '07_001_0004', 'inspect_outcome', '检查结果（值）', 'Test Result Qualifier', null, null, '4', '1', '2', '50', '7', '1', 'F.r.3.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a5cbceed5dbe43dfbf378e2796345166', '1', '08_001_0004', null, '不良事件', 'Name of AE', null, null, '1', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a6d6ac02063a4e9da5469ea0589b066f', '1', '05_001_0008', 'ISO-3166country_code', '药物获得国家', 'Obtained Country', null, null, '5', '1', '2', '50', '5', '1', 'G.k.2.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a7438015060e49839d74ddd8f01398f4', '1', '03_001_0001', null, '报告者职位', 'Reporter\'s Title', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.1.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a7578fbc60d541e3a15531cbc59fbb77', '1', '02_001_0011', null, '企业首位获悉人联系方式', 'First Company Learned Tel', null, null, '1', '1', '2', '50', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a78f5d8c6b074501975a13c40d1a10b8', '1', '05_001_0001', 'drug_character', '药物特征', 'Drug Characterisation', null, null, '4', '1', '1', '50', '5', '1', 'G.k.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a853a39cd32b4b4ea75c829db1d2ea99', '1', '04_008_0010', null, '病史开始日期', 'Parent\'s Medical Start Date', null, null, '6', '1', '2', '25', '4', '9', 'D.10.7.1.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a8ae3d9d07844227b3add032d534da57', '1', '04_001_0014', null, '门诊号', 'Medical Record Number', null, null, '1', '1', '2', '50', '4', '1', 'D.1.1.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a8f4bd0258ed4707aa8b447336f2adaf', '1', '03_001_0009', 'province', '报告者省份', 'Reporter\'s Province', null, null, '5', '1', '2', '50', '3', '1', 'C.2.r.2.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('a96f628bb0a3432990e8676ffe1db3bd', '1', '03_001_0012', 'ISO-3166country_code', '报告者国家代码', 'Reporter\'s Country Code', null, null, '5', '1', '2', '50', '3', '1', 'C.2.r.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('aba8587245494a9d98906c04bb49f406', '1', '01_003_0001', null, '患者姓名', 'Patient\'s name', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ad37452992c941a59abb26ea1a56035f', '1', '01_002_0002', null, '通用名', 'Common name', null, null, '1', '2', '1', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ad50613cada84cc3a848bca34e80d2b9', '1', '08_001_0007', 'reporter_evaluation', '报告者评价', 'Reporter\'s  Evaluation', null, null, '4', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b032d6cf13044031a0d942bf40247423', '1', '08_001_0003', null, '通用名称', 'Common Name', null, null, '1', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b04f5d244d20412897d5003ba56c0b4a', '1', '04_008_0013', null, '文字描述', 'Parent\'s Medical Narrative', null, null, '1', '1', '2', '2000', '4', '10', 'D.10.7.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b0e04e769e394acf93359799742f178d', '1', '01_004_0003', null, '刊名', 'Literature journals', null, null, null, '2', '2', '50', '1', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b1f3fb225dcb4362ae7f1a191031dd03', '1', '08_001_0014', 'zjf', '再次给药后是否再次发生反应？', 'Dechallenge', null, null, '4', '1', '2', '50', '8', '1', 'G.k.9.i.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b254246975674f79ab4c41c900084f66', '1', '04_003_0001', null, '药物名称', 'Drug name', null, null, '1', '1', '2', '50', '4', '3', 'D.8.r.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b6614d1a8b6e4a81afce06cdcf6212ed', '1', '04_001_0009', 'sex', '性别', 'Patient\'s Sex', null, null, '4', '1', '2', '50', '4', '1', 'D.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b704cc910ff548199887eec10026a3b2', '1', '04_001_0002', null, '患者姓名缩写', 'Patient\'s initials', null, null, '1', '1', '2', '50', '4', '1', 'D.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b7ae6b45e6a74be3ac1a2f44eacd32bd', '1', '07_001_0005', 'inspect_unit', '检查结果（单位）', 'Test  Result Unit', null, null, '4', '1', '2', '50', '7', '1', 'F.r.3.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b8194abf17db4768b6efcedd11889002', '1', '01_003_0009', null, '报告者姓名', 'Reporter\'s Name', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('b9b5ce4a4d8d4797a93c679cb52a0bfe', '1', '01_003_0003', 'sex', '性别', 'Patient\'s Sex', null, null, '4', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('bb497ba0bd514711b00d6621e314479e', '1', '03_001_0018', 'reporter_evaluation', '报告者评价', 'Reporter\'s Evaluation', null, null, '4', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('bea8481468f0429688ebebef7762a80c', '1', '04_009_0003', null, '用药结束日期', 'Parent\'s Drug End Date', null, null, '6', '1', '2', '25', '4', '10', 'D.10.8.r.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('bee342879f214abea12b6b2cc3cd5823', '1', '06_001_0009', 'ctcae_classification', 'CTCAE分级', 'CTC AE classification', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('bf0bb741fc2d4a39968630e935baea24', '1', '09_001_0003', 'is_serverity', '报告是否严重', 'Seriousness', null, null, '4', '1', '2', '50', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('c1bf124f93fc4e7aa1b00161578a1ac6', '1', '03_001_0021', 'research_role', '研究者角色', 'Reporter\'s Role', null, null, '4', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('c2d1fead77c04486814fbe835362b064', '1', '07_001_0001', null, '检查日期', 'Test Date', null, null, '1', '1', '2', '50', '7', '1', 'F.r.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('c368217831714e76af40210f3ad7dc30', '1', '01_001_0002', null, 'PV获知时间', 'PV Received Date', null, null, '6', '2', '1', '25', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('c572fc389cb449789b1a3a1b07468e2a', '1', '04_001_0008', null, '身高（cm）', 'Patient\'s Height', null, null, '1', '1', '2', '50', '4', '1', 'D.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('c5fa86767b484abe993ae7ebdab9d672', '1', '02_002_0005', null, '研究名称', 'Name Of Study', null, null, '1', '1', '2', '50', '2', '2', 'C.5.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ca6a40737596460ca122cde6f8691489', '1', '04_002_0003', 'is_ongoing', '是否持续', 'Ongoing or not', null, null, '4', '1', '2', '50', '4', '2', 'D.7.1.r.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ca81a9e2eb2342fbacc914288b0af3eb', '1', '08_001_0001', null, '生产厂商', 'Manufacturer', null, null, '1', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('caa335a542db44a69b3e4946df47f296', '1', '03_001_0020', 'reporter_privacy_confidential', '隐私机密', 'Reporter Privacy confidential', null, null, '4', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cae3c10065aa4d7aac2aacc138104531', '1', '02_002_0003', 'clinical-research', '研究分期', 'Study Type Where Reaction(s)', null, null, '4', '1', '2', '50', '2', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cafbd90ac0124ed9a1e885f04518e57b', '1', '04_008_0007', null, '父母身高（cm）', 'Parent\'s Height', null, null, '1', '1', '2', '50', '4', '8', 'D.10.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cb2ff18b88b64a6bae5b54599eacd1b9', '1', '01_001_0007', 'seriousness', '报告严重性', 'Seriousness', null, null, '2', '2', '2', '50', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cba8f9069ecc47439fd06089694a6bf7', '1', '04_003_0003', null, '用药结束日期', 'Drug End Date', null, null, '6', '1', '2', '25', '4', '3', 'D.8.r.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cc16edc65a9446c7a81fa3f132141824', '1', '04_001_0005', 'age_unit', '年龄单位', 'Patient\'s Age Unit', null, null, '4', '1', '2', '50', '4', '1', 'D.2.2.b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cc52972fbda14b91a066e158265d5f15', '1', '04_008_0003', null, '父母年龄', 'Parent\'s Age', null, null, '1', '1', '2', '50', '4', '8', 'D.10.2.2a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cd970b2377d54983a94a9c980490337d', '1', '05_001_0027', 'drug-way', '给药途径', 'Route of Administration', null, null, '5', '1', '2', '50', '5', '2', 'G.k.4.r.10.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('cf3cdd3870c24c4d8e8ba6cd52a1fcb9', '1', '04_008_0009', 'history_type', '病史（疾病/手术等code)', 'Parent\'s Medical code', null, null, '4', '1', '2', '50', '4', '9', 'D.10.7.1.r.1b', '1,3', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d04c947fb19a4069a38184502fa2ba55', '1', '04_001_0012', null, '患者电话', 'Patient\'s Telephone', null, null, '1', '1', '1', '50', '4', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d0544e6899134076a5847bc777b48b3a', '1', '02_001_0009', null, '迟报原因', 'Delayed Reason', null, null, '1', '1', '2', '50', '2', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d11edd73eafa4e5dae7bae8296f1baea', '1', '04_004_0002', null, '事件发生孕周', 'Gestation Period', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d3a826bd1f1446a1978ff9ca5fe5fa33', '1', '05_001_0006', null, '规格', 'Strength', null, null, '1', '1', '2', '50', '5', '1', 'G.k.2.3.r.3a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d42e41516bd54c48ada1b4fec26c7d0b', '1', '05_001_0014', null, '生产厂家', 'Manufacturer', null, null, '1', '1', '2', '50', '5', '1', 'G.k.3.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d548286ad4274af9990202d7684fc6e5', '1', '06_001_0024', 'sae_reports', 'SAE报道情况（国外）', 'SAE reports (foreign)', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d7fb9ab69ffd41399a24ec340ef7a9dd', '1', '04_007_0001', null, '尸检-确定的死因（字典编码）', 'Autopsy Code', null, null, '4', '1', '2', '50', '4', '7', 'D.9.4.r.1b', '1,2', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('d9cfbbc63e0246df831ff65d67505edc', '1', '01_001_0006', 'SUSAR', 'SUSAR', 'SUSAR', null, null, '4', '2', '2', '50', '1', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('db7c564fcfd045b58171d98d14f4b869', '1', '02_002_0004', 'research-type', '研究类型', 'Type Of Study', null, null, '4', '1', '2', '50', '2', '2', 'C.5.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('dc986e3fb3084591a3cf99d655b3905a', '1', '03_001_0008', 'city', '报告者城市', 'Reporter\'s City', null, null, '5', '1', '2', '50', '3', '1', 'C.2.r.2.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('dca732618984490ca0d5d3b16b70c3a0', '1', '04_001_0013', null, '医院名称', 'Hospital Name', null, null, '1', '1', '2', '50', '4', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ddfae33edfcf457a9d87645a7de93717', '1', '04_004_0007', null, '分娩胎儿数', 'Number of Fetus', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('de7a1cccc1b04ba3931bf831e73551e3', '1', '04_002_0004', null, '病史结束日期', 'Medical End Date', null, null, '6', '1', '2', '25', '4', '2', 'D.7.1.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('deaf40695c6b4b5ba15c1f33067bc343', '1', '04_001_0017', 'reporter_privacy_confidential', '隐私机密', 'Patient\'s Privacy', null, null, '4', '1', '2', '50', '4', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e3b71ad4062d485f9ce8e6dc1db45bd7', '1', '10_001_0005', 'attach-format', '文件格式', 'File Type', null, null, '4', '2', '2', '50', '10', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e59062fbd544414399c924f3e144aad8', '1', '09_001_0010', null, '备注', 'Outcome of AE Note', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e631a6a956ef4e8fa489f77b92b8b52a', '1', '04_002_0002', null, '病史开始日期', 'Medical Start Date', null, null, '6', '1', '2', '25', '4', '2', 'D.7.1.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e6607f3bab924e739ec4c303a9b3e56e', '1', '09_001_0004', null, '备注', 'Seriousness Note', null, null, '1', '1', '2', '2000', '9', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e72a901bde43492cbdc5f096af1670af', '1', '04_001_0018', 'relevant_medical_history', '相关重要信息', 'Important Information', null, null, '3', '1', '2', '50', '4', '1', 'ADR', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e78f373327c8436aa4b4e8b72c78caa5', '1', '04_008_0004', 'age_unit', '年龄单位', 'Parent\'s Age Unit', null, null, '4', '1', '2', '50', '4', '8', 'D.10.2.2b', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('e8096f4612a74f7499b59a11857db534', '1', '04_003_0002', null, '用药开始日期', 'Drug Start Date', null, null, '6', '1', '2', '25', '4', '3', 'D.8.r.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ec6689f913a9410c9494c5633ec9ccc2', '1', '06_001_0015', 'frequency', '事件发生频率', 'Frequency', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ed5e78fa03644e149f12a16f31e8e891', '1', '01_003_0004', null, '出生日期', 'Patient\'s Birthdate', null, null, '6', '2', '2', '25', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('eefca44b472f490c8961bff56b06e381', '1', '01_003_0011', null, '所属机构', 'Reporter\'s Organisation', null, null, '1', '2', '2', '50', '1', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('ef573b3727be464ba5b436f4c7f49a98', '1', '04_007_0002', null, '死因描述', 'Death Narrative', null, null, '1', '1', '2', '2000', '4', '7', 'D.9.2.r.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('efdaca3c45834744bcbcbbf3240f3b56', '1', '08_001_0009', 'reporter_evaluation', '因果关系修正', 'Causality Update', null, null, '4', '2', '2', '50', '8', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f2f63ab9a9a94e6bab4fbf1a1c9e5a14', '1', '06_001_0010', 'standard_of_seriousness', '严重性标准', 'Severity', null, null, '3', '1', '2', '50', '6', '1', 'E.i.3.2', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f3604cfdd2294b88bd4db3c579a38ead', '1', '03_001_0003', null, '报告者姓', 'Reporter\'s Family Name', null, null, '1', '1', '2', '50', '3', '1', 'C.2.r.1.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f36c0c4f989e43eca060d90f395e6d9b', '1', '04_001_0016', null, '受试者编号', 'Patient\'s Id', null, null, '1', '1', '2', '50', '4', '1', 'D.1.1.4', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f37edb9d9d9f4d11a39360a4b184d940', '1', '02_001_0005', 'is_attach', '是否有原始资料', 'Original Document', null, null, '4', '1', '2', '50', '2', '1', 'C.1.6.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f3b6cbd8f06b48159668c60b544d7b51', '1', '03_001_0015', null, '报告者邮箱', 'Reporter\'s Email', null, null, '1', '1', '2', '50', '3', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f412b490eb1f48baa2205055cfdc826c', '1', '01_002_0010', null, '不良事件结果', 'Outcome of AE', null, null, '1', '2', '2', '50', '1', '2', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f5fa19e75be440198c314e16e0d49ef3', '1', '04_008_0002', null, '父母出生日期', 'Parent\'s BiarthDate', null, null, '6', '1', '2', '25', '4', '8', 'D.10.2.1', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f6da391744c443e193c604244e44ce95', '1', '02_003_0003', null, '刊名', 'Literature journals', null, null, '1', '1', '2', '50', '2', '3', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f70e4487b5404fba9d3b880ed5fc71a3', '1', '02_001_0004', 'received_from', '企业报告类型', 'Type Of Report', null, null, '4', '1', '1', '50', '2', '1', 'C.1.3', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f7b508e156c94c5893b27d1a0d4bbcc0', '1', '03_001_0011', null, '报告者电话', 'Reporter\'s Telephone', null, null, '1', '1', '1', '50', '3', '1', 'C.2.r.2.7', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f7bad6285ea84ab69c0f84c976612b18', '1', '05_001_0004', null, '英文名称', 'English Name', null, null, '1', '1', '2', '50', '5', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f7cd55e3dafb45d49563137a1866345e', '1', '03_001_0004', 'company_type', '报告者单位类型', 'Type of Reporter\'s Organisation', null, null, '4', '1', '2', '50', '3', '1', 'ADR', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f7d71b629f5b46e2be633a90f34b7728', '1', '06_001_0023', 'sae_reports', 'SAE报道情况（国内）', 'SAE reports (domestic)', null, null, '4', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f919fc8fa72149efa4c28ecdefd80e35', '1', '04_004_0012', null, '身高（cm）', 'Neonatal\'s Height', null, null, '1', '1', '2', '50', '4', '5', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('f9d4517fea154ccbb9950c5616ba82d9', '1', '02_001_0006', 'SUSAR', 'SUSAR', 'SUSAR', null, null, '4', '1', '1', '50', '2', '1', 'C.1.7', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fb8cd5a5023b448facc7f28ddc635cf7', '1', '04_003_0005', null, '反应（coode）', 'Drug Reaction', null, null, '4', '1', '2', '50', '4', '3', 'D.8.r.7b', '1,2', null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fd2fbf557d394a6d8532db69aa9fea1e', '1', '05_001_0011', null, '揭盲日期', 'Date For Unblinding', null, null, '6', '1', '2', '25', '5', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fd3057dbfac44edaae4c85c249ef1611', '1', '05_001_0023', null, '给药的持续时间', 'Drug Duration', null, null, '1', '1', '2', '50', '5', '2', 'G.k.4.r.6a', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fd936668cf3444ecb70e29925f389c30', '1', '06_001_0012', null, '事件结束日期', 'End Date of AE', null, null, '6', '1', '2', '25', '6', '1', 'E.i.5', null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fec6dc7093de4d2e89c40a99e0387665', '1', '04_004_0005', null, '妊娠次数', 'Gravida', null, null, '1', '1', '2', '50', '4', '4', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+INSERT INTO `field_test` VALUES ('fed56bdd14e846fa98371efdcfbd4e40', '1', '06_001_0020', 'impacton_primary_disease', '对原患疾病的影响', 'Impact on Primary Disease', null, null, '3', '1', '2', '50', '6', '1', null, null, null, null, null, null, null, '1', null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for field_test_conpany
+-- ----------------------------
+DROP TABLE IF EXISTS `field_test_conpany`;
+CREATE TABLE `field_test_conpany` (
+  `id` char(32) NOT NULL,
+  `field_type` int(11) DEFAULT NULL COMMENT '字段类型1系统通用，2内置字段，3私有字段',
+  `company_id` char(32) DEFAULT NULL,
+  `field_code` varchar(64) DEFAULT NULL COMMENT '字段编码',
+  `dict_data_name` varchar(32) DEFAULT NULL COMMENT '字段对应字典',
+  `field_chinese_name` varchar(32) DEFAULT NULL COMMENT '字段中文名',
+  `field_english_name` varchar(255) DEFAULT NULL COMMENT '字段英文名',
+  `table_name` varchar(32) DEFAULT NULL COMMENT '数据表名称',
+  `attribute_name` varchar(255) DEFAULT NULL COMMENT '表字段名',
+  `html_type` int(11) DEFAULT NULL COMMENT '控件类型',
+  `edit_status` int(11) DEFAULT NULL COMMENT '是否可编辑1可编辑，2不可编辑',
+  `required_field` int(11) DEFAULT NULL COMMENT '是否必填1必填，2不必填',
+  `field_length` varchar(11) DEFAULT NULL COMMENT '最大长度',
+  `field_owner_boundary` int(11) DEFAULT NULL COMMENT '所属界面',
+  `field_owner_paragraph` int(11) DEFAULT NULL COMMENT '所属段落',
+  `export_node` varchar(255) DEFAULT NULL COMMENT 'etb导出节点',
+  `dic_type` varchar(11) DEFAULT NULL COMMENT '字典类型',
+  `dic_language` int(11) DEFAULT NULL COMMENT '字典语言',
+  `dic_version` int(11) DEFAULT NULL COMMENT '字典版本',
+  `field_statistical` int(11) DEFAULT NULL COMMENT '参与统计(1:是,2:否)',
+  `field_qc` int(11) DEFAULT NULL COMMENT '参与QC(1:是,2:否)',
+  `field_search` int(11) DEFAULT NULL COMMENT '参与搜索(1:是,2:否)',
+  `delete_status` int(11) DEFAULT NULL COMMENT '删除状态1正常，2删除',
+  `remark` varchar(32) DEFAULT NULL COMMENT '备注',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of field_test_conpany
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for file_information
 -- ----------------------------
 DROP TABLE IF EXISTS `file_information`;
@@ -508,33 +1709,6 @@ CREATE TABLE `file_information` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for file_report
--- ----------------------------
-DROP TABLE IF EXISTS `file_report`;
-CREATE TABLE `file_report` (
-  `id` char(32) NOT NULL DEFAULT '' COMMENT '主键ID',
-  `company_id` char(32) DEFAULT NULL COMMENT '公司ID',
-  `project_id` char(32) DEFAULT NULL COMMENT '项目id',
-  `report_source` char(32) DEFAULT NULL COMMENT '报告来源',
-  `report_name` varchar(100) DEFAULT NULL COMMENT '报告名称',
-  `report_series` varchar(80) DEFAULT NULL COMMENT '报告编号',
-  `report_received_date` datetime DEFAULT NULL COMMENT '接收时间',
-  `report_severity` varchar(40) DEFAULT NULL COMMENT '报告严重性 （一般 严重 死亡 其他）',
-  `report_handle_user_id` char(32) DEFAULT NULL COMMENT '处理人id',
-  `delete_status` int(11) DEFAULT '0' COMMENT '删除状态(1:未删除，0:已删除)',
-  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
-  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
-  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
-  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
-  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='资料存放目录信息';
-
--- ----------------------------
--- Records of file_report
--- ----------------------------
-
--- ----------------------------
 -- Table structure for folder_information
 -- ----------------------------
 DROP TABLE IF EXISTS `folder_information`;
@@ -559,14 +1733,33 @@ CREATE TABLE `folder_information` (
 -- ----------------------------
 INSERT INTO `folder_information` VALUES ('19edd304d0bf4538add69b9b88a101ba', '50666f125cd245629a89cacf767a0bd5', '62', '13', '1', '1', '1', '1', '33', '2018-10-22 15:10:11', '33', '2018-10-22 15:10:11');
 INSERT INTO `folder_information` VALUES ('1a4012ae8553454cb730cefd5fa10829', '472ae92c76c64b66a392ee8db4aab85b', '62', '13', '第二个二级目录', '12', '1', '1', '33', '2018-10-22 15:11:20', '33', '2018-10-22 15:11:20');
-INSERT INTO `folder_information` VALUES ('472ae92c76c64b66a392ee8db4aab85b', null, 'string', 'string', '测试一级目录', '2', '1', '1', 'string', '2018-10-19 10:09:55', 'string', '2018-10-19 10:09:55');
-INSERT INTO `folder_information` VALUES ('50666f125cd245629a89cacf767a0bd5', null, '62', '13', '新建一级目录2', '2', '1', '1', '33', '2018-10-22 11:32:10', '33', '2018-10-22 11:32:10');
+INSERT INTO `folder_information` VALUES ('1d219e6306e84b559b00703859091f43', null, '62', '13', '新建一级目录', '12', '1', '1', '33', '2018-10-23 17:46:29', '33', '2018-10-23 17:46:29');
+INSERT INTO `folder_information` VALUES ('3710134c32b94f0aa09b461be5068f5d', '5f7d4eab17294b69b3ee5c25dcccbb98', '62', '13', '新建二级目录', '1', '1', '1', '33', '2018-10-23 13:44:36', '33', '2018-10-23 13:44:36');
+INSERT INTO `folder_information` VALUES ('472ae92c76c64b66a392ee8db4aab85b', null, 'string', 'string', '测试一级目录', '2', '1', '1', 'string', '2018-10-19 10:09:55', '33', '2018-10-23 10:36:22');
+INSERT INTO `folder_information` VALUES ('49f989e20c6045bebb48434725e6a7b7', null, '62', '13', '新建一级目录810', '1', '1', '1', '33', '2018-10-23 10:20:02', '33', '2018-10-23 10:37:55');
+INSERT INTO `folder_information` VALUES ('4d4b732d85b14030ac9b10c405f2dc43', null, '62', '13', '新建一级目录02012', '1', '1', '1', '33', '2018-10-23 10:26:37', '33', '2018-10-23 10:26:37');
+INSERT INTO `folder_information` VALUES ('50666f125cd245629a89cacf767a0bd5', null, '62', '13', '新建一级目录2', '2', '1', '1', '33', '2018-10-22 11:32:10', '33', '2018-10-23 10:38:27');
+INSERT INTO `folder_information` VALUES ('55471ce4ffc4420d966458564b9d8fd1', '7d9969e0bae2476a9fc276ebe76d59f5', '62', '13', '121', '21', '1', '1', '33', '2018-10-23 13:27:08', '33', '2018-10-23 13:27:08');
+INSERT INTO `folder_information` VALUES ('55a4c6d8beb34dfb95053729dc2baa77', '91e7f56843db41359e05276200065423', '62', '13', '新建二级目录2-1', '1', '1', '1', '33', '2018-10-23 13:44:56', '33', '2018-10-23 13:45:08');
+INSERT INTO `folder_information` VALUES ('5f7d4eab17294b69b3ee5c25dcccbb98', null, '62', '13', '新建一级目录5', '1', '1', '1', '33', '2018-10-23 13:43:59', '33', '2018-10-23 13:43:59');
+INSERT INTO `folder_information` VALUES ('632c67ff391b434b800c4dbf99d03b37', null, '62', '13', '新建一级目录2', '21', '1', '1', '33', '2018-10-23 13:38:38', '33', '2018-10-23 13:38:38');
 INSERT INTO `folder_information` VALUES ('642fb7a7fbb94249ad4e223d5b908cbc', null, '62', '13', '121', '2', '1', '1', '33', '2018-10-22 18:38:57', '33', '2018-10-22 18:38:57');
+INSERT INTO `folder_information` VALUES ('643aae4eb86a473e87f7f21d6999c1a2', null, '62', '13', '新建一级目录', '1', '1', '1', '33', '2018-10-23 13:26:39', '33', '2018-10-23 13:26:39');
 INSERT INTO `folder_information` VALUES ('6869849bc5a0441cba84b81d44956179', '9d302ab0c62d4ac3a604fc7f269f38d0', '62', '13', '现金', '1', '1', '1', '33', '2018-10-22 15:18:56', '33', '2018-10-22 15:18:56');
-INSERT INTO `folder_information` VALUES ('9028d9ef9e0642679594357de8c1bcab', null, '62', '13', '1', '1', '0', '1', '33', '2018-10-22 11:25:26', '33', '2018-10-22 11:25:26');
+INSERT INTO `folder_information` VALUES ('79d6621e8c164b4eba148a73d8bbd170', '49f989e20c6045bebb48434725e6a7b7', '62', '13', '12', '21', '1', '1', '33', '2018-10-23 13:27:23', '33', '2018-10-23 13:27:23');
+INSERT INTO `folder_information` VALUES ('7d9969e0bae2476a9fc276ebe76d59f5', null, '62', '13', '新建一级目录212', '1', '1', '1', '33', '2018-10-23 10:27:16', '33', '2018-10-23 10:27:16');
+INSERT INTO `folder_information` VALUES ('9028d9ef9e0642679594357de8c1bcab', null, '62', '13', '1', '1', '1', '1', '33', '2018-10-22 11:25:26', '33', '2018-10-22 11:25:26');
+INSERT INTO `folder_information` VALUES ('91e7f56843db41359e05276200065423', null, '62', '13', '新建一级目录', '1', '1', '1', '33', '2018-10-23 13:33:47', '33', '2018-10-23 13:33:47');
 INSERT INTO `folder_information` VALUES ('9d302ab0c62d4ac3a604fc7f269f38d0', null, 'string', 'string', '测试一级目录111', '2', '1', '1', 'string', '2018-10-19 10:27:54', 'string', '2018-10-19 10:27:54');
+INSERT INTO `folder_information` VALUES ('9ed5b3e7f121415091425ab3cbe6f637', null, '62', '13', '新建一级目录810212', '1', '1', '1', '33', '2018-10-23 10:29:25', '33', '2018-10-23 10:29:25');
+INSERT INTO `folder_information` VALUES ('a578f8a619204089afe6b6d8c05a2da5', null, '62', '13', '新建菜单四', '12', '1', '1', '33', '2018-10-23 13:42:41', '33', '2018-10-23 13:42:41');
 INSERT INTO `folder_information` VALUES ('a62e165defac4e0badeea5bf10d6d72f', null, '62', '13', '新建一级目录4', '1', '1', '1', '33', '2018-10-22 11:32:36', '33', '2018-10-22 11:32:36');
-INSERT INTO `folder_information` VALUES ('be5df5a061af4b9a878b332bd7a0aed6', null, '62', '13', '新建一级目录·1', '1', '0', '1', '33', '2018-10-22 11:29:50', '33', '2018-10-22 11:29:50');
+INSERT INTO `folder_information` VALUES ('a8c0f8f17d94491ea8df2c032791d6f0', '4d4b732d85b14030ac9b10c405f2dc43', '62', '13', '21', '2', '1', '1', '33', '2018-10-23 13:27:39', '33', '2018-10-23 13:27:39');
+INSERT INTO `folder_information` VALUES ('b597445c9eb34132a43e4b5f0317225d', '472ae92c76c64b66a392ee8db4aab85b', '62', '13', '新建二级目录3', '1', '1', '1', '33', '2018-10-23 13:32:54', '33', '2018-10-23 13:32:54');
+INSERT INTO `folder_information` VALUES ('be5df5a061af4b9a878b332bd7a0aed6', null, '62', '13', '新建一级目录·1', '1', '1', '1', '33', '2018-10-22 11:29:50', '33', '2018-10-22 11:29:50');
+INSERT INTO `folder_information` VALUES ('e4ac404ec2b24e3d912964b2e09281b8', null, '62', '13', '新建目录三', '12', '1', '1', '33', '2018-10-23 13:40:54', '33', '2018-10-23 13:40:54');
+INSERT INTO `folder_information` VALUES ('f68cde7eb7e44b50b3951d915a028f38', '5f7d4eab17294b69b3ee5c25dcccbb98', '62', '13', '新建二级目录', '1', '1', '1', '33', '2018-10-23 13:44:34', '33', '2018-10-23 13:44:34');
+INSERT INTO `folder_information` VALUES ('f9374da3881d4e1ca8bc729c50923fc2', null, '62', '13', '新建一级目录8', '1', '1', '1', '33', '2018-10-23 10:19:49', '33', '2018-10-23 10:19:49');
 
 -- ----------------------------
 -- Table structure for mailbox
@@ -609,6 +1802,126 @@ INSERT INTO `mailbox` VALUES ('acb85c8eaf844aeb898ee6ceffcf58cb', '62', '88@qq.c
 INSERT INTO `mailbox` VALUES ('af4f2be0523d463fb50f15eb0a2893e3', '62', 'sha@sha.cn', 'test123', '123234345', '3', 'stmpsds123', '1', '9090', '2', '1', '4', '33', '2018-09-10 16:52:30', '33', '2018-09-11 13:45:58');
 INSERT INTO `mailbox` VALUES ('e74b81eb5e344ffe837704e8920fabf7', '62', '11@bioon.com', '次奥', '123456', '1', '22@bioon.com', '1', '8808', '2', '1', '4', '33', '2018-09-11 11:39:32', '33', '2018-09-14 14:24:46');
 INSERT INTO `mailbox` VALUES ('eb18f4e604a64eb586ddabc995bec1c2', '62', 'sdf@cm.cn', 'asds', '123343453', '1', 'stmpsdf', '1', '9090', '2', '1', '2', '33', '2018-09-11 17:36:45', '33', '2018-09-14 13:12:06');
+
+-- ----------------------------
+-- Table structure for overview_drug_event_info
+-- ----------------------------
+DROP TABLE IF EXISTS `overview_drug_event_info`;
+CREATE TABLE `overview_drug_event_info` (
+  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `report_id` varchar(32) NOT NULL COMMENT '报告ID',
+  `project_id` varchar(32) NOT NULL COMMENT '项目ID',
+  `company_id` varchar(32) NOT NULL COMMENT '公司ID',
+  `drug_type` int(11) DEFAULT NULL COMMENT '药品类型',
+  `drug_generic_name` varchar(128) DEFAULT NULL COMMENT '药品通用名',
+  `drug_trade_name` varchar(128) DEFAULT NULL COMMENT '药品商品名',
+  `drug_manufacturer` varchar(32) DEFAULT NULL COMMENT '药品生产厂家',
+  `production_batch` varchar(32) DEFAULT NULL COMMENT '生产批次',
+  `medical_reasons` varchar(128) DEFAULT NULL COMMENT '用药原因',
+  `adverse_events_time` datetime DEFAULT NULL COMMENT '不良事件发生时间',
+  `adverse_events_name` varchar(32) DEFAULT NULL COMMENT '不良事件名称',
+  `adverse_events_pt` varchar(32) DEFAULT NULL COMMENT '不良事件pt',
+  `adverse_events_result` varchar(128) DEFAULT NULL COMMENT '不良事件结果',
+  `DELETE_STATUS` int(11) DEFAULT NULL COMMENT '删除状态',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='概览-药品与不良事件信息';
+
+-- ----------------------------
+-- Records of overview_drug_event_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for overview_literature_info
+-- ----------------------------
+DROP TABLE IF EXISTS `overview_literature_info`;
+CREATE TABLE `overview_literature_info` (
+  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `report_id` varchar(32) NOT NULL COMMENT '报告ID',
+  `project_id` varchar(32) NOT NULL COMMENT '项目ID',
+  `company_id` varchar(32) NOT NULL COMMENT '公司ID',
+  `literature_name` varchar(128) DEFAULT NULL COMMENT '文献篇名',
+  `literature_author` varchar(32) DEFAULT NULL COMMENT '文献作者',
+  `literature_title` varchar(128) DEFAULT NULL COMMENT '文献刊名',
+  `literature_published_time` datetime DEFAULT NULL COMMENT '文献发表时间',
+  `DELETE_STATUS` int(11) DEFAULT NULL COMMENT '删除状态',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='概览-文献信息';
+
+-- ----------------------------
+-- Records of overview_literature_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for overview_patient_reporter_info
+-- ----------------------------
+DROP TABLE IF EXISTS `overview_patient_reporter_info`;
+CREATE TABLE `overview_patient_reporter_info` (
+  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `report_id` varchar(32) NOT NULL COMMENT '报告ID',
+  `project_id` varchar(32) NOT NULL COMMENT '项目ID',
+  `company_id` varchar(32) NOT NULL COMMENT '公司ID',
+  `patient_name` varchar(32) DEFAULT NULL COMMENT '患者姓名',
+  `patient_phone` int(11) DEFAULT NULL COMMENT '患者电话',
+  `patient_sex` int(11) DEFAULT NULL COMMENT '患者性别',
+  `patient_birth_time` datetime DEFAULT NULL COMMENT '患者出生日期',
+  `patient_age` int(11) DEFAULT NULL COMMENT '患者年龄',
+  `patient_age_unit` varchar(32) DEFAULT NULL COMMENT '患者年龄单位',
+  `centre_number` varchar(32) DEFAULT NULL COMMENT '中心编号',
+  `patient_number` varchar(32) DEFAULT NULL COMMENT '患者编号',
+  `reporter_name` varchar(32) DEFAULT NULL COMMENT '报告者姓名',
+  `reporter_phone` int(11) DEFAULT NULL COMMENT '报告者电话',
+  `reporter_affiliation` varchar(32) DEFAULT NULL COMMENT '报告者所属机构',
+  `DELETE_STATUS` int(11) DEFAULT NULL COMMENT '删除状态',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='概览-患者与报告者信息';
+
+-- ----------------------------
+-- Records of overview_patient_reporter_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for overview_report_attributes
+-- ----------------------------
+DROP TABLE IF EXISTS `overview_report_attributes`;
+CREATE TABLE `overview_report_attributes` (
+  `ID` varchar(32) NOT NULL COMMENT '主键ID',
+  `report_id` varchar(32) NOT NULL COMMENT '报告ID',
+  `project_id` varchar(32) NOT NULL COMMENT '项目ID',
+  `company_id` varchar(32) NOT NULL COMMENT '公司ID',
+  `report_first_received_date` datetime DEFAULT NULL COMMENT '首次获知时间',
+  `pv_received_date` datetime DEFAULT NULL COMMENT 'pv获知时间',
+  `event_origin_country` varchar(32) DEFAULT NULL COMMENT '事件发生国家',
+  `report_type` int(11) DEFAULT NULL COMMENT '企业报告类型',
+  `first_follow_up` int(11) DEFAULT NULL COMMENT '首次/随访',
+  `report_susar` int(11) DEFAULT NULL COMMENT '快速报告SUSAR',
+  `report_severity` int(11) DEFAULT NULL COMMENT '报告严重性',
+  `DELETE_STATUS` int(11) DEFAULT NULL COMMENT '删除状态',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='概览-报告属性';
+
+-- ----------------------------
+-- Records of overview_report_attributes
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for project_drug
@@ -949,6 +2262,7 @@ INSERT INTO `regulations` VALUES ('75f54927fd534f669db6f18cb815fab8', '62', '756
 INSERT INTO `regulations` VALUES ('7988862732e443e289979a263442ad0c', '62', '死亡', '死亡', '1', '6', '1', '2', '[{\"label\":\"医学评审\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据质控\",\"value\":1}]', '4', '33', '2018-09-20 13:37:40', '33', '2018-09-20 14:42:53');
 INSERT INTO `regulations` VALUES ('7a66b973c2c84d9298d8e9f982e19be1', '62', '杀杀杀杀123', '报告规则', '61', '8', '2', '天', '[{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"数据质控\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"医学评审\",\"value\":3}]', '3', '33', '2018-09-12 16:44:18', '33', '2018-09-12 16:44:47');
 INSERT INTO `regulations` VALUES ('91bec56290f44943867f03116fe6a6c7', '62', '发过的', '报告规则', '3', '6', '2', '天', '[{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"数据质控\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"医学评审\",\"value\":1}]', '2', '33', '2018-09-12 16:51:50', '33', '2018-09-12 16:52:37');
+INSERT INTO `regulations` VALUES ('94d873c85427407a81600801e16fbe07', '62', '测试', '严重', '1', '8', '1', '天', '[{\"label\":\"1\",\"value\":1},{\"label\":\"法规\",\"value\":1},{\"label\":\"发的\",\"value\":1},{\"label\":\"不超过\",\"value\":1},{\"label\":\"f\",\"value\":4}]', '1', '33', '2018-10-24 16:04:55', '33', '2018-10-24 16:04:55');
 INSERT INTO `regulations` VALUES ('9eb06fb043ce4982bfb90ee567255cd0', '62', 'uy', '其他', '7', '7', '1', '天', '[{\"label\":\"发过火\",\"value\":7}]', '1', '33', '2018-09-18 18:00:28', '33', '2018-09-18 18:00:28');
 INSERT INTO `regulations` VALUES ('a1f7fe20752f49eb872a15cfb15535a5', '62', '严重', '严重', '14', '3', '1', '天', '[{\"label\":\"0\",\"value\":2},{\"label\":\"1\",\"value\":1}]', '5', '33', '2018-09-14 15:46:19', '33', '2018-09-18 15:05:46');
 INSERT INTO `regulations` VALUES ('c043e4d1cf9f4d4c9c4bc633caa4fe6c', '62', '一般', '一般', '3', '6', '1', '天', '[{\"label\":\"医学评审\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据质控\",\"value\":1}]', '1', '33', '2018-09-20 14:41:19', '33', '2018-09-20 14:41:19');
@@ -957,6 +2271,40 @@ INSERT INTO `regulations` VALUES ('d8fd6cceb1834848858232cb2f318e62', '62', '的
 INSERT INTO `regulations` VALUES ('e199581a4a09468d9015818010d97f90', '62', '很久', '报告规则', '6', '7', '2', '1', '[{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"数据质控\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"医学评审\",\"value\":2}]', '2', '33', '2018-09-12 16:13:21', '33', '2018-09-12 16:50:48');
 INSERT INTO `regulations` VALUES ('e1e80fd7b38e482f9dad8a895ea0eea2', '62', '一般', '一般', '3', '3', '1', '天', '[{\"label\":\"0\",\"value\":1},{\"label\":\"1\",\"value\":2}]', '1', '33', '2018-09-18 15:05:34', '33', '2018-09-18 15:05:34');
 INSERT INTO `regulations` VALUES ('e2c024e6a1384ba29e98a00c5cb311cb', '62', '玩儿', '报告规则', '3', '6', '1', '天', '[{\"label\":\"报告递交\",\"value\":1},{\"label\":\"数据录入\",\"value\":1},{\"label\":\"原始资料\",\"value\":1},{\"label\":\"数据质控\",\"value\":1},{\"label\":\"医学评审QC\",\"value\":1},{\"label\":\"医学评审\",\"value\":1}]', '1', '33', '2018-09-12 16:53:40', '33', '2018-09-12 16:53:40');
+
+-- ----------------------------
+-- Table structure for report_tasks
+-- ----------------------------
+DROP TABLE IF EXISTS `report_tasks`;
+CREATE TABLE `report_tasks` (
+  `id` char(32) NOT NULL DEFAULT '' COMMENT '主键ID',
+  `company_id` char(32) DEFAULT NULL COMMENT '公司ID',
+  `project_id` char(32) DEFAULT NULL COMMENT '项目id',
+  `source_id` char(32) DEFAULT NULL COMMENT '资源id',
+  `source_type` tinyint(1) DEFAULT '1' COMMENT '资源类型（1 手动导入 2 文献导入 3 移动端导入）',
+  `report_id` char(32) DEFAULT NULL COMMENT '报告id',
+  `report_assigned_date` datetime DEFAULT NULL COMMENT '报告分发时间',
+  `report_priority` int(11) DEFAULT NULL COMMENT '报告优先级',
+  `task_severity` varchar(40) DEFAULT NULL COMMENT '报告严重性 （一般 严重 死亡 其他）',
+  `task_role_id` varchar(32) DEFAULT NULL COMMENT '分发角色',
+  `task_user_id` char(32) DEFAULT NULL COMMENT '分发人id',
+  `task_user_name` char(50) DEFAULT NULL COMMENT '分发人名称',
+  `regulation_id` char(32) DEFAULT NULL COMMENT '报告规则id',
+  `regulation_node_id` int(11) DEFAULT NULL COMMENT '报告规则节点id',
+  `regulation_node_name` varchar(40) DEFAULT NULL COMMENT '节点名称',
+  `task_countdown` datetime DEFAULT NULL COMMENT '任务倒计时',
+  `delete_status` int(11) DEFAULT '0' COMMENT '删除状态(1:未删除，0:已删除)',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='报告任务表';
+
+-- ----------------------------
+-- Records of report_tasks
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for role_menu
@@ -2044,28 +3392,28 @@ INSERT INTO `role_menu` VALUES ('1039748235038777362', '1002', 'c74ae8cb0caa4359
 INSERT INTO `role_menu` VALUES ('1039748235038777363', '1002', '57830d80b9e94438801da25492647ddb', '0', null, '2', '2018-09-12 13:31:11', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1039748235038777364', '1002', '24ce88922af440efbdb397aa5e84bf07', '0', null, '2', '2018-09-12 13:31:11', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1039748235038777365', '1002', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-09-12 13:31:11', '2', '2018-10-18 15:17:06');
-INSERT INTO `role_menu` VALUES ('1039748360771428352', '1006', '9f7225dcf0b748b3b94908e4457e7cef', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428353', '1006', 'ebcd8028d5444e6886157ef8ba6c57b4', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428354', '1006', '2cd9f888aede41419c6efe2a641ca1f1', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428355', '1006', '96141b02268e4705b98eb45ca65affac', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428356', '1006', '528d9514c59049d994433a8a82b3f995', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428357', '1006', '68cf608f21c7476fac9d0213ba1778e2', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428358', '1006', 'd541d7d219094a2c98d0a8fc717e9da8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428359', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428360', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428361', '1006', '3ba6e0e0fc33464e8317cb38e14537eb', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428362', '1006', '89df9b7c7b744ca39f49aef5de0fa46a', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428363', '1006', '2fd66a73cfe54dbdbe40d55fb97fec9b', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428364', '1006', 'd43e4e58d6e5457b88d6b312dd4dff72', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428365', '1006', 'f1cd8a4b25354134a1eaa49cb90385b8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428366', '1006', '71d6a3dd0c294b79add8026d21e1f00f', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428367', '1006', '5a2c4cd26a5a46dc86ce5f0d32c93abf', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428368', '1006', '1c30189542904319b1691a1497254efe', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428369', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428370', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428371', '1006', '57830d80b9e94438801da25492647ddb', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428372', '1006', '24ce88922af440efbdb397aa5e84bf07', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1039748360771428373', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-22 09:40:08');
+INSERT INTO `role_menu` VALUES ('1039748360771428352', '1006', '9f7225dcf0b748b3b94908e4457e7cef', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428353', '1006', 'ebcd8028d5444e6886157ef8ba6c57b4', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428354', '1006', '2cd9f888aede41419c6efe2a641ca1f1', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428355', '1006', '96141b02268e4705b98eb45ca65affac', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428356', '1006', '528d9514c59049d994433a8a82b3f995', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428357', '1006', '68cf608f21c7476fac9d0213ba1778e2', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428358', '1006', 'd541d7d219094a2c98d0a8fc717e9da8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428359', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428360', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428361', '1006', '3ba6e0e0fc33464e8317cb38e14537eb', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428362', '1006', '89df9b7c7b744ca39f49aef5de0fa46a', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428363', '1006', '2fd66a73cfe54dbdbe40d55fb97fec9b', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428364', '1006', 'd43e4e58d6e5457b88d6b312dd4dff72', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428365', '1006', 'f1cd8a4b25354134a1eaa49cb90385b8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428366', '1006', '71d6a3dd0c294b79add8026d21e1f00f', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428367', '1006', '5a2c4cd26a5a46dc86ce5f0d32c93abf', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428368', '1006', '1c30189542904319b1691a1497254efe', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428369', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428370', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428371', '1006', '57830d80b9e94438801da25492647ddb', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428372', '1006', '24ce88922af440efbdb397aa5e84bf07', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1039748360771428373', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-09-12 13:31:41', '2', '2018-10-24 15:16:52');
 INSERT INTO `role_menu` VALUES ('1039748827421302784', 'cro2', '9f7225dcf0b748b3b94908e4457e7cef', '0', null, '2', '2018-09-12 13:33:33', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1039748827421302785', 'cro2', '04cea8ff16344dd7a1aa2043fa81026e', '0', null, '2', '2018-09-12 13:33:33', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1039748827421302786', 'cro2', '5dad8dba8317459a8123b996b131f3b5', '0', null, '2', '2018-09-12 13:33:33', '2', '2018-10-18 11:10:39');
@@ -2412,25 +3760,25 @@ INSERT INTO `role_menu` VALUES ('1041934483449344015', '1004', 'c6b999553dda470a
 INSERT INTO `role_menu` VALUES ('1041934483449344016', '1004', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-09-18 14:18:34', '2', '2018-10-18 13:51:47');
 INSERT INTO `role_menu` VALUES ('1041934483449344017', '1004', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-09-18 14:18:34', '2', '2018-10-18 13:51:47');
 INSERT INTO `role_menu` VALUES ('1041934483449344018', '1004', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-09-18 14:18:34', '2', '2018-10-18 13:51:47');
-INSERT INTO `role_menu` VALUES ('1041934548536553472', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553473', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553474', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553475', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553476', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553477', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553478', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553479', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553480', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553481', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553482', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553483', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553484', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553485', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553486', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553487', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553488', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553489', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1041934548536553490', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-22 09:40:08');
+INSERT INTO `role_menu` VALUES ('1041934548536553472', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553473', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553474', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553475', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553476', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553477', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553478', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553479', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553480', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553481', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553482', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553483', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553484', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553485', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553486', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553487', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553488', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553489', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1041934548536553490', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-09-18 14:18:49', '2', '2018-10-24 15:16:52');
 INSERT INTO `role_menu` VALUES ('1044774494282665984', '1002', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-09-26 10:23:45', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1044774494282665985', '1002', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-09-26 10:23:45', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1044774494282665986', '1002', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-09-26 10:23:45', '2', '2018-10-18 15:17:06');
@@ -2542,26 +3890,26 @@ INSERT INTO `role_menu` VALUES ('1052750398606725136', '1003', 'c6b999553dda470a
 INSERT INTO `role_menu` VALUES ('1052750398606725137', '1003', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 10:37:09', '2', '2018-10-18 13:52:10');
 INSERT INTO `role_menu` VALUES ('1052750398606725138', '1003', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 10:37:09', '2', '2018-10-18 13:52:10');
 INSERT INTO `role_menu` VALUES ('1052750398606725139', '1003', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 10:37:09', '2', '2018-10-18 13:52:10');
-INSERT INTO `role_menu` VALUES ('1052750451836637184', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637185', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637186', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637187', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637188', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637189', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637190', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637191', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637192', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637193', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637194', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637195', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637196', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637197', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637198', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637199', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637200', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637201', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637202', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052750451836637203', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-22 09:40:08');
+INSERT INTO `role_menu` VALUES ('1052750451836637184', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637185', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637186', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637187', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637188', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637189', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637190', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637191', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637192', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637193', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637194', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637195', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637196', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637197', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637198', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637199', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637200', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637201', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637202', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052750451836637203', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 10:37:22', '2', '2018-10-24 15:16:52');
 INSERT INTO `role_menu` VALUES ('1052758830487359488', 'cro2', 'f538197465f14f9b870f661fd4407549', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1052758830487359489', 'cro2', 'b42a5b673b774688add97ceaf13f0698', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1052758830487359490', 'cro2', 'edcef1bf62eb4687a223e10df4085db0', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
@@ -2581,26 +3929,26 @@ INSERT INTO `role_menu` VALUES ('1052758830487359503', 'cro2', 'c6b999553dda470a
 INSERT INTO `role_menu` VALUES ('1052758830487359504', 'cro2', '0965be7f783a42adae1547864404281c', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1052758830487359505', 'cro2', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
 INSERT INTO `role_menu` VALUES ('1052758830487359506', 'cro2', 'c74ae8cb0caa43599f196533dde11a60', '1', null, '2', '2018-10-18 11:10:39', '2', '2018-10-18 11:10:39');
-INSERT INTO `role_menu` VALUES ('1052771236210987008', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987009', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987010', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987011', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987012', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987013', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987014', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987015', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987016', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987017', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987018', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987019', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987020', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987021', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987022', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987023', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987024', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987025', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987026', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052771236210987027', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-22 09:40:08');
+INSERT INTO `role_menu` VALUES ('1052771236210987008', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987009', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987010', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987011', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987012', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987013', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987014', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987015', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987016', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987017', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987018', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987019', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987020', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987021', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987022', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987023', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987024', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987025', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987026', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052771236210987027', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 11:59:57', '2', '2018-10-24 15:16:52');
 INSERT INTO `role_menu` VALUES ('1052799255147368448', '1002', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 13:51:17', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1052799255147368449', '1002', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 13:51:17', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1052799255147368450', '1002', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 13:51:17', '2', '2018-10-18 15:17:06');
@@ -2735,48 +4083,117 @@ INSERT INTO `role_menu` VALUES ('1052820849508929551', '1002', 'c6b999553dda470a
 INSERT INTO `role_menu` VALUES ('1052820849508929552', '1002', '0965be7f783a42adae1547864404281c', '1', null, '2', '2018-10-18 15:17:06', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1052820849508929553', '1002', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '1', null, '2', '2018-10-18 15:17:06', '2', '2018-10-18 15:17:06');
 INSERT INTO `role_menu` VALUES ('1052820849508929554', '1002', 'c74ae8cb0caa43599f196533dde11a60', '1', null, '2', '2018-10-18 15:17:06', '2', '2018-10-18 15:17:06');
-INSERT INTO `role_menu` VALUES ('1052845948131790848', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790849', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790850', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790851', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790852', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790853', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790854', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790855', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790856', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790857', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790858', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790859', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790860', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790861', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790862', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790863', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790864', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790865', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790866', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790867', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1052845948131790868', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296832', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296833', '1006', 'f538197465f14f9b870f661fd4407549', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296834', '1006', 'a0b37036e239423bb5f574ec99b690c7', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296835', '1006', 'b42a5b673b774688add97ceaf13f0698', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296836', '1006', 'edcef1bf62eb4687a223e10df4085db0', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296837', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296838', '1006', '94b2adbd099448d9a0edc53130ad4e54', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296839', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296840', '1006', '5916fcfcff6e46c793e92decd48f83e7', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296841', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296842', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296843', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296844', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296845', '1006', '9e6f7f86c31d41c795dadb410f58f859', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296846', '1006', 'e66d9275b9c644518f60d8ae51985ead', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296847', '1006', '859824ce1b354484b31d926a3320e1a3', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296848', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296849', '1006', 'c6b999553dda470a9afa2bae6d270798', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296850', '1006', '0965be7f783a42adae1547864404281c', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296851', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
-INSERT INTO `role_menu` VALUES ('1054185601682296852', '1006', 'c74ae8cb0caa43599f196533dde11a60', '1', null, '2', '2018-10-22 09:40:08', '2', '2018-10-22 09:40:08');
+INSERT INTO `role_menu` VALUES ('1052845948131790848', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790849', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790850', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790851', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790852', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790853', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790854', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790855', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790856', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790857', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790858', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790859', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790860', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790861', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790862', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790863', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790864', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790865', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790866', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790867', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1052845948131790868', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-18 16:56:50', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296832', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296833', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296834', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296835', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296836', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296837', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296838', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296839', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296840', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296841', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296842', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296843', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296844', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296845', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296846', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296847', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296848', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296849', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296850', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296851', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054185601682296852', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-22 09:40:08', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636736', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636737', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636738', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636739', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636740', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636741', '1006', 'a7f56456473c456b9ee49dd62659ef13', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636742', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636743', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636744', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636745', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636746', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636747', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636748', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636749', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636750', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636751', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636752', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636753', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636754', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636755', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636756', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683610379636757', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-23 18:39:02', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260544', '1006', 'f538197465f14f9b870f661fd4407549', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260545', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260546', '1006', 'a0b37036e239423bb5f574ec99b690c7', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260547', '1006', 'b42a5b673b774688add97ceaf13f0698', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260548', '1006', 'edcef1bf62eb4687a223e10df4085db0', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260549', '1006', 'a7f56456473c456b9ee49dd62659ef13', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260550', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260551', '1006', '94b2adbd099448d9a0edc53130ad4e54', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260552', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260553', '1006', '5916fcfcff6e46c793e92decd48f83e7', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260554', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260555', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260556', '1006', 'efd8346015aa45fd95df97bad8e3c877', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260557', '1006', 'a0abdae523e944f8a507463f83ceb2bb', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260558', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260559', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260560', '1006', '9e6f7f86c31d41c795dadb410f58f859', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260561', '1006', 'e66d9275b9c644518f60d8ae51985ead', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260562', '1006', '859824ce1b354484b31d926a3320e1a3', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260563', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260564', '1006', 'c6b999553dda470a9afa2bae6d270798', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260565', '1006', '0965be7f783a42adae1547864404281c', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260566', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054683697105260567', '1006', 'c74ae8cb0caa43599f196533dde11a60', '0', null, '2', '2018-10-23 18:39:23', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866560', '1006', 'f538197465f14f9b870f661fd4407549', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866561', '1006', 'b62a2a1a6bf8432e976e8787713cfb6b', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866562', '1006', 'a0b37036e239423bb5f574ec99b690c7', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866563', '1006', 'b42a5b673b774688add97ceaf13f0698', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866564', '1006', 'edcef1bf62eb4687a223e10df4085db0', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866565', '1006', '4611dfcec52b41b4877ae8dbf2736f87', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866566', '1006', '94b2adbd099448d9a0edc53130ad4e54', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866567', '1006', '1aeb4779df6940a6b92f1c7fb2ee946a', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866568', '1006', '5916fcfcff6e46c793e92decd48f83e7', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866569', '1006', '8cf8b04e5fb040b4ac24f95352de6106', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866570', '1006', 'e7092728c02f43489cbacfd03e10d1f2', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866571', '1006', 'efd8346015aa45fd95df97bad8e3c877', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866572', '1006', 'a0abdae523e944f8a507463f83ceb2bb', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866573', '1006', 'c5da4b34ec2d47b1ad016bbd483cb86b', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866574', '1006', '28f1475d6ec54eaaa8e913c3f19c3e85', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866575', '1006', '9e6f7f86c31d41c795dadb410f58f859', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866576', '1006', 'e66d9275b9c644518f60d8ae51985ead', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866577', '1006', '859824ce1b354484b31d926a3320e1a3', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866578', '1006', '13cf21b481074730b7f1ab6dc2e46cac', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866579', '1006', 'c6b999553dda470a9afa2bae6d270798', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866580', '1006', '0965be7f783a42adae1547864404281c', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866581', '1006', 'b3fc01f505c74a5bb1ee88eb9a6cecf8', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
+INSERT INTO `role_menu` VALUES ('1054995117692866582', '1006', 'c74ae8cb0caa43599f196533dde11a60', '1', null, '2', '2018-10-24 15:16:52', '2', '2018-10-24 15:16:52');
 
 -- ----------------------------
 -- Table structure for sys_dictionary
@@ -3400,6 +4817,7 @@ INSERT INTO `sys_menu` VALUES ('10f3c371448243428b5a602cc215610a', 'e7092728c02f
 INSERT INTO `sys_menu` VALUES ('12c2811240f94dbdb57a3846f8d68e11', '41760ed52cdc4eab8075bf1a3579949d', '', '', '', '1', '', '', '', null, '2', '1', '', null, '33', '2018-10-18 11:12:14', '33', '2018-10-18 11:12:18');
 INSERT INTO `sys_menu` VALUES ('167d1fbb323949298079346688d1ac3a', '8cf8b04e5fb040b4ac24f95352de6106', 'b42a5b673b774688add97ceaf13f0698', '发送者信息(E2B)', 'sender', '1', '/sender/index', '', '', '5', '1', '0', '5', null, '33', '2018-09-13 14:18:38', '33', '2018-09-13 14:18:38');
 INSERT INTO `sys_menu` VALUES ('1897288f9a51456c817f725627aa74e3', '5916fcfcff6e46c793e92decd48f83e7', 'b42a5b673b774688add97ceaf13f0698', '上市后药品信息', 'postDrug', '1', '/postDrug/index', '', '', '4', '1', '0', '4', null, '33', '2018-09-13 14:17:13', '33', '2018-09-13 14:17:13');
+INSERT INTO `sys_menu` VALUES ('1caf9f6ec3064d67b1840fc997a91235', 'a7f56456473c456b9ee49dd62659ef13', 'b42a5b673b774688add97ceaf13f0698', '报告管理', 'reportManagement', '1', '/reportManagement', '', 'el-icon-tickets', '1', '1', '1', 'reportManagement', null, '33', '2018-10-23 18:33:14', '33', '2018-10-24 14:29:07');
 INSERT INTO `sys_menu` VALUES ('1cb4c6c0811641d6af22cb4722cfe226', 'd43e4e58d6e5457b88d6b312dd4dff72', '2fd66a73cfe54dbdbe40d55fb97fec9b', '字段管理', 'index', '1', '/fieldManagement/index', '', 'form', '1', '2', '0', '1', null, '33', '2018-09-10 14:57:16', '33', '2018-09-10 14:57:16');
 INSERT INTO `sys_menu` VALUES ('22fb41c3dfe84c68a99f2c615fa03543', '9e6f7f86c31d41c795dadb410f58f859', 'c5da4b34ec2d47b1ad016bbd483cb86b', '报告规则', 'rulesOfReporting', '1', 'rulesOfReporting', '', '', '1', '1', '0', '1', null, '33', '2018-09-13 14:25:02', '33', '2018-09-13 14:25:02');
 INSERT INTO `sys_menu` VALUES ('269b5c1db61d4c48ab976614d0bfc2b3', '9f7225dcf0b748b3b94908e4457e7cef', '', '用户管理', 'users', '1', '/users', '', 'tree', '0', '1', '1', 'users', null, '33', '2018-09-10 11:49:21', '33', '2018-09-13 14:10:13');
@@ -3429,6 +4847,7 @@ INSERT INTO `sys_menu` VALUES ('76aac86bcd4549db86ca2f083e80ddfb', '0965be7f783a
 INSERT INTO `sys_menu` VALUES ('7a8595effa7f4539933979e1194c5aaa', 'd361facdd85444f3b222259910f84e22', 'ebcd8028d5444e6886157ef8ba6c57b4', '基础信息', 'baseInfo', '1', '1', '', '1', '1', '1', '0', '', null, '33', '2018-09-13 11:45:04', '33', '2018-09-13 11:45:04');
 INSERT INTO `sys_menu` VALUES ('7c5aa97db7624e628ccbdb987dfb817c', '5feb2171b3a74265b9150f5accefd204', '9f7225dcf0b748b3b94908e4457e7cef', '用户管理', 'users', '1', '/users/index', '', 'tree', '1', '1', '1', 'users.index', null, '33', '2018-09-10 11:50:07', '33', '2018-09-10 17:30:56');
 INSERT INTO `sys_menu` VALUES ('803ca033c6c049e8885c58e04400cdb1', 'c57a029bac4144e2a3b8c6472d730752', '3ba6e0e0fc33464e8317cb38e14537eb', '工作流配置', 'configure', '1', '/Workflow/configure', '', 'form', '1', '1', '1', '1', null, '33', '2018-09-10 14:47:00', '33', '2018-09-10 15:33:20');
+INSERT INTO `sys_menu` VALUES ('80a3da56d0c8487c966e075a722c1349', 'a0abdae523e944f8a507463f83ceb2bb', 'efd8346015aa45fd95df97bad8e3c877', '原始资料', 'rawDataImport', '1', '/rawDataImport/index', '', 'el-icon-printer', '1', '1', '0', 'el-icon-printer', null, '33', '2018-10-23 18:38:39', '33', '2018-10-23 18:38:39');
 INSERT INTO `sys_menu` VALUES ('854e5cc214e54323b4b01099e6633e76', '94b2adbd099448d9a0edc53130ad4e54', 'b42a5b673b774688add97ceaf13f0698', '项目成员', 'PjtMembers', '1', '/PjtMembers/index', '', '', '2', '1', '0', '/PjtMembers/index', null, '33', '2018-09-13 14:12:17', '33', '2018-09-13 14:13:13');
 INSERT INTO `sys_menu` VALUES ('87a22f1126b54134b3b444f803652182', '2cd9f888aede41419c6efe2a641ca1f1', 'ebcd8028d5444e6886157ef8ba6c57b4', '邮箱配置', 'index', '1', '/email/index', '', 'form', '1', '1', '0', 'email.index', null, '33', '2018-09-10 11:25:41', '33', '2018-09-10 11:25:41');
 INSERT INTO `sys_menu` VALUES ('888bf6f771574365966c5cab7ff7d8d6', '958f7d0b25ef402d9980516cb7e709fa', '', '基础信息', 'baseMessage', '2', '/base', '', '', '0', '2', '0', '基础信息', null, '33', '2018-09-13 14:05:21', '33', '2018-09-13 14:05:21');
@@ -3445,6 +4864,7 @@ INSERT INTO `sys_menu` VALUES ('a5d95e8ad75a4122ae64ca11e0e70a93', 'e4eaa4c5d8c6
 INSERT INTO `sys_menu` VALUES ('ad5e13543a294f699fbcc24265c4ce75', '1db79efe54144dc99a3952ee6ff25701', '', '基础信息', 'baseMessage', '1', '/base', '', '', '0', '1', '1', '基础信息', null, '33', '2018-09-13 14:05:18', '33', '2018-09-13 14:07:41');
 INSERT INTO `sys_menu` VALUES ('b159c29d7c194373a128c8a8868e580b', 'fe3028648f6040728cd13c85b7f176be', '', '测试', 'test', '1', '/test', '', 'form', '1', '1', '1', '1', null, '33', '2018-09-12 13:18:12', '33', '2018-09-12 13:18:18');
 INSERT INTO `sys_menu` VALUES ('b19d7cffde8d4c49b8ed90864757a9fa', '41028f1bdc254f24b38f2eb5f572421c', '', 'sdf', 'sdf', '1', '/sd', '', 'sdf', '2', '1', '1', 'sdf', null, '33', '2018-10-18 10:34:06', '33', '2018-10-18 10:34:12');
+INSERT INTO `sys_menu` VALUES ('b451cdafd6684e248fb9f642fa298dfe', 'efd8346015aa45fd95df97bad8e3c877', '', '报告管理', 'reportManagement', '1', '/reportManagement', '', 'el-icon-document', '1', '1', '0', 'el-icon-document', null, '33', '2018-10-23 18:36:02', '33', '2018-10-23 18:36:02');
 INSERT INTO `sys_menu` VALUES ('b51ba63351d74f0eb5a174b15684c0b1', '96141b02268e4705b98eb45ca65affac', '', '药物信息-上市前', 'aaa', '1', '/preDrug/index', '', '', '1', '1', '1', '', null, '33', '2018-09-12 13:19:28', '33', '2018-09-13 14:27:44');
 INSERT INTO `sys_menu` VALUES ('b6c5e48dfe6b4c9a8be1a3f946f64cfb', '58463887615c4a54815f9f83625c02ec', '2cd9f888aede41419c6efe2a641ca1f1', 'test', 'test', '2', '', '删除', 'form', '1', '1', '1', '1', null, '33', '2018-09-11 14:34:26', '33', '2018-09-12 09:07:32');
 INSERT INTO `sys_menu` VALUES ('c0b866d3c99a4279acbdefd8bfaa76a7', '3ba6e0e0fc33464e8317cb38e14537eb', '', '工作流', 'Workflow', '1', '/Workflow', '', 'form', '1', '1', '1', '1', null, '33', '2018-09-10 14:45:07', '33', '2018-09-13 14:27:54');
@@ -3452,6 +4872,7 @@ INSERT INTO `sys_menu` VALUES ('c4f7dd90fe7b4c9ba38b964108b3fe9c', 'ebcd8028d544
 INSERT INTO `sys_menu` VALUES ('c9ca44b7c360462db2719d45f184d27e', 'b901bff502414927a2b2fe0cb0f7328f', '9f7225dcf0b748b3b94908e4457e7cef', 'test', 'test', '2', 'test', '', 'test', '1', '2', '1', 'test', null, '33', '2018-09-10 17:37:51', '33', '2018-09-11 14:52:08');
 INSERT INTO `sys_menu` VALUES ('cce78f83afd34a65a6e1bf5167724d02', '1aeb4779df6940a6b92f1c7fb2ee946a', 'b42a5b673b774688add97ceaf13f0698', '上市前药品信息', 'preDrug', '1', '/preDrug/index', '', '', '3', '1', '0', '/preDrug/index', null, '33', '2018-09-13 14:14:21', '33', '2018-09-13 14:14:21');
 INSERT INTO `sys_menu` VALUES ('cf55a3c9a4b8425a93acbb586291e9f7', 'f538197465f14f9b870f661fd4407549', '', '检索任务管理', 'retrievalTask', '1', '/retrievalTask/index', '', 'el-icon-info', '0', '1', '0', '检索任务管理', null, '33', '2018-10-18 10:35:51', '33', '2018-10-18 10:35:51');
+INSERT INTO `sys_menu` VALUES ('d2127242f52f42659ce7064d95045e87', '1d2738bfe23d469e8203841d7cfdf46b', '', 'sd', 'asfd', '1', '/asf', '', '', '1', '1', '1', 'asd', null, '33', '2018-10-23 18:34:16', '33', '2018-10-23 18:34:29');
 INSERT INTO `sys_menu` VALUES ('d5592402086c4182b26bb5fb9a36c423', 'a0b37036e239423bb5f574ec99b690c7', '', '测试菜单', 'sfsf爽肤水', '1', '/roles', '', '是非得失', '1', '2', '0', '乌尔亢', null, '33', '2018-09-17 17:04:49', '33', '2018-09-21 15:06:11');
 INSERT INTO `sys_menu` VALUES ('dc6bb55c610141d6a1a5bd4b8d954533', '859824ce1b354484b31d926a3320e1a3', 'c5da4b34ec2d47b1ad016bbd483cb86b', '邮箱配置', 'email', '1', '/email/index', '', '', '3', '1', '0', '3', null, '33', '2018-09-13 14:26:32', '33', '2018-09-13 14:26:32');
 INSERT INTO `sys_menu` VALUES ('e18224705a0b42528c641c62fa32a32c', '1f0572716ef2454081c6371b4261b1e8', '', '1', '1', '1', '1', '', '1', '1', '1', '1', '', null, '33', '2018-09-11 17:50:16', '33', '2018-09-11 17:50:22');
@@ -3551,6 +4972,56 @@ INSERT INTO `sys_receiver` VALUES ('eb4a3e3f1f414c9d8543e09a41d58db9', '62', '20
 INSERT INTO `sys_receiver` VALUES ('ee4724bbb03644d9a6000a979e656a24', '62', '2018MEDRI000287', 'jianghua ', '1', '2', '1', null, 'ybb', '2018-09-04 19:38:52', 'ybb', '2018-09-13 18:26:55');
 INSERT INTO `sys_receiver` VALUES ('ef09fc0345774b909096ad40bb169321', '62', '2018MEDRI000087', '生物谷112222', '备注', '2', '1', null, 'ybb', '2018-08-22 14:51:10', 'ybb', '2018-09-10 18:09:25');
 INSERT INTO `sys_receiver` VALUES ('fd17a8dabeb14658aee3998fe00ba47a', '62', '2018MEDRI000888', '防守打法', '爽肤水', '1', '1', null, 'jerry', '2018-09-21 14:27:55', 'jerry', '2018-09-21 14:28:00');
+
+-- ----------------------------
+-- Table structure for sys_report
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_report`;
+CREATE TABLE `sys_report` (
+  `id` varchar(32) NOT NULL COMMENT '报告ID',
+  `company_id` varchar(32) DEFAULT NULL COMMENT '公司ID',
+  `project_id` varchar(32) DEFAULT NULL COMMENT '项目ID',
+  `report_no` varchar(32) DEFAULT NULL COMMENT '报告编号',
+  `event_from_country` varchar(32) DEFAULT NULL COMMENT '事件发生国家',
+  `first_follow_up` int(11) DEFAULT NULL COMMENT '首次/随访报告',
+  `report_type` int(11) DEFAULT NULL COMMENT '企业报告类型',
+  `current_process_node` varchar(32) DEFAULT NULL COMMENT '报告当前处理节点id',
+  `current_process_node_name` varchar(32) DEFAULT NULL COMMENT '报告当前处理节点名称',
+  `previous_process_node` varchar(32) DEFAULT NULL COMMENT '报告上一处理节点id',
+  `previous_process_node_name` varchar(32) DEFAULT NULL COMMENT '报告上一处理节点名称',
+  `current_node_user_id` varchar(32) DEFAULT NULL COMMENT '节点处理人id',
+  `current_node_user_name` varchar(32) DEFAULT NULL COMMENT '节点处理人名称',
+  `previous_node_user_id` varchar(32) DEFAULT NULL COMMENT '节点上一处理人ID',
+  `previous_node_user_name` varchar(32) DEFAULT NULL COMMENT '节点上一处理人名称',
+  `report_countdown` datetime DEFAULT NULL COMMENT '报告倒计时',
+  `report_priority` int(11) DEFAULT NULL COMMENT '报告优先级',
+  `report_susar` int(11) DEFAULT NULL COMMENT 'SUSAR报告',
+  `report_repeat` int(11) DEFAULT NULL COMMENT '重复报告',
+  `report_invalid` int(11) DEFAULT NULL COMMENT '无效报告',
+  `create_version_num` int(11) DEFAULT NULL COMMENT '新建版本次数',
+  `latest_version` int(11) DEFAULT NULL COMMENT '最新版本(0:不是，1:是)',
+  `previous_report_version_id` varchar(32) DEFAULT NULL COMMENT '上一版本报告ID',
+  `create_version_reason` varchar(1024) DEFAULT NULL COMMENT '创建版本原因',
+  `pv_create_time` datetime DEFAULT NULL COMMENT 'pv获知时间',
+  `related_report` text COMMENT '关联报告(id集合)',
+  `first_create_time` datetime DEFAULT NULL COMMENT '首次获知时间',
+  `drug_name` varchar(3120) DEFAULT NULL COMMENT '药物名称(商品名;通用名称)',
+  `primary_adverse_event` varchar(128) DEFAULT NULL COMMENT '首要不良事件',
+  `patient_name` varchar(32) DEFAULT NULL COMMENT '患者姓名',
+  `principal_rapporteur` varchar(32) DEFAULT NULL COMMENT '首要报告者姓名',
+  `causal_relationship` int(11) DEFAULT NULL COMMENT '因果关系',
+  `delete_status` int(11) DEFAULT NULL COMMENT '删除状态',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个例报告';
+
+-- ----------------------------
+-- Records of sys_report
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_roles
@@ -3681,10 +5152,10 @@ INSERT INTO `sys_sender` VALUES ('c50cfa46fe694c938069ba48a996eb3c', '2018MEDSI0
 INSERT INTO `sys_sender` VALUES ('c5f5c4ed3e0c41798f5676e1940bf175', '2018MEDSI000098', '62', '1', '1', '1', null, null, null, null, null, null, null, null, null, null, '2', '1', null, null, '2018-09-11 19:02:30', null, null);
 INSERT INTO `sys_sender` VALUES ('cb69e6763d3b461a8fa3429d171f758e', '2018MEDSI000114', '62', '发发发', '3', '爽肤水', null, null, null, null, null, null, null, null, null, null, '2', '1', null, null, '2018-09-17 11:08:31', null, null);
 INSERT INTO `sys_sender` VALUES ('d175bbf0f906486f806f1975c7f1fe14', '21', '62', '21', '1', '2121', null, null, null, null, null, null, null, null, null, null, '2', '1', null, 'ybb', '2018-08-22 14:21:37', null, null);
-INSERT INTO `sys_sender` VALUES ('d2387e982a1e4be69f4f4b53e779b89f', '2018MEDSI000121法规和法国风格法国话费', '62', '恢复供货', '1', '发过火', null, null, null, null, null, null, null, null, null, null, '2', '2', null, null, '2018-09-18 17:16:02', null, null);
+INSERT INTO `sys_sender` VALUES ('d2387e982a1e4be69f4f4b53e779b89f', '2018MEDSI000121法规和法国风格法国话费', '62', '恢复供货', '1', '发过火', null, null, null, null, null, null, null, null, null, null, '1', '2', null, null, '2018-09-18 17:16:02', null, null);
 INSERT INTO `sys_sender` VALUES ('dbabf7f1cd8c4db1b9f4770dbf8d437f', '2018MEDSI000008', '62', '2121', '212', '21212', '2121', '212', '1', '1', '21', null, '2121', '2121', '2121', null, '2', '1', null, null, '2018-08-21 17:14:36', null, null);
 INSERT INTO `sys_sender` VALUES ('f1e554cc34394b91bde7951ebbf86bdb', '2018MEDSI000056', '62', '1231232312312', '1232111212', '2232131', '王企鹅去问问去', '房贷首付地方发呆时', '1', '1', '为期额', '放的感到很尴尬很头疼', '123121', '1231213213124', '3123饿的我', ' 3违法都是凡人3 ', '2', '1', null, null, '2018-09-06 09:55:33', null, null);
-INSERT INTO `sys_sender` VALUES ('fd37953f23a7409dbb1eebf6a0eab9f7', '2018MEDSI000118', '62', '测试', '1', '双方都', '研发部', '前段', '1', '6', '漯河', '艾斯德斯', '1232', '13231', '23', '123', '1', '2', null, null, '2018-09-18 15:40:40', null, null);
+INSERT INTO `sys_sender` VALUES ('fd37953f23a7409dbb1eebf6a0eab9f7', '2018MEDSI000118', '62', '测试', '1', '双方都', '研发部', '前段', '1', '6', '漯河', '艾斯德斯', '1232', '13231', '23', '123', '2', '2', null, null, '2018-09-18 15:40:40', null, null);
 
 -- ----------------------------
 -- Table structure for user_role_project
@@ -4512,6 +5983,7 @@ INSERT INTO `workflow_regulations` VALUES ('74a7403da4bf47989fc4117fe26ebbb4', '
 INSERT INTO `workflow_regulations` VALUES ('78480af313a749ebbc9ca778ddaf936e', '69fb1fe72ed64f30908dbfd81c75e03f', '4c1d542da1a74c3ebdf8959644cc0bbf', '62', '1', null, '33', '2018-09-12 16:51:11', '33', '2018-09-12 16:51:11');
 INSERT INTO `workflow_regulations` VALUES ('78d2c143aa3a4eb78032ea710c7892ee', '69fb1fe72ed64f30908dbfd81c75e03f', 'd8fd6cceb1834848858232cb2f318e62', '62', '1', null, '33', '2018-09-12 16:53:04', '33', '2018-09-12 16:53:04');
 INSERT INTO `workflow_regulations` VALUES ('8007cf497d3c4ce7b6ddefa60488ca2b', '1037297151343751168', '2352d28e165b436e90552f27065c9dfe', '62', '1', null, '33', '2018-09-20 13:48:34', '33', '2018-09-20 13:48:34');
+INSERT INTO `workflow_regulations` VALUES ('899f4a441aa041599f8f486a4ff90b1a', '21a5a95ad5c94481989675810b21f11f', '94d873c85427407a81600801e16fbe07', '62', '1', null, '33', '2018-10-24 16:04:55', '33', '2018-10-24 16:04:55');
 INSERT INTO `workflow_regulations` VALUES ('8e5d3e00656e48cda75962579c148c83', '6bd9605771a248aaa8aafdd4d4365697', '75f54927fd534f669db6f18cb815fab8', '62', '1', null, '33', '2018-09-18 18:00:45', '33', '2018-09-18 18:00:45');
 INSERT INTO `workflow_regulations` VALUES ('8e92267fdf734403ab532bad521b207c', '1037297151343751168', '7988862732e443e289979a263442ad0c', '62', '1', null, '33', '2018-09-20 13:37:40', '33', '2018-09-20 13:37:40');
 INSERT INTO `workflow_regulations` VALUES ('93c7540a639e4a789ecda2573f322827', '1037623390274256896', '02572cc60dc642f0be9c210eee8c4588', '62', '1', null, '33', '2018-09-10 14:07:28', '33', '2018-09-10 14:07:28');
