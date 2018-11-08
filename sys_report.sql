@@ -265,6 +265,10 @@ CREATE TABLE `basicinfo_report_attributes` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基本信息-报告属性';
 
+
+
+
+
 PSUR 
 6.药品不良反应报告信息 
 6.1药品个例不良反应
@@ -273,21 +277,13 @@ PSUR
   序号       报告编号               药品批号                      不良反应名称
         sys_report.report_no    drug.drug_production_batch 
 
-
-
 patientinfo_parents_previous_medical_history 患者信息-父母相关既往用药史  用药开始日期 用药结束日期
 
 drug_adverse_reactions  drug_id adverse_name 不良反应名称 
 
 首次/随访报告  病例来源 来自于报告
 
-
-
-
 根据活性成分->找对应的药物 同时获取活性成分的对应开始和截止时间的有效报告
-
-
-
 
 sys_report
   `report_no` varchar(32) DEFAULT NULL COMMENT '报告编号',
@@ -313,3 +309,11 @@ patientinfo_previous_medical_history
 
 basicinfo_report_attributes   
   `report_sources` int(11) DEFAULT NULL COMMENT '企业信息来源',
+
+
+
+
+  个例药品不良反应汇总表（按SOC/PT统计）
+
+
+  
