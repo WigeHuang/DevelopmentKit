@@ -1,0 +1,16 @@
+企业管理类项目
+https://gitee.com/blind/maple.git
+
+https://github.com/alibaba/AliSQL
+
+https://gitee.com/minull/ace-security
+
+https://github.com/cookieY/Yearning
+
+https://gitee.com/jeecg/jeecg
+
+https://github.com/cachecats/sell
+
+https://gitee.com/hackempire/emsite-parent
+
+

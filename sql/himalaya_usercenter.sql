@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-10-25 18:38:02
+Date: 2018-11-13 11:07:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -117,51 +117,28 @@ CREATE TABLE `base_group` (
 -- ----------------------------
 -- Records of base_group
 -- ----------------------------
-INSERT INTO `base_group` VALUES ('09faacd7c9c54a2ea490148a145bd9b3', '1003', '33', '-1', null, null, '1', null, '0', '2018-10-18 04:43:12', null, null, null, '2018-10-19 01:31:54', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('1', '1001', '最小访问权限', '-1', '/testGroup/visitorRole', null, '-1', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('10c4c7cfa82c473b890e8c91fc2e4754', '2222', '资料管理员', '-1', null, null, '1', null, '1', '2018-10-21 20:33:33', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('125bbceb1df04178bbe7b0f852f94090', '1001', '11', '-1', null, null, '1', null, '0', '2018-10-18 04:43:12', null, null, null, '2018-10-19 01:31:54', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('14ada9278d884fd89a694648381ee065', null, 'yanfa', '-1', null, null, '2', null, '0', '2018-10-19 03:30:06', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('048f7e2b7c6e4475a602f93873104351', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('117cb3e0bf9a4036aee2ebd419385f2c', null, '开发部', '-1', null, null, '2', null, '0', '2018-11-11 20:05:23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('16', 'visitor1', '游客11', '-1', null, null, '2', null, '0', '2018-09-19 07:06:30', null, 'stri1212ng', null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('17', 'test', 'ceshi1', '-1', null, null, '2', null, '0', '2018-09-19 07:13:27', null, 'string', null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('18', 'jishu', '技术部', '-1', null, null, '2', null, '0', '2018-09-19 07:14:33', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('1b74ecd771b24b61b25f692069d5c05f', '1002', '测试', '-1', null, null, '1', null, '1', '2018-10-21 21:05:22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('24b4b41a5f674cfab47557dbcec26500', null, 'sd', '-1', null, null, '2', null, '0', '2018-10-19 03:44:00', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('25680efad130428c8a22213f0c954c20', '1002', '水电费', '-1', null, null, '1', null, '1', '2018-10-23 00:48:41', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('2f75ce15840e4cb098ba8ed9aee8307c', '1003', '数据质控QC', '-1', null, null, '1', null, '0', '2018-10-21 21:02:17', null, null, null, '2018-10-23 22:39:56', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('3256de7114dd4aa986eb39260ed8e138', 'develop', '开发', '-1', null, null, '1', null, '0', '2018-10-16 22:39:47', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('3d3982122a76424d971dee157d743e86', null, 'asdsf', '-1', null, null, '2', null, '0', '2018-10-19 03:47:58', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('1957071fa1cd42469b793b9daa9fe92e', null, 'yanfa', '-1', null, null, '2', null, '0', '2018-10-30 21:53:02', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('4', 'visitorRole', '游客', '3', '/testGroup/visitorRole', null, '1', '', '0', null, null, null, null, '2018-10-14 04:13:19', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('42d2a0d5883a431e815d0dd38a8e3503', '1002', '22', '-1', null, null, '1', null, '0', '2018-10-18 04:43:12', null, null, null, '2018-10-19 01:31:54', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('4627cc9018ad4c8f873581bd2c439d7c', '1002', '水电费', '-1', null, null, '1', null, '0', '2018-10-23 00:58:53', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('46d1ffa4d0934b639b552008d3fa37eb', null, 'ds', '-1', null, null, '2', null, '0', '2018-10-19 03:42:21', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('47b5e982a7434bfaa8cfa01aa364b599', null, 'fgh', '-1', null, null, '2', null, '0', '2018-10-22 23:06:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('4c25e7ce0062458fa4d8671525ebe79c', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('5bab987b88374b2381976b09d445bbb0', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('6', 'company', 'AG集团', '-1', '/company', null, '2', '', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('61222e2d2d78496ab16e9aed7244c22c', '1002', 'sdf', '-1', null, null, '1', null, '0', '2018-10-23 02:06:10', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('66014e4e073c4507a40a3672bde23451', '1002', '大声道', '-1', null, null, '1', null, '0', '2018-10-22 05:59:05', null, null, null, '2018-10-22 20:02:42', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('6647a8ab421e4503bcf8a6100394c6a6', null, 'we', '-1', null, null, '2', null, '0', '2018-10-19 03:39:39', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('672589ab5d0d42ef846e93e1b0bb7d45', '1002', 'zuifsd', '-1', null, null, '1', null, '0', '2018-10-24 03:20:03', null, null, null, '2018-10-24 21:08:42', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('621053e6d99e4df99d01899059028d98', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:20:02', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('6b204ef825534f4b91e6c1fdf4b0850a', null, '研发', '-1', null, null, '2', null, '0', '2018-10-30 21:54:04', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('6d6d0a3ba2c346cea94dade5e397ab52', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('7', 'financeDepart', '财务部', '6', '/company/financeDepart', null, '2', '', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('711ef8b4fc6946adbbb758084f51fee4', null, '测试部门', '-1', null, null, '2', null, '0', '2018-10-19 02:30:44', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('767d8b91c61546edae5b3b62b46e64c2', '1002', '数据录入员', '2fde74f7d692487685e07c5261a01425', null, null, '1', null, '0', '2018-10-17 07:08:38', null, null, null, '2018-10-23 22:39:56', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('7834068722cb417c8c7634a2339af52e', null, 'asd', '-1', null, null, '2', null, '0', '2018-10-19 03:47:01', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('7a23855aafb140f2a48ca81220592ff5', null, null, '-1', null, null, '2', null, '0', '2018-10-24 03:06:22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('7beb5a8dfd47438a991a00ed9fea6e94', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('8', 'hrDepart', '人力资源部', '6', '/company/hrDepart', null, '2', '', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('914d2200978b4234a56835de859d4e17', '1002', '大声道', '-1', null, null, '1', null, '1', '2018-10-22 02:44:52', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('984ac7a33fee44bb8db02b9d7d0254e4', null, null, '-1', null, null, '2', null, '0', '2018-10-17 20:46:47', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('98bfe8d007ad44a68c86ddc8d4d7b352', null, 'dfg', '-1', null, null, '2', null, '0', '2018-10-22 23:07:30', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('9e5297d82eed4a3285142415b8796a21', null, '研发', '-1', null, null, '2', null, '0', '2018-10-19 01:46:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('a202dc8168db4e0ab237fc4328708699', null, '九芝堂pv', '-1', null, null, '2', null, '0', '2018-10-19 02:37:10', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('af14d3f9a5ca4df3bad8ba8beb542ef8', '1002', '权限A', '-1', null, null, '1', null, '0', '2018-10-22 01:54:13', null, null, null, '2018-10-23 02:06:40', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('bdddddd2b79743438e8d9ada0f7d07a3', null, '22', '-1', null, null, '2', null, '0', '2018-10-17 00:38:20', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('cd8cbe8587534c9690d0004f16bf7070', null, 'er', '-1', null, null, '2', null, '0', '2018-10-23 01:14:41', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('d8348cee33a943e68e42191a095c74ae', '1002', 'er', '-1', null, null, '1', null, '1', '2018-10-22 03:05:56', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('d83accf62e3745f5a06767cfb2417ff1', null, 'df', '-1', null, null, '2', null, '0', '2018-10-19 03:43:22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('f1a7422b8bf54eb8bfa15e21faa127c7', null, null, '-1', null, null, '2', null, '0', '2018-10-21 22:38:14', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('f638707664934dc8b8a5f422f7dcd151', null, 'qr', '-1', null, null, '2', null, '0', '2018-10-19 03:45:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('f6669b6f607f46a9bed901ca6d9a6d0f', '1003', '佛挡杀佛', '-1', null, null, '1', null, '0', '2018-10-10 04:34:12', null, null, null, '2018-10-14 04:13:19', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('f80e49ab2f3a431f8a4425ecd4734ebe', null, '开发部', '-1', null, null, '2', null, '0', '2018-10-24 02:33:21', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `base_group` VALUES ('fba9676c7f1c4d5898479802d275acde', '1004', '44', '-1', null, null, '1', null, '0', '2018-10-18 04:43:12', null, null, null, '2018-10-19 01:31:54', null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('9348a023a46e469aba5287eef5553597', null, '111', '-1', null, null, '2', null, '0', '2018-10-30 05:15:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('a202dc8168db4e0ab237fc4328708699', '', '九芝堂pv', '-1', null, null, '2', null, '0', '2018-10-19 02:37:10', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('c391f093dc2a4963aa42cdd20a80530c', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('c794cfc444b74d56a7508d219d3be599', null, '开发部', '-1', null, null, '2', null, '0', '2018-11-11 20:05:23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('cf651ae8cbeb4aaa92e1a9667e92f362', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('ebc0dfa68be34249a8112193d69faf25', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group` VALUES ('efd3b277e4e34ca6997c45a057e3c516', null, null, '-1', null, null, '2', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group` VALUES ('fc20868915b546d483d68d38e36738a5', '001', 'role001', '-1', null, null, '1', null, '0', '2018-10-10 01:19:45', 'string', 'string', 'string', '2018-10-14 04:13:19', null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
@@ -242,31 +219,46 @@ INSERT INTO `base_group_member` VALUES ('1690421c87894667a63dc436b8da857c', '984
 INSERT INTO `base_group_member` VALUES ('17', '16', '64', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('18', '16', '65', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('19', '17', '66', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('1c68719b1c9943d787b7a4c48a4a8363', 'ebc0dfa68be34249a8112193d69faf25', 'd4d52fe4cb7a43559eb8a365a8b6f307', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('2', '4', '2', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('20', '18', '67', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('20b0a54de6b44b4b9ce7022b49fda763', 'd83accf62e3745f5a06767cfb2417ff1', 'b5db858612804d109be53d34336d1a8f', null, '0', '2018-10-19 03:43:22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('28b78ebd051044868c2db62609a75dba', '3256de7114dd4aa986eb39260ed8e138', '88c9992e46c944c0af378966992d499d', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('2b00ee2fff7b4d81895295aaa09ee5aa', '6d6d0a3ba2c346cea94dade5e397ab52', '85bde88a54834c4dbd60cbfc00026243', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('31edee6d2ab648358d4826b6811c9890', '3d3982122a76424d971dee157d743e86', '450f5434205049eb9586e664bd29b309', null, '0', '2018-10-19 03:47:58', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('34f6deeb39834b0787ac7b58b529d3ae', 'f1a7422b8bf54eb8bfa15e21faa127c7', '605595efceeb49de86bfc25d4110b4a6', null, '0', '2018-10-21 22:38:14', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('41fbda7fd4d14bdd969edbb43ec2d3b1', '1957071fa1cd42469b793b9daa9fe92e', '78ffb5b46a1e4abfa749c9f245e7838b', null, '0', '2018-10-30 21:53:02', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('4fb1fd35546943128d9fa4b302301d74', '117cb3e0bf9a4036aee2ebd419385f2c', '2648b1d5b09c4fbd8b397133d3071d77', null, '0', '2018-11-11 20:05:23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('54592324c90b44e680f6631c1925ff3e', '048f7e2b7c6e4475a602f93873104351', '76760e8b157b4a80817019ce3d971940', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('665fb852a6c04eee9a03ea4c19dc0f03', '69807e31bdd146e08febb9e447658cb1', '54ac1a2ac2ee4364adca30a6741c6051', null, '0', '2018-10-19 03:34:24', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('6aaf3e97bbf44f3c9b918be21dfd45fb', '47b5e982a7434bfaa8cfa01aa364b599', '6513ea7752c04f83a430d1ccd48399df', null, '0', '2018-10-22 23:06:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('7626bc080ccc498fa5a35dbba34f930c', '14ada9278d884fd89a694648381ee065', '7de23f6a6a234fecb6b7fc5879df2f4a', null, '0', '2018-10-19 03:30:06', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('7a2a46a5e6a74461b9d7e7ea0268a5ac', '6647a8ab421e4503bcf8a6100394c6a6', 'ccf5736518a24f5abdf353632c2e5028', null, '0', '2018-10-19 03:39:39', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('7db402318b7b42e794079fe9826e56bb', '46d1ffa4d0934b639b552008d3fa37eb', 'a14c5aef952f4976aeb9a08859931ec0', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('8269117aef75435994fd9978a27bd17f', '4c25e7ce0062458fa4d8671525ebe79c', 'b5df582cc62047c2a2c6d1c108e004f7', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('845fdfad9333449db422135ddb8e04aa', 'cd8cbe8587534c9690d0004f16bf7070', '38b0fd5610524b3db61e7c1e1809bca2', null, '0', '2018-10-23 01:14:41', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('8e7b7d5dcae24c75b591a55d3a2e2252', '7834068722cb417c8c7634a2339af52e', '3adbf6655e394584830a8e0351034254', null, '0', '2018-10-19 03:47:01', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('9', '9', '4', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('96f372454ed34908ad08d055bbaa4466', '69807e31bdd146e08febb9e447658cb1', '499bd5a65f8b4cc5a49fc7d55611bf25', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('a01606808bc64ed09d4b1548e9044e95', '7a23855aafb140f2a48ca81220592ff5', 'aeeeae4778f34f90857f33986b25ed99', null, '0', '2018-10-24 03:06:22', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('a032ccb791eb47818d0ef7b766b3574c', 'cf651ae8cbeb4aaa92e1a9667e92f362', '1286c37f4caa4aabb60637a06d461fc7', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('a5b126975b9a4b3a8973ae99723d1135', '9e5297d82eed4a3285142415b8796a21', 'c246bc0584e848159f50b43f1e05cdec', null, '0', '2018-10-19 01:46:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('ab2d5bb670074c06808be976be147eaf', '7beb5a8dfd47438a991a00ed9fea6e94', '8f1729649d304290838cedc886ab79ee', null, '0', '2018-11-11 20:14:48', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('ae4e9ee5c05241779bb3058818cd3e79', '9348a023a46e469aba5287eef5553597', '9d5d76148a2a406dbc92ac14802ab205', null, '0', '2018-10-30 05:15:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('ae8691ba06084eb996d6c509528035a4', 'c794cfc444b74d56a7508d219d3be599', '8f3913d4c0434a7ab20f29e97965eb7e', null, '0', '2018-11-11 20:05:23', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('b727c40b02b040c9aa967cf0ac1c6c3a', '5bab987b88374b2381976b09d445bbb0', 'b03e3f89756043f6bb6d6443554a69e2', null, '0', '2018-11-11 20:18:43', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('c4d81c276ec54130abb91b64d2862c2b', '46d1ffa4d0934b639b552008d3fa37eb', '825aa76fa03448009aaf7fb59c5d622e', null, '0', '2018-10-19 03:42:21', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('c620814f85b140a19948fc1c79ae53ba', '9e5297d82eed4a3285142415b8796a21', '56a3f776e1de4e4fae0c0458cb21e3f3', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('c77525c990a64133ae398d4203685e9f', '6b204ef825534f4b91e6c1fdf4b0850a', '28c57ae863af4fe9bb28d23d590e4fbd', null, '0', '2018-10-30 21:54:04', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('cb69c28b69af433bb437a9f06567d0fe', '621053e6d99e4df99d01899059028d98', '84c64cd49db2445084e12ddba41e6fd2', null, '0', '2018-11-11 20:20:02', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('cc43e37fdec64f1da4288d908e8e2006', 'c391f093dc2a4963aa42cdd20a80530c', '91647845fe1d44a186ddb4abc1040e2f', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('cc6331fbc68d4058be5234cf76e4bd5c', '69807e31bdd146e08febb9e447658cb1', '2226c66a2d2b436388ff7a8afd658afb', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('d62e8442756a41629cce82ef87b46954', '711ef8b4fc6946adbbb758084f51fee4', 'd4d58fdb57fd49da9ffd88afdc20ba6f', null, '0', '2018-10-19 02:30:44', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('e9898d0764534dd6820fd5b198800569', '9e5297d82eed4a3285142415b8796a21', '2fe21b4f0eb3490097feb686c84b8632', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('eea400cb275e45cea93699c3f54b9858', 'a202dc8168db4e0ab237fc4328708699', '2911ea8b63f64cebb9b17ee5133f1249', null, '0', '2018-10-19 02:37:10', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('ef08f506bb6544ee84e705d780156b65', '98bfe8d007ad44a68c86ddc8d4d7b352', 'b35c3bb3ce0447e4af05b887d2fc66f0', null, '0', '2018-10-22 23:07:30', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('f284e859767846a5bb37a4376cd1fa6a', '24b4b41a5f674cfab47557dbcec26500', 'b50bce4780d643aa9e8f6c8d41a2a826', null, '0', '2018-10-19 03:44:00', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `base_group_member` VALUES ('f481ee8c0beb40888e858e4548eb26e3', 'efd3b277e4e34ca6997c45a057e3c516', 'f8f955780bf2408cb854f2e1fd7e442e', null, '0', '2018-11-11 20:20:03', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 INSERT INTO `base_group_member` VALUES ('fbfbd17b58ad45918f56ba41ddd6ba6c', '24b4b41a5f674cfab47557dbcec26500', '7ab830fddf724e04ba62befa60b02d36', null, '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
@@ -595,7 +587,7 @@ CREATE TABLE `base_user_log` (
   `user_name` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
   `tenant_name` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
   `product_name` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
-  `product_version` int(11) DEFAULT NULL,
+  `product_version` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL,
   `host` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
   `url` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
   `op_name` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
@@ -611,6 +603,27 @@ CREATE TABLE `base_user_log` (
 -- Records of base_user_log
 -- ----------------------------
 INSERT INTO `base_user_log` VALUES ('1', 'admin', '九芝堂pv', '测试产品', '1', '12.0.0.1', 'www.test.com', '登录', '成功', 'sh', null, '0', '2018-10-15 10:00:10');
+
+-- ----------------------------
+-- Table structure for common_field
+-- ----------------------------
+DROP TABLE IF EXISTS `common_field`;
+CREATE TABLE `common_field` (
+  `id` char(32) NOT NULL DEFAULT '' COMMENT '主键ID',
+  `tenant_id` char(32) DEFAULT NULL COMMENT '公司ID',
+  `project_id` char(32) DEFAULT NULL COMMENT '项目id',
+  `delete_status` int(11) DEFAULT '0' COMMENT '删除状态(1:未删除，0:已删除)',
+  `REVISION` int(11) DEFAULT NULL COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公共字段表';
+
+-- ----------------------------
+-- Records of common_field
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for gate_log
@@ -668,13 +681,9 @@ CREATE TABLE `host_contract` (
 -- ----------------------------
 -- Records of host_contract
 -- ----------------------------
-INSERT INTO `host_contract` VALUES ('16ad098ca2a64190952b05d580b28e39', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '2018-09-27', '2018-09-28', '2018-09-29', 'dfsdf12', '1', '2018-10-22 22:24:03', null, '2018-10-23 11:24:03', null);
-INSERT INTO `host_contract` VALUES ('2ff0521e70f643aa84f3f2ceb9285766', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '2018-10-08', '2018-10-10', '2018-10-16', '124-ceshi', '1', '2018-10-22 03:14:19', null, '2018-10-22 16:14:18', null);
-INSERT INTO `host_contract` VALUES ('3f515d224e2846758af2a7355af97c3f', 'da4f5777888d4c749741bdd47981b519', '2018-10-22', '2018-10-29', '2018-10-23', '666666', '0', '2018-10-23 22:41:56', null, '2018-10-24 11:41:55', null);
-INSERT INTO `host_contract` VALUES ('401088c4995e4c27b14c1bdfd93e56b6', '2fde74f7d692487685e07c5261a01425', '2018-10-16', '2018-10-30', '2018-10-17', 'T-K-181017123', '1', '2018-10-17 03:32:07', null, '2018-10-17 16:32:06', null);
+INSERT INTO `host_contract` VALUES ('3f515d224e2846758af2a7355af97c3f', 'da4f5777888d4c749741bdd47981b519', '2018-10-21', '2018-10-28', '2018-10-22', '666666', '0', '2018-10-23 22:41:56', null, '2018-10-24 11:41:55', null);
 INSERT INTO `host_contract` VALUES ('480b5fb60ce9433a93a0d44094d0d2fa', 'ff89e683aa88482d8baced036b772999', '2018-10-12', '2018-10-23', '2018-10-12', 'Q-T-181018789', '0', '2018-10-18 03:36:12', null, '2018-10-18 16:36:11', null);
 INSERT INTO `host_contract` VALUES ('64b34c0b03514023b6da0e2a2271f138', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '2018-10-01', '2018-10-02', '2018-10-16', '32423', '0', '2018-10-22 06:07:11', null, '2018-10-22 19:07:11', null);
-INSERT INTO `host_contract` VALUES ('6d95cf950705442fbf6c6ceee49852cc', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '2018-09-28', '2018-10-06', '2018-10-07', '101', '1', '2018-10-22 03:32:16', null, '2018-10-22 16:32:15', null);
 INSERT INTO `host_contract` VALUES ('a91cde03ce34436e9bbeacd239247cd7', '2fde74f7d692487685e07c5261a01425', '2018-10-12', '2018-10-25', '2018-10-12', 'T-PS-181018124', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', null);
 INSERT INTO `host_contract` VALUES ('c797d0795f464ee292a7cb192d90ef81', 'da4f5777888d4c749741bdd47981b519', '2018-10-17', '2018-10-30', '2018-10-17', 'T-U-181018456', '0', '2018-10-17 22:41:38', null, '2018-10-18 11:41:37', null);
 INSERT INTO `host_contract` VALUES ('cdc1245e9b1048e2a270d4843b0f089b', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '2018-10-01', '2018-10-02', '2018-10-04', 'nm,', '0', '2018-10-22 22:31:56', null, '2018-10-23 11:31:55', null);
@@ -685,34 +694,57 @@ INSERT INTO `host_contract` VALUES ('d34cf9514d92429db646aa3d97760baf', 'cc9ac07
 -- ----------------------------
 DROP TABLE IF EXISTS `host_product`;
 CREATE TABLE `host_product` (
-  `id` varchar(40) COLLATE utf8mb4_bin NOT NULL,
+  `id` varchar(32) COLLATE utf8mb4_bin NOT NULL,
   `name` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品名称',
-  `version` int(10) DEFAULT NULL COMMENT '产品版本',
+  `version` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品版本',
   `roles` varchar(250) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '角色列表',
   `deleted` int(11) DEFAULT '0' COMMENT '删除状态 0 未删除 1 删除',
   `crt_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `crt_name` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '创建人',
   `upd_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `upd_name` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '修改人',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `product_name_version` (`name`,`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- ----------------------------
 -- Records of host_product
 -- ----------------------------
-INSERT INTO `host_product` VALUES ('0e22840e89944764911f48c298de5be3', 'asd', '3', '第三方;最小访问权限', '1', '2018-10-23 11:53:15', null, '2018-10-23 00:48:17', null);
-INSERT INTO `host_product` VALUES ('378dbf1906264945a0dbd43af1f1b46d', 'PV2.0', '3', '权限A;最小访问权限', '0', '2018-10-22 01:54:13', null, '2018-10-23 02:06:40', null);
-INSERT INTO `host_product` VALUES ('504e2996f8e94d89a812837874e45f48', '阿萨德', '3', '水电费;最小访问权限', '0', '2018-10-23 00:58:52', null, '2018-10-23 13:58:52', null);
-INSERT INTO `host_product` VALUES ('5248b4f01b9141319f403bf1e3b3edce', '测试', '2', '大声道;角色6;最小访问权限', '0', '2018-10-22 05:59:05', null, '2018-10-22 20:02:42', null);
-INSERT INTO `host_product` VALUES ('69086a2407fe468aabbfe61b22dd0f4f', '位', '6', '水电费;最小访问权限', '1', '2018-10-23 00:48:40', null, '2018-10-23 13:48:40', null);
-INSERT INTO `host_product` VALUES ('76419eb7403e497790aac50af4373f0e', '租房项目', '1', '数据录入员;数据质控QC;医学评审;医学评审QC;报告递交;;最小访问权限', '0', '2018-10-19 01:03:58', null, '2018-10-21 21:29:15', null);
-INSERT INTO `host_product` VALUES ('865e7d4a867c48da88f7a5465c1f3688', 'fdfg', null, '最小访问权限', '1', '2018-10-23 12:08:41', null, '2018-10-22 23:09:11', null);
-INSERT INTO `host_product` VALUES ('a6723dc7a68241c0a889b1a6dbdb05dc', '今日头条', '1', '数据录入员;数据质控QC;最小访问权限', '0', '2018-10-21 20:33:33', null, '2018-10-23 22:39:56', null);
-INSERT INTO `host_product` VALUES ('b33ab178f85547d290e1e98f1c9aeb24', 'asd', '4', 'sdf;最小访问权限', '0', '2018-10-23 02:06:10', null, '2018-10-23 15:06:10', null);
-INSERT INTO `host_product` VALUES ('c6609e7b384040479fffeb6633f6f8ce', '快手直播', '2', '数据录入;最小访问权限', '0', '2018-10-21 21:02:17', null, '2018-10-21 21:27:44', null);
-INSERT INTO `host_product` VALUES ('da4cc58b9d254751bf0023dc9fc059a6', '教育产品', '1', '数据质控QC;最小访问权限', '0', '2018-10-18 04:43:12', null, '2018-10-22 00:26:19', null);
-INSERT INTO `host_product` VALUES ('dadd264e01514ec6bf85f70f6279a5ac', 'ceshi', '9', 'zuifsd;最小访问权限', '0', '2018-10-24 03:20:03', null, '2018-10-24 21:08:42', null);
-INSERT INTO `host_product` VALUES ('f2eac01db5f84cf2abfd75f77000679d', 'ceshi', '2', 'er;最小访问权限', '1', '2018-10-22 03:05:56', null, '2018-10-22 16:05:56', null);
+INSERT INTO `host_product` VALUES ('e804b79df0224db789abff4bdf7438dd', 'PV', '4.0', '资料管理员;数据录入员;数据录入QC员;医学审评员;医学审评QC员;报告递交员;公司经理;企业运维;业务系统运维;最小访问权限', '0', '2018-11-02 01:26:51', null, '2018-11-02 04:29:58', null);
+
+-- ----------------------------
+-- Table structure for host_product_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `host_product_roles`;
+CREATE TABLE `host_product_roles` (
+  `id` char(32) NOT NULL DEFAULT '' COMMENT '主键ID',
+  `tenant_id` char(32) DEFAULT NULL COMMENT '公司ID',
+  `host_product_id` char(32) DEFAULT NULL COMMENT '产品版本id',
+  `role_code` varchar(50) DEFAULT NULL COMMENT '角色编码',
+  `role_name` varchar(50) DEFAULT NULL COMMENT '角色名称',
+  `role_type` tinyint(11) DEFAULT NULL COMMENT '角色类型(-1最小角色类型 1 普通角色类型）',
+  `deleted` int(11) DEFAULT '0' COMMENT '删除状态(0:未删除，1:已删除)',
+  `REVISION` int(11) DEFAULT '1' COMMENT '乐观锁',
+  `CREATED_BY` varchar(32) DEFAULT NULL COMMENT '创建人',
+  `CREATED_TIME` datetime DEFAULT NULL COMMENT '创建时间',
+  `UPDATED_BY` varchar(32) DEFAULT NULL COMMENT '更新人',
+  `UPDATED_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='产品角色表';
+
+-- ----------------------------
+-- Records of host_product_roles
+-- ----------------------------
+INSERT INTO `host_product_roles` VALUES ('0be3316a9cce4bb6894405d72c234038', null, 'e804b79df0224db789abff4bdf7438dd', '1002', '资料管理员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('1', null, null, '1001', '最小访问权限', '-1', '0', '1', null, '2018-10-26 09:55:43', null, '2018-10-26 09:55:47');
+INSERT INTO `host_product_roles` VALUES ('3813d03ae469477cb49663633436835f', null, 'e804b79df0224db789abff4bdf7438dd', '1009', '企业运维', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('3f1c4e31f0fc48f28a850148deb2a131', null, 'e804b79df0224db789abff4bdf7438dd', '1004', '数据录入QC员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('5313854c435c434a875848a2f403c8e9', null, 'e804b79df0224db789abff4bdf7438dd', '1010', '业务系统运维', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('5c8ea2ec37c74ea5962c58f88eb8a3d8', null, 'e804b79df0224db789abff4bdf7438dd', '1003', '数据录入员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('789ad8d704e1473180ac21ca59977495', null, 'e804b79df0224db789abff4bdf7438dd', '1008', '公司经理', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('d2d11bd2aab549b5afafe6f3ef78f67a', null, 'e804b79df0224db789abff4bdf7438dd', '1005', '医学审评员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('f99a837b884d44e79357ef30f9e7cc99', null, 'e804b79df0224db789abff4bdf7438dd', '1006', '医学审评QC员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
+INSERT INTO `host_product_roles` VALUES ('fbb1547fd2fe476a9d07b95d495482dc', null, 'e804b79df0224db789abff4bdf7438dd', '1007', '报告递交员', '1', '0', '1', null, '2018-11-02 04:29:58', null, null);
 
 -- ----------------------------
 -- Table structure for host_project
@@ -722,7 +754,7 @@ CREATE TABLE `host_project` (
   `id` varchar(40) COLLATE utf8mb4_bin NOT NULL DEFAULT '',
   `product_id` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品id',
   `serial_number` varchar(40) COLLATE utf8mb4_bin NOT NULL,
-  `product_version` int(10) DEFAULT NULL COMMENT '产品版本',
+  `product_version` varchar(10) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品版本',
   `max_user_num` int(11) DEFAULT '-1' COMMENT '使用人数上限',
   `start_date` date DEFAULT NULL COMMENT '开始时间',
   `end_date` date DEFAULT NULL COMMENT '结束时间',
@@ -740,20 +772,17 @@ CREATE TABLE `host_project` (
 -- ----------------------------
 -- Records of host_project
 -- ----------------------------
-INSERT INTO `host_project` VALUES ('2a467bb9c1144344a356dccc3a6579bd', '7caa10f82e3f435993242e80f7d5336c', '03', '2', '0', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
-INSERT INTO `host_project` VALUES ('2e38061afa0440a0bf6c69acf4d54c32', 'a6723dc7a68241c0a889b1a6dbdb05dc', '01', '1', '100', '2018-10-04', '2018-10-12', 'http://jhgdsf.com', '0', '6d95cf950705442fbf6c6ceee49852cc', '1', '2018-10-22 03:32:16', null, '2018-10-22 16:32:15', 'false');
-INSERT INTO `host_project` VALUES ('438e35665fd2474bb51158858e92c27b', '5248b4f01b9141319f403bf1e3b3edce', '01', '2', '100', '2018-10-14', '2018-10-15', 'http://jhjdsk.com', '1', '64b34c0b03514023b6da0e2a2271f138', '0', '2018-10-22 06:07:11', null, '2018-10-22 19:07:11', 'false');
-INSERT INTO `host_project` VALUES ('4cbfb97ce39942e3886c5b7bd4aae9be', null, '03', '4', '4', '2018-10-21', '2018-10-21', 'http://kjkjhfd.com', '2', 'd34cf9514d92429db646aa3d97760baf', '0', '2018-10-24 03:23:16', null, '2018-10-24 16:23:16', 'false');
-INSERT INTO `host_project` VALUES ('821f717c763a40ebad0d7c704a31c843', 'fbfc169693374535874a3c61f640d448', '01', '1', '2', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
-INSERT INTO `host_project` VALUES ('85582b20b49f4262a7fc864fb4db1bb9', '7caa10f82e3f435993242e80f7d5336c', '222', '3', '2', '2018-10-12', '2018-10-23', 'http://10.0.1.251:8484/#/roles/index', '0', '480b5fb60ce9433a93a0d44094d0d2fa', '0', '2018-10-18 03:36:12', null, '2018-10-18 16:36:11', 'false');
-INSERT INTO `host_project` VALUES ('9f5b0aba893d4bb6ba5341dbf93bad6e', 'a6723dc7a68241c0a889b1a6dbdb05dc', '01', '1', '100', '2018-09-30', '2018-10-14', 'http://mbmbd.com', '0', 'cdc1245e9b1048e2a270d4843b0f089b', '0', '2018-10-22 22:31:56', null, '2018-10-23 11:31:55', 'false');
-INSERT INTO `host_project` VALUES ('aa54172788cd462fb4809410c3854984', null, '02', '9', '7', '2018-10-28', '2018-10-28', 'http://jkhkjd.com', '1', 'd34cf9514d92429db646aa3d97760baf', '0', '2018-10-24 03:23:16', null, '2018-10-24 16:23:16', 'false');
-INSERT INTO `host_project` VALUES ('c0a0f6b609bb4e23a4a8a9041dd00f51', 'c99ba07ceda1400fa33d46b93729893a', '02', '1', '3', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
-INSERT INTO `host_project` VALUES ('d106d3c8327e48d0bf60109bfc0ade2b', null, '02', '2', '100', '2018-10-27', '2018-10-20', 'http://jncj.com', '1', 'cdc1245e9b1048e2a270d4843b0f089b', '0', '2018-10-22 22:31:56', null, '2018-10-23 11:31:55', 'false');
-INSERT INTO `host_project` VALUES ('e68c40c841cb4a50b177a1cec24acda3', 'a6723dc7a68241c0a889b1a6dbdb05dc', '01', '2', '100', '2018-10-04', '2018-09-27', 'http://jhjkfd.com', '2', '16ad098ca2a64190952b05d580b28e39', '0', '2018-10-22 22:24:03', null, '2018-10-22 22:30:47', 'false');
-INSERT INTO `host_project` VALUES ('ebf33877491d4bc68ba92598ff3e74ee', null, '01', '4', '3', '2018-10-14', '2018-10-22', 'http://kjhfsjkd.com', '1', 'd34cf9514d92429db646aa3d97760baf', '0', '2018-10-24 03:23:16', null, '2018-10-24 16:23:16', 'false');
-INSERT INTO `host_project` VALUES ('ec069029443a412e932b4235e34ce575', 'f2eac01db5f84cf2abfd75f77000679d', '123', '2', '-1', '2018-10-21', '2018-10-22', 'http://jhjfd.com', '2', '2ff0521e70f643aa84f3f2ceb9285766', '0', '2018-10-22 03:14:19', null, '2018-10-22 03:31:14', 'false');
-INSERT INTO `host_project` VALUES ('fe6576fe2f754710a561d5bde3b05cde', 'a6723dc7a68241c0a889b1a6dbdb05dc', '01', '1', '6', '2018-10-22', '2018-10-29', 'http://10.0.1.253:3327/#/systemMag/contract/add', '1', '3f515d224e2846758af2a7355af97c3f', '0', '2018-10-23 22:41:56', null, '2018-10-24 11:41:55', 'false');
+INSERT INTO `host_project` VALUES ('0e22840e89944764911f48c298de5be3', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '0', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
+INSERT INTO `host_project` VALUES ('2e38061afa0440a0bf6c69acf4d54c32', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '100', '2018-10-04', '2018-10-12', 'http://jhgdsf.com', '0', '6d95cf950705442fbf6c6ceee49852cc', '1', '2018-10-22 03:32:16', null, '2018-10-22 16:32:15', 'false');
+INSERT INTO `host_project` VALUES ('438e35665fd2474bb51158858e92c27b', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '100', '2018-10-14', '2018-10-15', 'http://jhjdsk.com', '1', '64b34c0b03514023b6da0e2a2271f138', '0', '2018-10-22 06:07:11', null, '2018-10-22 19:07:11', 'false');
+INSERT INTO `host_project` VALUES ('821f717c763a40ebad0d7c704a31c843', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '2', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
+INSERT INTO `host_project` VALUES ('85582b20b49f4262a7fc864fb4db1bb9', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '2', '2018-10-12', '2018-10-23', 'http://10.0.1.251:8484/#/roles/index', '0', '480b5fb60ce9433a93a0d44094d0d2fa', '0', '2018-10-18 03:36:12', null, '2018-10-18 16:36:11', 'false');
+INSERT INTO `host_project` VALUES ('95afe57f441444a88afc01ba77cc6204', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '100', '2018-10-07', '2018-10-14', 'http://jhdfj.com', '2', 'd940326e65924911a2a1cd979b1b37a6', '0', '2018-10-30 20:41:42', null, '2018-10-30 20:42:50', 'false');
+INSERT INTO `host_project` VALUES ('9f5b0aba893d4bb6ba5341dbf93bad6e', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '100', '2018-09-30', '2018-10-14', 'http://mbmbd.com', '0', 'cdc1245e9b1048e2a270d4843b0f089b', '0', '2018-10-22 22:31:56', null, '2018-10-23 11:31:55', 'false');
+INSERT INTO `host_project` VALUES ('c0a0f6b609bb4e23a4a8a9041dd00f51', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '3', '2018-10-12', '2018-10-25', 'http://10.0.1.251:8484/#/dashboard', '0', 'a91cde03ce34436e9bbeacd239247cd7', '0', '2018-10-17 20:03:48', null, '2018-10-18 09:03:47', 'false');
+INSERT INTO `host_project` VALUES ('e68c40c841cb4a50b177a1cec24acda3', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '100', '2018-10-04', '2018-09-27', 'http://jhjkfd.com', '2', '16ad098ca2a64190952b05d580b28e39', '0', '2018-10-22 22:24:03', null, '2018-10-22 22:30:47', 'false');
+INSERT INTO `host_project` VALUES ('ec069029443a412e932b4235e34ce575', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '-1', '2018-10-21', '2018-10-22', 'http://jhjfd.com', '2', '2ff0521e70f643aa84f3f2ceb9285766', '0', '2018-10-22 03:14:19', null, '2018-10-22 03:31:14', 'false');
+INSERT INTO `host_project` VALUES ('fe6576fe2f754710a561d5bde3b05cde', 'e804b79df0224db789abff4bdf7438dd', '123', '4.0', '6', '2018-10-21', '2018-10-28', 'http://10.0.1.253:3327/#/systemMag/contract/add', '1', '3f515d224e2846758af2a7355af97c3f', '0', '2018-10-23 22:41:56', null, '2018-10-24 11:41:55', 'false');
 
 -- ----------------------------
 -- Table structure for saas_project
@@ -777,12 +806,13 @@ CREATE TABLE `saas_project` (
 -- ----------------------------
 -- Records of saas_project
 -- ----------------------------
-INSERT INTO `saas_project` VALUES ('01349500b8f04f38ba4d00cae8207d67', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '03', 'asdsa', 'ceshi', '1', '1', null, '2018-10-22 22:37:48', null, '2018-10-23 11:37:47');
+INSERT INTO `saas_project` VALUES ('02fd0579074243b484ccfa230c0cd981', '1de3b2e83f504295a8d5560891c3fbed', '438e35665fd2474bb51158858e92c27b', '123fd', '胜多负少', '0', '0', null, '2018-10-30 21:47:55', null, '2018-10-31 10:47:54');
 INSERT INTO `saas_project` VALUES ('13', '123', '123', 'bjlh_pv', '白家老号', '1', '0', null, '2018-08-16 13:57:42', null, '2018-08-16 13:57:42');
-INSERT INTO `saas_project` VALUES ('46ea3b3e1ef74302abcfa4023603a999', 'da4f5777888d4c749741bdd47981b519', '03', '003', '东方头条', '1', '0', null, '2018-10-22 00:18:44', null, '2018-10-22 13:18:43');
-INSERT INTO `saas_project` VALUES ('bf610423b6a9495fb9d2d61761d266ed', 'cc9ac07ba95c4454ba5c8ecff628d6f8', '03', 'sdfsd', 'test', '0', '0', null, '2018-10-22 22:38:30', null, '2018-10-23 11:38:30');
+INSERT INTO `saas_project` VALUES ('136cc6890c454e6087880d2bd144f703', '1de3b2e83f504295a8d5560891c3fbed', '0e22840e89944764911f48c298de5be3', 'fg', 'fg', '0', '0', null, '2018-11-12 04:51:56', null, '2018-11-12 18:51:55');
+INSERT INTO `saas_project` VALUES ('70b98d7c4ebd4d4bb0e3fb2dfadcde6b', '6ca6ffc8cd564094b7f584e2bca0a3f7', '0e22840e89944764911f48c298de5be3', '123', 'test', '0', '0', null, '2018-11-12 19:12:28', null, '2018-11-13 09:12:28');
+INSERT INTO `saas_project` VALUES ('875d762ac14f47b3a8c2244a5e96d5de', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'ec069029443a412e932b4235e34ce575', '20181102', '梅斯CRO', '1', '0', null, '2018-11-02 01:31:54', null, '2018-11-02 14:31:54');
+INSERT INTO `saas_project` VALUES ('abbd86ee2a4b4a9099d69710ad1ad191', 'da4f5777888d4c749741bdd47981b519', '0e22840e89944764911f48c298de5be3', '003', '青青项目', '1', '0', null, '2018-11-11 19:24:19', null, '2018-11-12 09:24:19');
 INSERT INTO `saas_project` VALUES ('da2b752e9b4749348dacb031adb04643', 'da4f5777888d4c749741bdd47981b519', '222', '002', '房地产项目', '1', '0', null, '2018-10-18 03:38:37', null, '2018-10-18 16:38:36');
-INSERT INTO `saas_project` VALUES ('ea65b0c1bee449b0a84a9cf32e9ab7ec', '2fde74f7d692487685e07c5261a01425', '3', '001', '青青项目', '0', '0', null, '2018-10-17 20:23:34', null, '2018-10-18 09:23:33');
 
 -- ----------------------------
 -- Table structure for saas_project_user
@@ -806,17 +836,17 @@ CREATE TABLE `saas_project_user` (
 -- ----------------------------
 -- Records of saas_project_user
 -- ----------------------------
-INSERT INTO `saas_project_user` VALUES ('123123', '13', '33', 'cro', '1', '0', '2018-08-08 16:20:26', null, '2018-08-23 16:20:29', null);
-INSERT INTO `saas_project_user` VALUES ('2b48ae9921544454b2ea9b85601c7602', '46ea3b3e1ef74302abcfa4023603a999', '33', '数据质控QC', '1', '0', '2018-10-24 11:42:38', null, '2018-10-24 11:42:38', null);
-INSERT INTO `saas_project_user` VALUES ('373c546a68cd43979f6247b7d0c59ab2', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', '865e7d4a867c48da88f7a5465c1f3688', '最小访问权限', '1', '0', '2018-10-22 14:26:08', null, '2018-10-22 14:26:08', null);
-INSERT INTO `saas_project_user` VALUES ('68c4519a6cc34532b632e87e0dad5c97', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', 'b2c484bdceb940249eaf7415e286fbfb', '最小访问权限;22', '1', '0', '2018-10-25 09:08:00', null, '2018-10-25 09:08:00', null);
-INSERT INTO `saas_project_user` VALUES ('85dfeeec22a14b35baec177033f1c1c5', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', '0e22840e89944764911f48c298de5be3', '资料管理员;最小访问权限;数据录入员', '1', '0', '2018-10-18 15:31:42', null, '2018-10-18 15:31:42', null);
+INSERT INTO `saas_project_user` VALUES ('123123', '13', '33', 'cro', '1', '1', '2018-08-08 16:20:26', null, '2018-08-23 16:20:29', null);
+INSERT INTO `saas_project_user` VALUES ('2b48ae9921544454b2ea9b85601c7602', '46ea3b3e1ef74302abcfa4023603a999', '33', '数据质控QC', '1', '1', '2018-10-24 11:42:38', null, '2018-10-24 11:42:38', null);
+INSERT INTO `saas_project_user` VALUES ('373c546a68cd43979f6247b7d0c59ab2', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', '865e7d4a867c48da88f7a5465c1f3688', '最小访问权限', '1', '1', '2018-10-22 14:26:08', null, '2018-10-22 14:26:08', null);
+INSERT INTO `saas_project_user` VALUES ('68c4519a6cc34532b632e87e0dad5c97', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', 'b2c484bdceb940249eaf7415e286fbfb', '最小访问权限;22', '1', '1', '2018-10-25 09:08:00', null, '2018-10-25 09:08:00', null);
+INSERT INTO `saas_project_user` VALUES ('85dfeeec22a14b35baec177033f1c1c5', 'ea65b0c1bee449b0a84a9cf32e9ab7ec', '0e22840e89944764911f48c298de5be3', '资料管理员;最小访问权限;数据录入员', '1', '1', '2018-10-18 15:31:42', null, '2018-10-18 15:31:42', null);
 INSERT INTO `saas_project_user` VALUES ('a9ebde433cdd424db8ae9e992f5e2b47', 'da2b752e9b4749348dacb031adb04643', '865e7d4a867c48da88f7a5465c1f3688', '最小访问权限;数据录入', '1', '0', '2018-10-22 10:31:46', null, '2018-10-22 10:31:46', null);
-INSERT INTO `saas_project_user` VALUES ('afd6de918c1d4c6db7e5d88ee0de6b03', 'bf610423b6a9495fb9d2d61761d266ed', '8684339eaa6b4d3e8aa78ac0f4651415', '最小访问权限;开发;游客;22', '2', '0', '2018-10-23 11:39:07', null, '2018-10-23 11:39:07', null);
+INSERT INTO `saas_project_user` VALUES ('afd6de918c1d4c6db7e5d88ee0de6b03', 'bf610423b6a9495fb9d2d61761d266ed', '8684339eaa6b4d3e8aa78ac0f4651415', '最小访问权限;开发;游客;22', '2', '1', '2018-10-23 11:39:07', null, '2018-10-23 11:39:07', null);
 INSERT INTO `saas_project_user` VALUES ('b35d35e26f9c4d05a7014cfcb84ac2a4', '13', '0e22840e89944764911f48c298de5be3', null, '1', '1', '2018-10-22 17:54:58', null, '2018-10-22 17:54:58', null);
 INSERT INTO `saas_project_user` VALUES ('bcfff11b031c4e998af27f6ad9041cfd', 'bf610423b6a9495fb9d2d61761d266ed', '0e22840e89944764911f48c298de5be3', '游客', '1', '1', '2018-10-23 11:40:43', null, '2018-10-23 11:40:43', null);
-INSERT INTO `saas_project_user` VALUES ('c7e4e6c4f72944e68b4ed9a6cdd6ba24', '46ea3b3e1ef74302abcfa4023603a999', 'da3a9be724924d7097e7914ae9b63832', '最小访问权限;开发', '1', '0', '2018-10-23 10:55:54', null, '2018-10-23 10:55:54', null);
-INSERT INTO `saas_project_user` VALUES ('ceb66b9960df44248b472e9c61dc1e31', '46ea3b3e1ef74302abcfa4023603a999', '0e22840e89944764911f48c298de5be3', '最小访问权限', '2', '0', '2018-10-22 14:30:52', null, '2018-10-22 14:30:52', null);
+INSERT INTO `saas_project_user` VALUES ('c7e4e6c4f72944e68b4ed9a6cdd6ba24', '46ea3b3e1ef74302abcfa4023603a999', 'da3a9be724924d7097e7914ae9b63832', '最小访问权限;开发', '1', '1', '2018-10-23 10:55:54', null, '2018-10-23 10:55:54', null);
+INSERT INTO `saas_project_user` VALUES ('ceb66b9960df44248b472e9c61dc1e31', '46ea3b3e1ef74302abcfa4023603a999', '0e22840e89944764911f48c298de5be3', '最小访问权限', '2', '1', '2018-10-22 14:30:52', null, '2018-10-22 14:30:52', null);
 INSERT INTO `saas_project_user` VALUES ('eb6fb9dd9f2044b48db2b26c6dca0a00', '46ea3b3e1ef74302abcfa4023603a999', '2fe2e67f942b45e4b2420383a095ea65', '最小访问权限;开发', '1', '1', '2018-10-23 10:50:01', null, '2018-10-23 10:50:01', null);
 
 -- ----------------------------
@@ -839,7 +869,7 @@ CREATE TABLE `saas_tenant` (
   `upd_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
   `upd_name` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '修改人',
   `short_name` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '名称缩写',
-  `logo_fileId` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '公司logoid',
+  `logo_fileId` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '公司logoid',
   `report_Mark` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '报告编号企业标识',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -847,14 +877,19 @@ CREATE TABLE `saas_tenant` (
 -- ----------------------------
 -- Records of saas_tenant
 -- ----------------------------
-INSERT INTO `saas_tenant` VALUES ('123', '九芝堂pv', 'jzt_pv', null, 'null/null', null, null, null, '1', '1', '2018-08-08 15:36:45', null, '2018-10-19 01:57:06', null, null, null, null);
-INSERT INTO `saas_tenant` VALUES ('2fde74f7d692487685e07c5261a01425', '青青制药有限公司', '123456789', '中国', '上海市/上海', '上海松江区', '21000', 'http://www.baidu.com', '2', '0', '2018-10-17 02:12:32', null, '2018-10-22 06:09:35', null, 'qingqing', null, null);
+INSERT INTO `saas_tenant` VALUES ('123', '九芝堂pv', 'jzt_pv', null, '上海市/上海', '上海松江区', null, null, '1', '0', '2018-08-08 15:36:45', null, '2018-10-19 01:57:06', null, null, null, null);
+INSERT INTO `saas_tenant` VALUES ('1de3b2e83f504295a8d5560891c3fbed', 'logo', 'ASDF', '中国', '上海/上海', '浦东新区', '2434', 'http://khdfkj.com', '1', '0', '2018-10-30 05:21:22', null, '2018-10-30 20:16:31', null, 'dfg', 'http://p8i8uyqde.bkt.clouddn.com/logo.png?attname=logo.png&e=1540898307&token=QgXjzoMtDc1slvqisWVnn9YGKu-lVbPJhaHdCKW9:-AtNzEXH_m4Zd1hK85yS7uDHg2Q=', null);
+INSERT INTO `saas_tenant` VALUES ('2fde74f7d692487685e07c5261a01425', '青青制药有限公司', '123456789', '中国', '上海市/上海', '上海松江区', '21000', 'http://www.baidu.com', '2', '0', '2018-10-17 02:12:32', null, '2018-10-30 20:16:50', null, 'qingqing', null, null);
 INSERT INTO `saas_tenant` VALUES ('400d7c7146a44378bb3d1c0c61ce69c5', '太阳', 'ASDF', '中国', '上海/上海', '浦东新区', '123234', 'http://khshd.com', '1', '1', '2018-10-22 06:00:58', null, '2018-10-22 19:00:57', null, 'ty', null, null);
+INSERT INTO `saas_tenant` VALUES ('4ae230922bf641ae8b6df8fd1a92b3b4', '环境', 'DFGG', '中国', '上海/上海', '浦东新区', '123344578', '电放费', '1', '1', '2018-10-30 20:13:50', null, '2018-10-30 20:14:56', null, 'SDSF', null, null);
 INSERT INTO `saas_tenant` VALUES ('5bcc0c00e53542429a545c1fe5304afb', '水电费', 'KLOI', '中国', '上海/上海', '浦东新区', '123234354', 'http://jhskjd.com', '2', '1', '2018-10-22 03:09:51', null, '2018-10-22 16:09:50', null, 'jif', null, null);
-INSERT INTO `saas_tenant` VALUES ('62', '龙门镖局', 'longmen', '中国', 'null/上海市', '静安区', '200102', 'http://cxjkh.c0m', '1', '0', '2018-08-08 15:48:28', null, '2018-10-23 01:05:05', null, null, null, null);
+INSERT INTO `saas_tenant` VALUES ('62', '龙门镖局', 'longmen', '中国', '上海市', '静安区', '200102', 'http://cxjkh.c0m', '1', '0', '2018-08-08 15:48:28', null, '2018-10-23 01:05:05', null, null, null, null);
+INSERT INTO `saas_tenant` VALUES ('6ca6ffc8cd564094b7f584e2bca0a3f7', '梅斯CRO', 'MEDS', '中国', '上海市/上海市', '上海市徐汇区宜山路425号办公楼三层', '200232', 'http://www.medsci.cn/', '2', '0', '2018-11-02 01:20:06', null, '2018-11-02 14:20:05', null, 'Medsci', 'http://p8i8uyqde.bkt.clouddn.com/_Foxmail.1%405cd5205f-d6fe-a7ca-8234-dd8d5a742394%3F5130612171150620178.png?attname=_Foxmail.1%405cd5205f-d6fe-a7ca-8234-dd8d5a742394%3F5130612171150620178.png&e=1541143204&token=QgXjzoMtDc1slvqisWVnn9YGKu-lVbPJhaHdCKW9:5IVtphfcUtVBBFZ5NOphxteF860=', null);
 INSERT INTO `saas_tenant` VALUES ('cc9ac07ba95c4454ba5c8ecff628d6f8', '测试企业名称xiao', 'CSQY', 'China', '上海市/上海市', 'shanghai', '10086', 'www.xiao.com', '2', '0', '2018-10-19 02:26:59', null, '2018-10-22 06:11:24', null, 'CSQY', null, null);
 INSERT INTO `saas_tenant` VALUES ('da4f5777888d4c749741bdd47981b519', '青青企业', '666666', '中国', '上海市/上海', '上海松江', '21000', 'http://demo.pv.idrugsafety.cn/login', '3', '0', '2018-10-17 02:15:02', null, '2018-10-18 03:30:50', null, 'qingqi', null, null);
-INSERT INTO `saas_tenant` VALUES ('ff89e683aa88482d8baced036b772999', '青青人民医院', 'QQQQ', '中国', '上海市/上海', '上海松江', '21000', 'http://www.baidu.com', '3', '0', '2018-10-19 02:05:11', null, '2018-10-19 03:15:32', null, 'renming', null, null);
+INSERT INTO `saas_tenant` VALUES ('e3c00989467d4b77a255208e9ba97c48', '测试企业', 'ASDF', '中国', '上海/上海', '浦东新区', '12324567999', 'http://jhf.com', '1', '1', '2018-10-30 03:07:38', null, '2018-10-30 20:38:26', null, 'fdss', null, null);
+INSERT INTO `saas_tenant` VALUES ('ee53618829ab41b3bb35bda168ca05b1', 'fgh', 'ASDF', '国家', '省/城市', '企业地址', '邮编', ' 企业域名', '3', '1', '2018-10-30 20:39:30', null, '2018-10-30 20:39:53', null, 'fgh', null, null);
+INSERT INTO `saas_tenant` VALUES ('ff89e683aa88482d8baced036b772999', '青青人民医院', 'QQQQ', '中国', '上海市/上海', '上海松江', '21000', 'http://www.baidu.com', '3', '0', '2018-10-19 02:05:11', null, '2018-11-11 19:27:33', null, 'renming', 'http://p8i8uyqde.bkt.clouddn.com/JPEG.jpg?attname=JPEG.jpg&e=1541989648&token=QgXjzoMtDc1slvqisWVnn9YGKu-lVbPJhaHdCKW9:E8MoTBgF4uorasHsnnzNU7gtDRw=', null);
 
 -- ----------------------------
 -- Table structure for saas_user
@@ -869,7 +904,7 @@ CREATE TABLE `saas_user` (
   `mobile_phone` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机号码',
   `email` varchar(25) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `sex` char(1) COLLATE utf8mb4_bin DEFAULT '1' COMMENT '性别: 1 男 / 0 女',
-  `user_status` int(10) DEFAULT NULL COMMENT '用户状态：1、正常，2、禁用',
+  `user_status` int(10) DEFAULT '1' COMMENT '用户状态：1、正常，2、禁用',
   `description` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
   `deleted` int(11) DEFAULT '0' COMMENT '删除状态 0 未删除 1 删除',
   `crt_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -882,26 +917,25 @@ CREATE TABLE `saas_user` (
 -- ----------------------------
 -- Records of saas_user
 -- ----------------------------
-INSERT INTO `saas_user` VALUES ('0e22840e89944764911f48c298de5be3', '2fde74f7d692487685e07c5261a01425', 'Alisa', '艾莉萨', '$2a$12$egp6LgfetEoGDVc2iew/p.PQhFpApmckJi9cJikkrfwjXn3xDmP.m', '13612345678', 'bb@bioon.com', '0', '2', null, '1', '2018-10-18 15:31:42', null, '2018-10-22 22:41:00', null);
-INSERT INTO `saas_user` VALUES ('2fe21b4f0eb3490097feb686c84b8632', '2', '测试', '测试', '$2a$12$WAjgdd2D1EeE6plubx5xoOMSpERIY2SSNcxaaKytdpdc/kysGQ8Me', '18163526532', 'sdfs2kjh@fd.com', '1', '1', '水电费', '0', '2018-10-24 03:51:16', null, '2018-10-24 16:51:16', null);
-INSERT INTO `saas_user` VALUES ('2fe2e67f942b45e4b2420383a095ea65', 'da4f5777888d4c749741bdd47981b519', 'ceshi', 'sdf', '$2a$12$gK4dVFZ/DBXSwGD68d1jMuhQ1cm/p0coQhCXM7ouFA9q3Oq9IGFCm', '18137633782', 'zxc@ljfk.com', '1', null, null, '1', '2018-10-23 10:50:01', null, '2018-10-23 10:50:01', null);
+INSERT INTO `saas_user` VALUES ('2648b1d5b09c4fbd8b397133d3071d77', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$i80TO6ZaC8kuFIXlVzFGcucrE.ITrpu/XXpVFBCvQZ81qL/XqAZWi', '18321692036', 'aa@bioon.com', '1', '1', null, '1', '2018-11-11 20:05:22', null, '2018-11-12 10:05:22', null);
 INSERT INTO `saas_user` VALUES ('33', '123', 'jerry', '33', '$2a$12$iEJQi2gDX9x6Q0fn0j4Wxe5o6kayXO7EQRiUnmRkz5ki/5fCmXWfu', '13112345678', '634@BIOON.COM', '0', '1', '2', '0', '2018-08-29 15:39:32', '12', '2018-10-23 22:42:58', '3');
-INSERT INTO `saas_user` VALUES ('38b0fd5610524b3db61e7c1e1809bca2', '2', 'sdf', 'wer', '$2a$12$26n./11LmDqluctXlyR2eOWDGQEThiGnASFFpThvNlYydZo6wasfi', '18127362343', '243@kfd.com', '1', '1', 'asd', '0', '2018-10-23 01:14:41', null, '2018-10-23 14:14:41', null);
-INSERT INTO `saas_user` VALUES ('53827bd6baeb493c8c817e8cd2910aec', '2fde74f7d692487685e07c5261a01425', 'alex', '爱丽丝', '$2a$12$Y4gDmAZUdz/7wYpwXFzorOU50E3QGOPjWGxyiiW5AvqJWNsMbt60a', '12345678987', 'aa@bioon.com', '1', '1', null, '0', '2018-10-18 15:14:44', null, '2018-10-18 15:14:44', null);
-INSERT INTO `saas_user` VALUES ('56a3f776e1de4e4fae0c0458cb21e3f3', '2', '测试', '测试', '$2a$12$Xo/FRheNpQeXXTyKtfDpDeg8IRy0TquzqGaWWsrZRaoBeUg2Y/bJ2', '18136596352', 'sdf@lkjfd.com', '1', '1', 'sf', '0', '2018-10-24 03:18:28', null, '2018-10-24 16:18:28', null);
-INSERT INTO `saas_user` VALUES ('5b390cca0b9745ea83c7e690ce3b2aaa', '2', 'xuner', '熏儿', '$2a$12$Phm6CCzDH4W77RxClhefR.WlTJo33hLeUnZjmwgpiWWp970Ig2Unm', '13287654321', '666@bioon.com', '1', '1', null, '0', '2018-10-24 02:33:20', null, '2018-10-24 15:33:20', null);
-INSERT INTO `saas_user` VALUES ('6513ea7752c04f83a430d1ccd48399df', '2', 'fg', 'fgh', '$2a$12$VsP9HycsjZj79sriLhWsbe2OCN.ZA16LK2kVNQPpJ/ecVCGKx8EqO', '18137633782', 'dfg@kjhfkd.com', '1', '1', 'wer', '0', '2018-10-22 23:06:47', null, '2018-10-23 12:06:47', null);
+INSERT INTO `saas_user` VALUES ('50971403fa0d4343b9b4ce5c83a812ad', 'e974e4d26e244940a68d323643db8939', 'ququ', 'ququ', '$2a$12$H2CadwigV73wmWHyBYE4TenIvtV8Ey7wUzxJz0q3N0QjB6xL/kM9W', '13112345678', 'qu@bioon.com', '1', '1', null, '0', '2018-11-12 01:02:50', null, '2018-11-12 01:02:50', null);
+INSERT INTO `saas_user` VALUES ('5b390cca0b9745ea83c7e690ce3b2aaa', '123', 'xuner', '熏儿', '$2a$12$Phm6CCzDH4W77RxClhefR.WlTJo33hLeUnZjmwgpiWWp970Ig2Unm', '13287654321', '666@bioon.com', '1', '1', null, '0', '2018-10-24 02:33:20', null, '2018-10-24 15:33:20', null);
 INSERT INTO `saas_user` VALUES ('67', '123', '申沙沙', '测试账号1', '$2a$12$ZEtpkis93dH4mtm.mJiNz.gGUSePLsxxJ2v1b7YW3Oq7L6oLYxemW', '15093148821', 'shasha.shen@medsci.cn', '0', '1', '测试', '0', '2018-09-19 07:14:32', null, '2018-09-19 20:14:32', null);
-INSERT INTO `saas_user` VALUES ('7ab830fddf724e04ba62befa60b02d36', '2', 'vxc', 'asd', '$2a$12$pmWFMn4qWpDE5r4lPpNbyOQP8brT5oxXmZO6cpK98hF18WjBXkG8O', '18137633782', 'sdf@hjsdk.com', '1', '1', 'sdf', '0', '2018-10-23 01:11:02', null, '2018-10-23 14:11:03', null);
-INSERT INTO `saas_user` VALUES ('865e7d4a867c48da88f7a5465c1f3688', 'da4f5777888d4c749741bdd47981b519', 'AAA', 'A男', '$2a$12$bPJqpKdnzN/x0HCyVBVLKelfGfxwc6QTOmdp7t3PlKe7y5yiob9Pm', '13212345678', 'AA@BIOON.COM', '2', '1', null, '1', '2018-10-22 10:31:46', null, '2018-10-22 10:31:46', null);
-INSERT INTO `saas_user` VALUES ('8684339eaa6b4d3e8aa78ac0f4651415', 'cc9ac07ba95c4454ba5c8ecff628d6f8', 'fsdf', 'wqe', '$2a$12$bWf4oTv.IXnbpWA32/tgI.12KLANmXUlsUB.fVp8ReYnjQ/84Vz7m', '18136251423', 'fds@lnjd.com', '1', null, null, '1', '2018-10-23 11:39:07', null, '2018-10-22 22:41:34', null);
-INSERT INTO `saas_user` VALUES ('88c9992e46c944c0af378966992d499d', '2', 'xuefang', '雪芳', '$2a$12$IcVTUdHjKM.oFLkKcLPMp.gyayJGy8la7Q.iH/0vK/Kto1veWIyse', '13112345678', 'xuefang.li@bioon.com', '1', '1', null, '0', '2018-10-16 22:39:47', null, '2018-10-17 11:39:46', null);
-INSERT INTO `saas_user` VALUES ('aeeeae4778f34f90857f33986b25ed99', '2', 'aaa', '师范生', '$2a$12$Wzba/TsOjyoA10pbhmYGgOh8Hr.lJ4iCNj9E/RX/QSbzyaBbvwiE.', '13112345678', 'aaa@bioon.com', '1', '1', null, '0', '2018-10-24 03:06:22', null, '2018-10-24 16:06:22', null);
-INSERT INTO `saas_user` VALUES ('b2c484bdceb940249eaf7415e286fbfb', '2fde74f7d692487685e07c5261a01425', 'ceshi123', 'ceshi', '$2a$12$91EOxSJ21EnRmJc.iyjJ6u3PmYMmcuiq22kZIhXF5pXXvfwuEc2UW', '18137633782', 'sdf@jhj.com', '1', null, null, '0', '2018-10-25 09:08:00', null, '2018-10-25 09:08:00', null);
-INSERT INTO `saas_user` VALUES ('b35c3bb3ce0447e4af05b887d2fc66f0', '2', 'fgh', 'dfg', '$2a$12$4C4b.l/nm8ACRBEM6q5ZrO9I9f6Vkt2NOE1SwjvytKGo/ta9Q6jOi', '18137633782', 'dfg2hkj@fdf.com', '1', '1', 'dfdf', '0', '2018-10-22 23:07:30', null, '2018-10-23 12:07:30', null);
-INSERT INTO `saas_user` VALUES ('bbe241b341ff44caaafd442422eb5b51', '2', 'qingqing', '青青', '$2a$12$w0XPUkGu7ywG4S06jifrfu8IscQYbN8Mty9RSr3Tf0sepqFS7VhtG', '13187654321', 'lixuefang69@163.com', '1', '1', null, '0', '2018-10-17 20:46:47', null, '2018-10-18 09:46:47', null);
-INSERT INTO `saas_user` VALUES ('bf4dd9b1769d4abc9b2bd556154f3147', '2fde74f7d692487685e07c5261a01425', 'xiaoyan', '萧炎', '$2a$12$VN/xMg7A/S2HNWF8pxNP0.NE7nYPsqQvCWeoaMM2wCGgqd1s7hdY2', '15612345678', '748703042@qq.com', '1', '1', null, '0', '2018-10-18 10:54:03', null, '2018-10-18 10:54:03', null);
-INSERT INTO `saas_user` VALUES ('da3a9be724924d7097e7914ae9b63832', 'da4f5777888d4c749741bdd47981b519', 'ceshi ', 'asd', '$2a$12$4.WYlZnwhzXVkl/J.LGN9eZQvZheDhMGoAYp0dEaWbSpJM9/U9gi.', '18136256532', 'sdf@lkjsfd.com', '1', null, null, '1', '2018-10-23 10:55:54', null, '2018-10-23 10:55:54', null);
+INSERT INTO `saas_user` VALUES ('73ede8dd9fbb45698d50b1952871a244', 'c3f72ccff5b2450f98449448e7b654b7', 'ququ', 'ququ', '$2a$12$TXfF.uTgPlzK0p0p9iJt9eKE5E7/DJn8rcpP8L72vkQgm.UAQzPxm', '13112345678', 'qu@bioon.com', '1', '1', null, '0', '2018-11-12 01:02:50', null, '2018-11-12 01:02:50', null);
+INSERT INTO `saas_user` VALUES ('76760e8b157b4a80817019ce3d971940', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$LUBasGLo/XWOWMipzMX21ecU5HBHitrT6l/ENyNqqfnIR5oisVDoi', '13112345678', '4aaa@bioon.com', '1', '1', null, '1', '2018-11-11 20:14:48', null, '2018-11-12 10:14:48', null);
+INSERT INTO `saas_user` VALUES ('84c64cd49db2445084e12ddba41e6fd2', '123', '33', 'sa', '$2a$12$DPbMP5CXTwvsIq.ZEaB2EOXXMGQl2g1lO/ZYjzm6TauIb3z6Me48e', '13112345687', '224@bioon.com', '1', '1', null, '0', '2018-11-11 20:20:02', null, '2018-11-12 10:20:02', null);
+INSERT INTO `saas_user` VALUES ('85bde88a54834c4dbd60cbfc00026243', '123', '33', 'sa', '$2a$12$luCRdgSZB2gJIM5uWjU6/.1dIhRCQaiRP94sjuR02mjUfaOPnibkm', '13112345687', '224@bioon.com', '1', '1', null, '0', '2018-11-11 20:20:02', null, '2018-11-12 10:20:03', null);
+INSERT INTO `saas_user` VALUES ('88c9992e46c944c0af378966992d499d', '123', 'xuefang', '雪芳', '$2a$12$IcVTUdHjKM.oFLkKcLPMp.gyayJGy8la7Q.iH/0vK/Kto1veWIyse', '13112345678', 'xuefang.li@bioon.com', '1', '1', null, '0', '2018-10-16 22:39:47', null, '2018-10-17 11:39:46', null);
+INSERT INTO `saas_user` VALUES ('8f1729649d304290838cedc886ab79ee', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$.ilr3rG.NJfnYZ2KMVWCqe/57iH.36WB/MIAFacOeQiRAblaUPjue', '13112345678', '4aaa@bioon.com', '1', '1', null, '1', '2018-11-11 20:14:48', null, '2018-11-12 10:14:48', null);
+INSERT INTO `saas_user` VALUES ('8f3913d4c0434a7ab20f29e97965eb7e', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$xkMNCt0caqCenauM36J85ukljf9r/2qS1aqBuGXKjZgygATQldWba', '18321692036', 'aa@bioon.com', '1', '1', null, '1', '2018-11-11 20:05:20', null, '2018-11-12 10:05:20', null);
+INSERT INTO `saas_user` VALUES ('91647845fe1d44a186ddb4abc1040e2f', '123', '33', 'sa', '$2a$12$lHadWD4yXu5Qg1J.q5874OlVUz8ZXqB9P4fmmLutouzYJsVd3txGS', '13112345687', '224@bioon.com', '1', '1', null, '0', '2018-11-11 20:20:02', null, '2018-11-12 10:20:02', null);
+INSERT INTO `saas_user` VALUES ('94595de42e784bdeadbe6fcf86d0aee5', '23e388d226a341d680036440952cb411', '波波', '波波', '$2a$12$PRsFxfcw3CGIS33vcjaSPO8sn5WW4g.V9V0usTiPF3h/mkgVhHyGe', '13112345678', '77@bioon.com', '1', '1', null, '0', '2018-11-12 01:01:28', null, '2018-11-12 01:01:28', null);
+INSERT INTO `saas_user` VALUES ('bbe241b341ff44caaafd442422eb5b51', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$w0XPUkGu7ywG4S06jifrfu8IscQYbN8Mty9RSr3Tf0sepqFS7VhtG', '13187654321', 'lixuefang69@163.com', '1', '1', null, '0', '2018-10-17 20:46:47', null, '2018-10-18 09:46:47', null);
+INSERT INTO `saas_user` VALUES ('bf4dd9b1769d4abc9b2bd556154f3147', '2fde74f7d692487685e07c5261a01425', 'xiaoyan', '萧炎', '$2a$12$FjXOv3icy0Y2NEvqwKcolegskZ4dxL4uy.Hle9PdrBESCTysNbQpO', '15612345678', '748703042@qq.com', '1', '1', null, '0', '2018-10-18 10:54:03', null, '2018-10-18 10:54:03', null);
+INSERT INTO `saas_user` VALUES ('c66746f3994c40088886e36b85658247', '242fac02a109468cb2061174971c8814', 'ququ', 'ququ', '$2a$12$V5zVmPxvix0YoNC7hZAP6ei.O0N7UTbijM.q3ew1YAb8ei7z316DK', '13112345678', 'qu@bioon.com', '1', '1', null, '0', '2018-11-12 01:02:50', null, '2018-11-12 01:02:50', null);
+INSERT INTO `saas_user` VALUES ('d4d52fe4cb7a43559eb8a365a8b6f307', '6ca6ffc8cd564094b7f584e2bca0a3f7', 'qingqing', '青青', '$2a$12$FQgZbowmHKz9ZBgGPl0.zeHfqZGsLNg3QhPhsHEn7qo8LyV6MVjqe', '13112345678', '4aaa@bioon.com', '1', '1', null, '1', '2018-11-11 20:14:47', null, '2018-11-12 10:14:47', null);
+INSERT INTO `saas_user` VALUES ('f8f955780bf2408cb854f2e1fd7e442e', '123', '33', 'sa', '$2a$12$rkPEPUZzpyk9irlpIzZADudplRW4YDXwde6rDQ5U4hEUdob.IQeAq', '13112345687', '224@bioon.com', '1', '1', null, '0', '2018-11-11 20:20:02', null, '2018-11-12 10:20:02', null);
 
 -- ----------------------------
 -- Table structure for saas_user_log
@@ -976,3 +1010,173 @@ INSERT INTO `saas_user_log` VALUES ('76925433-d804-11e8-8a32-efbcc6712bdf', 'jer
 INSERT INTO `saas_user_log` VALUES ('7db68694-d805-11e8-8a32-89ad865b95de', 'jerry', '登录', '登录成功！', '0', '2018-10-25 11:24:33');
 INSERT INTO `saas_user_log` VALUES ('7f4a8685-d825-11e8-8a32-37579f3d98c8', 'jerry', '登录', '登录成功！', '0', '2018-10-25 15:13:39');
 INSERT INTO `saas_user_log` VALUES ('24b79ee6-d840-11e8-8a32-9bed072f7f14', 'jerry', '登录', '登录成功！', '0', '2018-10-25 18:24:24');
+INSERT INTO `saas_user_log` VALUES ('003531b1-d8bb-11e8-b52d-bbb9f2167e9d', 'jerry', '登录', '登录成功！', '0', '2018-10-26 09:03:50');
+INSERT INTO `saas_user_log` VALUES ('dee14892-d8bb-11e8-b52d-c3610ac5724b', 'jerry', '登录', '登录成功！', '0', '2018-10-26 09:10:04');
+INSERT INTO `saas_user_log` VALUES ('a4eebce3-db17-11e8-b52d-5937c85ab6de', 'jerry', '登录', '登录成功！', '0', '2018-10-29 09:12:03');
+INSERT INTO `saas_user_log` VALUES ('a4ef5924-db17-11e8-b52d-191271d92984', 'jerry', '登录', '登录成功！', '0', '2018-10-29 09:12:03');
+INSERT INTO `saas_user_log` VALUES ('580ff2a5-db1b-11e8-b52d-df66b1116da0', 'jerry', '登录', '登录成功！', '0', '2018-10-29 09:38:32');
+INSERT INTO `saas_user_log` VALUES ('82dccf66-db22-11e8-b52d-8d2f555d8ff3', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:29:50');
+INSERT INTO `saas_user_log` VALUES ('3f81f647-db23-11e8-b52d-53c44e033481', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:35:07');
+INSERT INTO `saas_user_log` VALUES ('419d0e18-db23-11e8-b52d-9b4ec790420b', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:35:10');
+INSERT INTO `saas_user_log` VALUES ('4a8469b9-db23-11e8-b52d-fd0eb721858b', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:35:25');
+INSERT INTO `saas_user_log` VALUES ('65733fda-db23-11e8-b52d-bba1c5995642', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:36:10');
+INSERT INTO `saas_user_log` VALUES ('326a1aeb-db24-11e8-b52d-1f85a0267794', 'jerry', '登录', '登录成功！', '0', '2018-10-29 10:41:54');
+INSERT INTO `saas_user_log` VALUES ('3297ee6c-db34-11e8-b52d-511896150a57', 'jerry', '登录', '登录成功！', '0', '2018-10-29 12:36:26');
+INSERT INTO `saas_user_log` VALUES ('569d6d8d-db34-11e8-b52d-3b5b4c5aaba1', 'jerry', '登录', '登录成功！', '0', '2018-10-29 12:37:27');
+INSERT INTO `saas_user_log` VALUES ('71e55e2e-db4a-11e8-b52d-270736dc6137', 'jerry', '登录', '登录成功！', '0', '2018-10-29 15:15:41');
+INSERT INTO `saas_user_log` VALUES ('72c46a2f-db63-11e8-b52d-c3f578a455c9', 'jerry', '登录', '登录成功！', '0', '2018-10-29 18:14:40');
+INSERT INTO `saas_user_log` VALUES ('5952cb80-dbe2-11e8-b52d-19bcec8f4d30', 'jerry', '登录', '登录成功！', '0', '2018-10-30 09:23:04');
+INSERT INTO `saas_user_log` VALUES ('cd428251-dbed-11e8-b52d-5f60d42a433b', 'jerry', '登录', '登录成功！', '0', '2018-10-30 10:45:03');
+INSERT INTO `saas_user_log` VALUES ('caf9c372-dbf0-11e8-b52d-9fcf46f921a4', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:06:27');
+INSERT INTO `saas_user_log` VALUES ('067804c3-dbf1-11e8-b52d-c1505dfa50be', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:08:07');
+INSERT INTO `saas_user_log` VALUES ('f2977294-dbf2-11e8-b52d-85f4beea8aa2', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:21:53');
+INSERT INTO `saas_user_log` VALUES ('25310575-dbf5-11e8-b52d-5bc457fd9756', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:37:37');
+INSERT INTO `saas_user_log` VALUES ('e0de4256-dbf6-11e8-b52d-db2893fc916a', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:50:01');
+INSERT INTO `saas_user_log` VALUES ('24d62957-dbf7-11e8-b52d-c7eafb89b37b', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:51:55');
+INSERT INTO `saas_user_log` VALUES ('4841b268-dbf7-11e8-b52d-25fdf950eb6e', 'jerry', '登录', '登录成功！', '0', '2018-10-30 11:52:55');
+INSERT INTO `saas_user_log` VALUES ('d68269f9-dc08-11e8-b52d-35c1b80130fe', 'jerry', '登录', '登录成功！', '0', '2018-10-30 13:58:35');
+INSERT INTO `saas_user_log` VALUES ('9132d04a-dc0a-11e8-b52d-b3d2c130645a', 'jerry', '登录', '登录成功！', '0', '2018-10-30 14:10:57');
+INSERT INTO `saas_user_log` VALUES ('c583b34b-dc10-11e8-b52d-9b1983927fd7', 'jerry', '登录', '登录成功！', '0', '2018-10-30 14:55:22');
+INSERT INTO `saas_user_log` VALUES ('a27fba1c-dc1a-11e8-b52d-dd0c109adec9', 'jerry', '登录', '登录成功！', '0', '2018-10-30 16:05:58');
+INSERT INTO `saas_user_log` VALUES ('3798e31d-dc2f-11e8-b52d-430335405e06', 'jerry', '登录', '登录成功！', '0', '2018-10-30 18:33:18');
+INSERT INTO `saas_user_log` VALUES ('ac5f2eee-dcaa-11e8-b52d-ebe8e105e5d9', 'jerry', '登录', '登录成功！', '0', '2018-10-31 09:17:02');
+INSERT INTO `saas_user_log` VALUES ('9d9ad3af-dcb9-11e8-b52d-d934c2f99980', 'jerry', '登录', '登录成功！', '0', '2018-10-31 11:04:00');
+INSERT INTO `saas_user_log` VALUES ('cf0c07a0-dcba-11e8-b52d-35c4cd6785a8', 'jerry', '登录', '登录成功！', '0', '2018-10-31 11:12:33');
+INSERT INTO `saas_user_log` VALUES ('3e4e95a1-dcbc-11e8-b52d-7d54acd07a2e', 'jerry', '登录', '登录成功！', '0', '2018-10-31 11:22:49');
+INSERT INTO `saas_user_log` VALUES ('e14fae82-dcbf-11e8-b52d-b75184b62713', 'jerry', '登录', '登录成功！', '0', '2018-10-31 11:48:51');
+INSERT INTO `saas_user_log` VALUES ('f2d3f8d3-dccb-11e8-b52d-81d9c4449aae', 'jerry', '登录', '登录成功！', '0', '2018-10-31 13:15:14');
+INSERT INTO `saas_user_log` VALUES ('40b7c844-dcce-11e8-b52d-87e757d84d4a', 'jerry', '登录', '登录成功！', '0', '2018-10-31 13:31:44');
+INSERT INTO `saas_user_log` VALUES ('d826b835-dcce-11e8-b52d-7136b49d97eb', 'jerry', '登录', '登录成功！', '0', '2018-10-31 13:35:58');
+INSERT INTO `saas_user_log` VALUES ('51310c36-dccf-11e8-b52d-8d4207c8d6ee', 'jerry', '登录', '登录成功！', '0', '2018-10-31 13:39:21');
+INSERT INTO `saas_user_log` VALUES ('c4d5c367-dcf2-11e8-b52d-d149917518a0', 'jerry', '登录', '登录成功！', '0', '2018-10-31 17:53:07');
+INSERT INTO `saas_user_log` VALUES ('d1a1f2f8-dcf5-11e8-b52d-a929372b6604', 'jerry', '登录', '登录成功！', '0', '2018-10-31 18:14:57');
+INSERT INTO `saas_user_log` VALUES ('d236f849-dcfb-11e8-b52d-0d8909b3ac4e', 'jerry', '登录', '登录成功！', '0', '2018-10-31 18:57:55');
+INSERT INTO `saas_user_log` VALUES ('0991877a-dd73-11e8-b52d-8160a2d06898', 'jerry', '登录', '登录成功！', '0', '2018-11-01 09:11:18');
+INSERT INTO `saas_user_log` VALUES ('4b2de05b-dd75-11e8-b52d-eb20a1e1d431', 'jerry', '登录', '登录成功！', '0', '2018-11-01 09:27:27');
+INSERT INTO `saas_user_log` VALUES ('9359697c-dd76-11e8-b52d-5bc81d0d1289', 'jerry', '登录', '登录成功！', '0', '2018-11-01 09:36:38');
+INSERT INTO `saas_user_log` VALUES ('e208b45d-dd7a-11e8-b52d-27e44d644e4c', 'jerry', '登录', '登录成功！', '0', '2018-11-01 10:07:28');
+INSERT INTO `saas_user_log` VALUES ('dff78bfe-dd98-11e8-b52d-21cbcc983402', 'jerry', '登录', '登录成功！', '0', '2018-11-01 13:42:09');
+INSERT INTO `saas_user_log` VALUES ('ef171b3f-ddb8-11e8-b52d-bfa220932934', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:31:38');
+INSERT INTO `saas_user_log` VALUES ('5763e470-ddba-11e8-b52d-0f562cd46848', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:41:43');
+INSERT INTO `saas_user_log` VALUES ('f15fe7e1-ddba-11e8-b52d-abc7f4ac1f37', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:46:01');
+INSERT INTO `saas_user_log` VALUES ('50a8e942-ddbb-11e8-b52d-195f3557bcea', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:48:41');
+INSERT INTO `saas_user_log` VALUES ('628b0173-ddbb-11e8-b52d-7b9cadefda51', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:49:11');
+INSERT INTO `saas_user_log` VALUES ('eed10a34-ddbb-11e8-b52d-8bc1f3a09e69', 'jerry', '登录', '登录成功！', '0', '2018-11-01 17:53:07');
+INSERT INTO `saas_user_log` VALUES ('00831c45-ddbd-11e8-b52d-bd669dce722e', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:00:46');
+INSERT INTO `saas_user_log` VALUES ('4d026496-ddbd-11e8-b52d-67fc1360b07e', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:02:54');
+INSERT INTO `saas_user_log` VALUES ('ee2af447-ddbd-11e8-b52d-21561f0ed001', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:07:24');
+INSERT INTO `saas_user_log` VALUES ('f07f92a8-ddbd-11e8-b52d-c9004abec6b2', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:07:28');
+INSERT INTO `saas_user_log` VALUES ('258618c9-ddbe-11e8-b52d-01705f0df159', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:08:57');
+INSERT INTO `saas_user_log` VALUES ('abdf413a-ddbe-11e8-b52d-b34b85cd5511', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:12:43');
+INSERT INTO `saas_user_log` VALUES ('fd42855b-ddbe-11e8-b52d-61627a161019', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:14:59');
+INSERT INTO `saas_user_log` VALUES ('6c5ce75c-ddbf-11e8-b52d-b94d50d3c661', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:18:06');
+INSERT INTO `saas_user_log` VALUES ('0c11e9dd-ddc0-11e8-b52d-8d49a5df6c50', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:22:34');
+INSERT INTO `saas_user_log` VALUES ('d40f1e3e-ddc0-11e8-b52d-ff24db32b7c6', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:28:09');
+INSERT INTO `saas_user_log` VALUES ('2d7f189f-ddc5-11e8-b52d-a77144a75156', 'jerry', '登录', '登录成功！', '0', '2018-11-01 18:59:17');
+INSERT INTO `saas_user_log` VALUES ('6f6fef90-ddc6-11e8-b52d-bb84c6d2827f', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:08:17');
+INSERT INTO `saas_user_log` VALUES ('d01aa3d1-ddc6-11e8-b52d-ad8a0ef84d13', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:10:59');
+INSERT INTO `saas_user_log` VALUES ('f364c232-ddc6-11e8-b52d-d3ff78ff0672', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:11:59');
+INSERT INTO `saas_user_log` VALUES ('0d115453-ddc7-11e8-b52d-538c9fb7007a', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:12:42');
+INSERT INTO `saas_user_log` VALUES ('27ddbc14-ddcc-11e8-b52d-454a53d87a6d', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:49:14');
+INSERT INTO `saas_user_log` VALUES ('ee59ceb5-ddcc-11e8-b52d-474f3cc23a90', 'jerry', '登录', '登录成功！', '0', '2018-11-01 19:54:47');
+INSERT INTO `saas_user_log` VALUES ('a2d62506-de3b-11e8-b52d-c344cd168832', 'jerry', '登录', '登录成功！', '0', '2018-11-02 09:07:15');
+INSERT INTO `saas_user_log` VALUES ('f74f5bb7-de3b-11e8-b52d-77e668203f4a', 'jerry', '登录', '登录成功！', '0', '2018-11-02 09:09:36');
+INSERT INTO `saas_user_log` VALUES ('2ecbce68-de3d-11e8-b52d-8dd67bf20536', 'jerry', '登录', '登录成功！', '0', '2018-11-02 09:18:19');
+INSERT INTO `saas_user_log` VALUES ('79d10ef9-de3f-11e8-b52d-3dda294322d8', 'jerry', '登录', '登录成功！', '0', '2018-11-02 09:34:44');
+INSERT INTO `saas_user_log` VALUES ('153f3bda-de47-11e8-b52d-bd87cb0ba72e', 'jerry', '登录', '登录成功！', '0', '2018-11-02 10:29:11');
+INSERT INTO `saas_user_log` VALUES ('abcd79ab-de50-11e8-b52d-a3213b3b4669', 'jerry', '登录', '登录成功！', '0', '2018-11-02 11:37:49');
+INSERT INTO `saas_user_log` VALUES ('9f51d5ec-de5f-11e8-b52d-e74e4c937f77', 'jerry', '登录', '登录成功！', '0', '2018-11-02 13:24:51');
+INSERT INTO `saas_user_log` VALUES ('c5f4e34d-de5f-11e8-b52d-cf344570d0c6', 'jerry', '登录', '登录成功！', '0', '2018-11-02 13:25:55');
+INSERT INTO `saas_user_log` VALUES ('f0acc35e-de64-11e8-b52d-7702668b79cb', 'jerry', '登录', '登录成功！', '0', '2018-11-02 14:02:55');
+INSERT INTO `saas_user_log` VALUES ('5ad4207f-de88-11e8-b52d-c35ca6c511ce', 'jerry', '登录', '登录成功！', '0', '2018-11-02 18:16:25');
+INSERT INTO `saas_user_log` VALUES ('059efdc0-de91-11e8-b52d-91edd08d43a7', 'jerry', '登录', '登录成功！', '0', '2018-11-02 19:18:28');
+INSERT INTO `saas_user_log` VALUES ('d96bcb11-df09-11e8-b52d-9d9c16d06fd5', 'jerry', '登录', '登录成功！', '0', '2018-11-03 09:43:23');
+INSERT INTO `saas_user_log` VALUES ('84c75e52-df0c-11e8-b52d-89b747195637', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:02:29');
+INSERT INTO `saas_user_log` VALUES ('993cf2a3-df0c-11e8-b52d-1fb1e1d99f73', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:03:03');
+INSERT INTO `saas_user_log` VALUES ('2e78eb14-df0f-11e8-b52d-a7feac587116', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:21:33');
+INSERT INTO `saas_user_log` VALUES ('3427ff15-df0f-11e8-b52d-911d81cd6e1d', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:21:42');
+INSERT INTO `saas_user_log` VALUES ('ba10ab16-df12-11e8-b52d-6d16fa9eb388', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:46:55');
+INSERT INTO `saas_user_log` VALUES ('eaa080b7-df13-11e8-b52d-f3f503df4d35', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:55:26');
+INSERT INTO `saas_user_log` VALUES ('1cf8d6c8-df14-11e8-b52d-896a630dfd74', 'jerry', '登录', '登录成功！', '0', '2018-11-03 10:56:51');
+INSERT INTO `saas_user_log` VALUES ('92b622a9-df14-11e8-b52d-31de92f2fa59', 'jerry', '登录', '登录成功！', '0', '2018-11-03 11:00:08');
+INSERT INTO `saas_user_log` VALUES ('5501798a-df39-11e8-b52d-d759dd7b5667', 'jerry', '登录', '登录成功！', '0', '2018-11-03 15:23:16');
+INSERT INTO `saas_user_log` VALUES ('ecaf202b-df39-11e8-b52d-5fb413214ee8', 'jerry', '登录', '登录成功！', '0', '2018-11-03 15:27:31');
+INSERT INTO `saas_user_log` VALUES ('ad1db5ac-df3b-11e8-b52d-71246f395e38', 'jerry', '登录', '登录成功！', '0', '2018-11-03 15:40:03');
+INSERT INTO `saas_user_log` VALUES ('7a8be39d-df3c-11e8-b52d-01f3ca0081c0', 'jerry', '登录', '登录成功！', '0', '2018-11-03 15:45:48');
+INSERT INTO `saas_user_log` VALUES ('a8a2c5ce-df44-11e8-b52d-8361b3858a73', 'jerry', '登录', '登录成功！', '0', '2018-11-03 16:44:21');
+INSERT INTO `saas_user_log` VALUES ('e0e78f0f-e099-11e8-b52d-8364cd7658a6', 'jerry', '登录', '登录成功！', '0', '2018-11-05 09:26:54');
+INSERT INTO `saas_user_log` VALUES ('8d70b7c0-e09a-11e8-b52d-eba3b924ee51', 'jerry', '登录', '登录成功！', '0', '2018-11-05 09:31:43');
+INSERT INTO `saas_user_log` VALUES ('9a7d7a21-e09a-11e8-b52d-73cde1c250f6', 'jerry', '登录', '登录成功！', '0', '2018-11-05 09:32:05');
+INSERT INTO `saas_user_log` VALUES ('cf758f12-e09f-11e8-b52d-592b523da60b', 'jerry', '登录', '登录成功！', '0', '2018-11-05 10:09:21');
+INSERT INTO `saas_user_log` VALUES ('ef215233-e0b9-11e8-b52d-ddcf679beec7', 'jerry', '登录', '登录成功！', '0', '2018-11-05 13:16:22');
+INSERT INTO `saas_user_log` VALUES ('73560ca4-e0bd-11e8-b52d-1fc7db89319b', 'jerry', '登录', '登录成功！', '0', '2018-11-05 13:41:32');
+INSERT INTO `saas_user_log` VALUES ('e14e6665-e0c9-11e8-b52d-e796082dfd58', 'jerry', '登录', '登录成功！', '0', '2018-11-05 15:10:30');
+INSERT INTO `saas_user_log` VALUES ('60237746-e0cb-11e8-b52d-21a5cd6d0b8a', 'jerry', '登录', '登录成功！', '0', '2018-11-05 15:21:13');
+INSERT INTO `saas_user_log` VALUES ('a5f78667-e0cd-11e8-b52d-4d8c65ea3f4d', 'jerry', '登录', '登录成功！', '0', '2018-11-05 15:37:29');
+INSERT INTO `saas_user_log` VALUES ('72284af8-e0d1-11e8-b52d-114948192c86', 'jerry', '登录', '登录成功！', '0', '2018-11-05 16:04:40');
+INSERT INTO `saas_user_log` VALUES ('e94d3d29-e0d1-11e8-b52d-bdea365078e5', 'jerry', '登录', '登录成功！', '0', '2018-11-05 16:08:00');
+INSERT INTO `saas_user_log` VALUES ('80a5e5fa-e0d2-11e8-b52d-1f548d90237f', 'jerry', '登录', '登录成功！', '0', '2018-11-05 16:12:14');
+INSERT INTO `saas_user_log` VALUES ('91636b9b-e0e3-11e8-b52d-a5b32689879d', 'jerry', '登录', '登录成功！', '0', '2018-11-05 18:14:23');
+INSERT INTO `saas_user_log` VALUES ('99096d9c-e0e3-11e8-b52d-4dbf9bef4587', 'jerry', '登录', '登录成功！', '0', '2018-11-05 18:14:36');
+INSERT INTO `saas_user_log` VALUES ('aa7d5aad-e0e3-11e8-b52d-93518f8a91d1', 'jerry', '登录', '登录成功！', '0', '2018-11-05 18:15:05');
+INSERT INTO `saas_user_log` VALUES ('325f178e-e0e7-11e8-b52d-a5d1a83fa8f0', 'jerry', '登录', '登录成功！', '0', '2018-11-05 18:40:22');
+INSERT INTO `saas_user_log` VALUES ('c5f9ea0f-e160-11e8-b52d-d97642935c8f', 'jerry', '登录', '登录成功！', '0', '2018-11-06 09:10:38');
+INSERT INTO `saas_user_log` VALUES ('e9a206f0-e160-11e8-b52d-118632ec8664', 'jerry', '登录', '登录成功！', '0', '2018-11-06 09:11:38');
+INSERT INTO `saas_user_log` VALUES ('396d2211-e165-11e8-b52d-893bb577b554', 'jerry', '登录', '登录成功！', '0', '2018-11-06 09:42:30');
+INSERT INTO `saas_user_log` VALUES ('4814f602-e195-11e8-b52d-317d3867c967', 'jerry', '登录', '登录成功！', '0', '2018-11-06 15:26:31');
+INSERT INTO `saas_user_log` VALUES ('1e304c21-e22c-11e8-a525-31a1658c5430', 'jerry', '登录', '登录成功！', '0', '2018-11-07 09:26:14');
+INSERT INTO `saas_user_log` VALUES ('3e0b2172-e239-11e8-a525-9f2a3c741b2a', 'jerry', '登录', '登录成功！', '0', '2018-11-07 11:00:11');
+INSERT INTO `saas_user_log` VALUES ('46eed393-e239-11e8-a525-891e4bf0a1c3', 'jerry', '登录', '登录成功！', '0', '2018-11-07 11:00:26');
+INSERT INTO `saas_user_log` VALUES ('e35b13b4-e239-11e8-a525-0d646c92c5d1', 'xiaoyan', '登录', '登录成功！', '0', '2018-11-07 11:04:49');
+INSERT INTO `saas_user_log` VALUES ('0f195985-e23a-11e8-a525-bf5c6775039e', 'jerry', '登录', '登录成功！', '0', '2018-11-07 11:06:02');
+INSERT INTO `saas_user_log` VALUES ('9e36d49a-e24e-11e8-9e4b-5bf55910ba8c', 'jerry', '登录', '登录成功！', '0', '2018-11-07 13:33:12');
+INSERT INTO `saas_user_log` VALUES ('b77ee31b-e24f-11e8-9e4b-1b04da25bb82', 'jerry', '登录', '登录成功！', '0', '2018-11-07 13:41:04');
+INSERT INTO `saas_user_log` VALUES ('5b190adc-e257-11e8-9e4b-eb1168921877', 'jerry', '登录', '登录成功！', '0', '2018-11-07 14:35:45');
+INSERT INTO `saas_user_log` VALUES ('4b219bed-e268-11e8-9e4b-9be650e87738', 'jerry', '登录', '登录成功！', '0', '2018-11-07 16:36:59');
+INSERT INTO `saas_user_log` VALUES ('c0d864de-e278-11e8-9e4b-b5e65763735c', 'jerry', '登录', '登录成功！', '0', '2018-11-07 18:34:49');
+INSERT INTO `saas_user_log` VALUES ('59b7430f-e27a-11e8-9e4b-711208e29a45', 'jerry', '登录', '登录成功！', '0', '2018-11-07 18:46:15');
+INSERT INTO `saas_user_log` VALUES ('a5bb47d0-e2f1-11e8-9e4b-d7207fcecb04', 'jerry', '登录', '登录成功！', '0', '2018-11-08 09:00:12');
+INSERT INTO `saas_user_log` VALUES ('35b04ed1-e2f2-11e8-9e4b-8143c2f7a08e', 'jerry', '登录', '登录成功！', '0', '2018-11-08 09:04:14');
+INSERT INTO `saas_user_log` VALUES ('61a26a29-e2fc-11e8-8b7c-f147cde619f0', 'jerry', '登录', '登录成功！', '0', '2018-11-08 10:17:03');
+INSERT INTO `saas_user_log` VALUES ('e4fb71fa-e2fc-11e8-8b7c-09682a0a37f2', 'jerry', '登录', '登录成功！', '0', '2018-11-08 10:20:43');
+INSERT INTO `saas_user_log` VALUES ('b7017ceb-e310-11e8-8b7c-798b7063975e', 'string', '登录', '用户不存在', '0', '2018-11-08 12:42:36');
+INSERT INTO `saas_user_log` VALUES ('d5408f7c-e310-11e8-8b7c-05260f313607', 'jerry', '登录', '登录成功！', '0', '2018-11-08 12:43:27');
+INSERT INTO `saas_user_log` VALUES ('1c900e7d-e328-11e8-8b7c-9bb06d5ff4f0', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:30:05');
+INSERT INTO `saas_user_log` VALUES ('596fb48e-e328-11e8-8b7c-f9359c0bd5b0', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:31:47');
+INSERT INTO `saas_user_log` VALUES ('1b33482f-e329-11e8-8b7c-4755f45c3948', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:37:12');
+INSERT INTO `saas_user_log` VALUES ('3496ea70-e329-11e8-8b7c-1bed7d0e9643', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:37:55');
+INSERT INTO `saas_user_log` VALUES ('41c00e71-e329-11e8-8b7c-a94a1d439238', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:38:17');
+INSERT INTO `saas_user_log` VALUES ('0a355902-e32a-11e8-8b7c-ebcb4fb3acbc', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:43:53');
+INSERT INTO `saas_user_log` VALUES ('b3e08f13-e32a-11e8-8b7c-271a16f8375b', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:48:38');
+INSERT INTO `saas_user_log` VALUES ('b410c6d4-e32a-11e8-8b7c-a9be3f3e202a', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:48:38');
+INSERT INTO `saas_user_log` VALUES ('da703b85-e32a-11e8-8b7c-1b23c5d6af52', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:49:42');
+INSERT INTO `saas_user_log` VALUES ('e4ce3196-e32a-11e8-8b7c-3f5aa7d4426b', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:50:00');
+INSERT INTO `saas_user_log` VALUES ('00f0ccc7-e32b-11e8-8b7c-6338e4394236', 'jerry', '登录', '登录成功！', '0', '2018-11-08 15:50:47');
+INSERT INTO `saas_user_log` VALUES ('85611eb8-e330-11e8-8b7c-5d37fc011de2', 'jerry', '登录', '登录成功！', '0', '2018-11-08 16:30:17');
+INSERT INTO `saas_user_log` VALUES ('24c02719-e333-11e8-8b7c-e5f467547693', 'jerry', '登录', '登录成功！', '0', '2018-11-08 16:49:03');
+INSERT INTO `saas_user_log` VALUES ('ab606aaa-e333-11e8-8b7c-a7d0701b5d27', 'jerry', '登录', '登录成功！', '0', '2018-11-08 16:52:49');
+INSERT INTO `saas_user_log` VALUES ('03c47aab-e335-11e8-8b7c-3f73c49326d6', 'jerry', '登录', '登录成功！', '0', '2018-11-08 17:02:27');
+INSERT INTO `saas_user_log` VALUES ('920d313c-e335-11e8-8b7c-3d3f94ebf888', 'jerry', '登录', '登录成功！', '0', '2018-11-08 17:06:26');
+INSERT INTO `saas_user_log` VALUES ('c7b3c7ed-e335-11e8-8b7c-4d729b0a0c51', 'jerry', '登录', '登录成功！', '0', '2018-11-08 17:07:56');
+INSERT INTO `saas_user_log` VALUES ('d591043e-e336-11e8-8b7c-1380bfa1e234', 'jerry', '登录', '登录成功！', '0', '2018-11-08 17:15:28');
+INSERT INTO `saas_user_log` VALUES ('f43f568f-e33a-11e8-8b7c-c56a733c0159', 'jerry', '登录', '登录成功！', '0', '2018-11-08 17:44:58');
+INSERT INTO `saas_user_log` VALUES ('446b60f0-e340-11e8-8b7c-3bc14d3d0f12', 'jerry', '登录', '登录成功！', '0', '2018-11-08 18:23:00');
+INSERT INTO `saas_user_log` VALUES ('518346e1-e340-11e8-8b7c-61d8f93f82c3', 'jerry', '登录', '登录成功！', '0', '2018-11-08 18:23:22');
+INSERT INTO `saas_user_log` VALUES ('d2549cf2-e341-11e8-8b7c-c56e8b91f5ba', 'jerry', '登录', '登录成功！', '0', '2018-11-08 18:34:07');
+INSERT INTO `saas_user_log` VALUES ('4f48fc63-e342-11e8-8b7c-c595c0b14a2f', 'jerry', '登录', '登录成功！', '0', '2018-11-08 18:37:37');
+INSERT INTO `saas_user_log` VALUES ('ba666c94-e355-11e8-8b7c-efe78f1a1bb8', 'jerry', '登录', '登录成功！', '0', '2018-11-08 20:56:37');
+INSERT INTO `saas_user_log` VALUES ('0af8ff55-e3bb-11e8-8b7c-3fd6dae24272', 'jerry', '登录', '登录成功！', '0', '2018-11-09 09:01:51');
+INSERT INTO `saas_user_log` VALUES ('2b3a06f6-e3bc-11e8-8b7c-add4d9fe53e5', 'jerry', '登录', '登录成功！', '0', '2018-11-09 09:09:55');
+INSERT INTO `saas_user_log` VALUES ('33bbd817-e3be-11e8-8b7c-37121ffa8c13', 'jerry', '登录', '登录成功！', '0', '2018-11-09 09:24:28');
+INSERT INTO `saas_user_log` VALUES ('82aa9268-e3c1-11e8-8b7c-b70444d5d461', 'jerry', '登录', '登录成功！', '0', '2018-11-09 09:48:09');
+INSERT INTO `saas_user_log` VALUES ('444e16b9-e3c9-11e8-8b7c-19a9baa5c5df', 'jerry', '登录', '登录成功！', '0', '2018-11-09 10:43:41');
+INSERT INTO `saas_user_log` VALUES ('a0c652ca-e3f3-11e8-8b7c-59d666ac97c7', 'jerry', '登录', '登录成功！', '0', '2018-11-09 15:46:54');
+INSERT INTO `saas_user_log` VALUES ('607fc4eb-e3fc-11e8-8b7c-411b8cfd9214', 'jerry', '登录', '登录成功！', '0', '2018-11-09 16:49:32');
+INSERT INTO `saas_user_log` VALUES ('0f3bd51c-e4ab-11e8-8b7c-e769fab952a1', 'jerry', '登录', '登录成功！', '0', '2018-11-10 13:39:58');
+INSERT INTO `saas_user_log` VALUES ('9e0c323d-e4ab-11e8-8b7c-f56e76628733', 'jerry', '登录', '登录成功！', '0', '2018-11-10 13:43:57');
+INSERT INTO `saas_user_log` VALUES ('bcf0bd2e-e617-11e8-8b7c-fd8667e672ed', 'jerry', '登录', '登录成功！', '0', '2018-11-12 09:10:26');
+INSERT INTO `saas_user_log` VALUES ('ec4b834f-e61a-11e8-8b7c-a3a177095efb', 'jerry', '登录', '登录成功！', '0', '2018-11-12 09:33:14');
+INSERT INTO `saas_user_log` VALUES ('b6e87060-e63d-11e8-8b7c-77aa3fae96b3', 'jerry', '登录', '登录成功！', '0', '2018-11-12 13:42:17');
+INSERT INTO `saas_user_log` VALUES ('e9568cd1-e647-11e8-8b7c-e31d1e969d92', 'jerry', '登录', '登录成功！', '0', '2018-11-12 14:55:16');
+INSERT INTO `saas_user_log` VALUES ('3ff31ca2-e6e0-11e8-8b7c-e9d4e4463a18', 'jerry', '登录', '登录成功！', '0', '2018-11-13 09:05:45');
+INSERT INTO `saas_user_log` VALUES ('8230f793-e6e0-11e8-8b7c-0f3c1a72fe45', 'jerry', '登录', '登录成功！', '0', '2018-11-13 09:07:36');

@@ -2,7 +2,7 @@
 
  报错截图：Tomcat Manager App--403 Access Denied You are not authorized to view this page
 
-![](D:\git\DevelopmentKit\Apps\1..jpg)
+![](E:\Arvin-Git\DevelopmentKit\Apps\1..jpg)
 
 ## 1、访问 http://localhost:8080/，点击 【manager app】，提示输入用户名和密码，admin/admin后报错。 
 
