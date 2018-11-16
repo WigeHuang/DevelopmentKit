@@ -71,3 +71,7 @@ mvn的setting.xml配置中加入服务节点权限
 		<url>http://10.0.1.253:8081/nexus/content/repositories/snapshots/</url>
 	</snapshotRepository>
 </distributionManagement>
+
+
+
+nohup java -jar  -XX:PermSize=128M -XX:MaxPermSize=256M xx.jar &
