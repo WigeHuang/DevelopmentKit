@@ -16,8 +16,14 @@ import java.util.Set;
  */
 public class ValidationUtils {
 
-    private static Validator validator =  Validation.buildDefaultValidatorFactory().getValidator();
-
+    //private static Validator validator =  Validation.buildDefaultValidatorFactory().getValidator();
+	
+	/**
+     * 使用hibernate的注解来进行验证
+     *
+     */
+    private static Validator validator = Validation.byProvider(HibernateValidator.class)
+                .configure().failFast(true).buildValidatorFactory().getValidator();
     /**
      * 校验实体类
      * @param obj
