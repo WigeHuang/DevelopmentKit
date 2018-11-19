@@ -1,4 +1,4 @@
-package cn.medsci.pv.config;
+package cn.arvin.demo.config;
 
 import com.baomidou.mybatisplus.mapper.ISqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
  * @author weihao.xiao
  */
 @Configuration
-@MapperScan("cn.medsci.pv.mapper*")
+@MapperScan("cn.arvin.demo.mapper*")
 public class MybatisPlusConfig {
     /**
      * mybatis-plus SQL执行效率插件【生产环境可以关闭】

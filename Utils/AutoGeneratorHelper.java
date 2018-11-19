@@ -1,4 +1,4 @@
-package cn.medsci.pv;
+package cn.arvin.demo;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
- * Created by wenhao.wang on 2018/3/16.
  *  mybatis-plus 代码生成器
  */
 public class AutoGeneratorHelper {
@@ -37,7 +36,7 @@ public class AutoGeneratorHelper {
                 .setDriverName("com.mysql.jdbc.Driver")
                 .setUsername("zhouwen")
                 .setPassword("ZhowWen-160111")
-                .setUrl("jdbc:mysql://10.0.1.40:3306/pv3.0?useUnicode=true&characterEncoding=utf8");
+                .setUrl("jdbc:mysql://10.0.1.40:3306/test?useUnicode=true&characterEncoding=utf8");
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel)
