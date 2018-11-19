@@ -1,7 +1,7 @@
 ### 前言说明：
 
 	参考地址：https://www.cnblogs.com/mr-yang-localhost/p/7812038.html
-
+	
 	hibernate validator（[官方文档](http://hibernate.org/validator/documentation/)）提供了一套比较完善、便捷的验证实现方式。spring-boot-starter-web`包里面有`hibernate-validator包，不需要引用hibernate validator依赖。
 
 #### 一、在代码中调用工具类进行参数校验：
@@ -173,6 +173,33 @@ public Validator validator(){
     return validator;
 }
 ```
+
+或者
+
+```java
+@Configuration
+public class ValidatorConfig {
+    // 配置方法参数校验
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor() {
+        MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor();
+        // 设置validator模式为快速失败返回
+        postProcessor.setValidator(validator());
+        return postProcessor;
+    }
+ 
+    // 配置hibernate Validator为快速失败返回模式
+    @Bean
+    public Validator validator() {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+            .configure()
+            .failFast(true)// true：快速失败返回模式 false：普通模式
+            .buildValidatorFactory();
+    }
+}
+```
+
+
 
 #### b.方法所在的Controller上加注解@Validated
 
